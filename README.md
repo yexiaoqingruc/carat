@@ -11,7 +11,7 @@ install.packages("carat")
 ```
 ## Install OpenMP-supported version from GitHub: 
 
-Note that, starting with 4.0 R no longer support OpenMP because it is platform-dependent. It is not supported by the system compiler on macOS. Empirical studies however indicate that OpemMP makes our algorithms in the package more efficient. Hence, we provide OpenMP-supported version on GitHub and it can be loaded via: 
+Note that, starting with 4.0 R no longer support OpenMP because it is platform-dependent. It is not supported by the system compiler on macOS. Empirical studies however indicate that OpenMP makes our algorithms in the package more efficient. Hence, we provide OpenMP-supported version on GitHub and it can be loaded via: 
 
 ```{R, eval = FALSE}
 devtools::install_github('yexiaoqingruc/caratOMP/caratOMP')
