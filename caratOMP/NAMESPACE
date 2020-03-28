@@ -1,0 +1,48 @@
+# Refer to all C/Fortran routines by their name prefixed by C_
+useDynLib(caratOMP, .registration=TRUE)
+#exportPattern("^[[:alpha:]]+")
+#exportPattern("^[^_]+")
+
+## from randomization
+# Real Data
+export(HuHuCAR, PocSimMIN, StrBCD, StrPBR, DoptBCD, AdjBCD)
+
+# Simulated Data
+export(HuHuCAR.sim, PocSimMIN.sim, StrBCD.sim, StrPBR.sim, DoptBCD.sim,
+       AdjBCD.sim)
+
+# User-interative functions
+export(HuHuCAR.ui, PocSimMIN.ui, StrBCD.ui, StrPBR.ui, DoptBCD.ui,
+       AdjBCD.ui)
+
+# Assessment and comparison for randomziation
+export(evalRand, evalRand.sim, compRand)
+
+# Hypothesis testing
+export(getData, boot.test, corr.test, rand.test)
+
+# Assessment and comparison for power
+export(compPower, evalPower)
+
+import(ggplot2)
+#import(RcppArmadillo)
+importFrom(Rcpp, evalCpp)
+importFrom(stats, quantile, qnorm)
+import(stringr)
+#importFrom(ggplot2, ggplot, aes, geom_line, geom_point, xlab, ylab, theme, 
+#                    element_text)
+importFrom(gridExtra, grid.arrange)
+#importFrom(RcppArmadillo, evalCpp)
+
+## register all the methods for generics elsewhere in case namespace is
+## loaded but not currently attached.
+S3method(print, carandom)
+S3method(print, careval)
+S3method(print, carcomp)
+S3method(print, carseq)
+
+export(print.carandom, print.careval, print.carcomp, print.carseq)
+
+
+
+
