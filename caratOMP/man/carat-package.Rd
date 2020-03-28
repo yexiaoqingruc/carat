@@ -1,9 +1,9 @@
-\name{carat-package}
-\alias{carat-package}
-\alias{carat}
+\name{caratOMP-package}
+\alias{caratOMP-package}
+\alias{caratOMP}
 \docType{package}
 \title{
-  carat-package: Covariate-Adaptive Randomization for Clinical Trials
+  carat-package: Covariate-Adaptive Randomization for Clinical Trials Supporting OpenMP
 }
 \description{
   Provides functions and command-line user interface to generate allocation sequence by covariate-adaptive randomization for clinical trials. It currently supports seven covariate-adaptive randomization procedures, such as stratified randomization, minimization, a general family of designs proposed by Hu and Hu (2012) <doi:10.1214/12-AOS983>. Three hypothesis testing methods that are valid and robust under covariate-adaptive randomization are also available in the package to facilitate the inference for treatment effect under the included randomization procedures. Additionally, the package provides comprehensive and efficient tools to allow one to evaluate and compare the performance of randomization procedures and tests based on various criteria.
