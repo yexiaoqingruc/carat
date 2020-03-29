@@ -33,5 +33,9 @@ Zelen M. \emph{The randomization and stratification of patients to clinical tria
 Fuyi Tu \email{fuyi.tu@ruc.edu.cn};Xiaoqing Ye \email{ye_xiaoq@163.com}; 
 Wei Ma \email{mawei@ruc.edu.cn};  Feifang Hu \email{ffhu68@163.com}.
 }
+\note{
+  The work was supported by the Fundamental Research Funds for the Central Universities, and the Research Funds of Renmin University of China.
+}
 
 \keyword{ carat-package }
+\keyword{caratOMP-package}
