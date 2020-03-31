@@ -23,6 +23,6 @@ The parallel version of **carat** implemented by **OpenMP** named **caratOMP** i
 
 ```{R, eval = FALSE}
 #install.packages('devtools')
-devtools::install_github('yexiaoqingruc/caratOMP/caratOMP')
+devtools::install_github('yexiaoqingruc/carat/caratOMP')
 ```
 
