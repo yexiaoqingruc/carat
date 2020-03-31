@@ -12,7 +12,7 @@ Due to starting with 4.0 R no longer supports **OpenMP**, which results from the
 
 ## Install the current release from CRAN:
 
-The package without OpenMP is available for Windows, Linux and Mac OS X from CRAN: 
+The package without **OpenMP** is available for Windows, Linux and Mac OS X from CRAN: 
 
 ```{R, eval = FALSE}
 install.packages("carat")
@@ -22,6 +22,7 @@ install.packages("carat")
 The parallel version of **carat** implemented by **OpenMP** named **caratOMP** is available via:
 
 ```{R, eval = FALSE}
+#install.packages('devtools')
 devtools::install_github('yexiaoqingruc/caratOMP/caratOMP')
 ```
 
