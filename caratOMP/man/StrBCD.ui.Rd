@@ -1,18 +1,17 @@
 \name{StrBCD.ui}
 \alias{StrBCD.ui}
-\alias{StrBCD.ui.carseq}
 \title{
 Command-line User Interface Using Shao's Method 
 }
 \description{
-A call to user-iterface function used to allocate patients to one of two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <Doi:10.1093/biomet/asq014>. 
+A call to the user-interface function used to allocate patients to one of two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <Doi:10.1093/biomet/asq014>. 
 }
 \usage{
-\method{StrBCD.ui}{carseq}(path, folder = "StrBCD")
+StrBCD.ui(path, folder = "StrBCD")
 }
 \arguments{
-  \item{path}{path in which a folder used to storage variables would be created.}
-  \item{folder}{name of the folder. If default, a folder names \code{"StrBCD"} will be created.}
+  \item{path}{the path in which a folder used to storage variables will be created. }
+  \item{folder}{name of the folder. If default, a folder named \code{"StrBCD"} will be created.}
 }
 \details{
 See \code{\link{StrBCD}}.
@@ -23,10 +22,10 @@ See \code{\link{StrBCD}}.
 \value{
 It returns an object of \code{\link{class}} \code{"carseq"}.
 
-The functions \code{\link{print}} is used to obtain results. The generic accessor functions \code{assignment}, \code{covariate}, \code{cov_num}, \code{cov_profile} and so on extract various useful features of the value returned by that function. 
+The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{assignment}, \code{covariate}, \code{cov_num}, \code{cov_profile} and others extract various useful features of the value returned by \code{StrBCD.ui}. 
 }
 \note{
-This function provides command-line interface so that users should follow instructions to enter data including covariates as well as levels for each covariate, biased probability \code{p} and covariate-profile of the new patient. 
+This function provides a command-line interface and users should follow the prompts to enter data including covariates as well as levels for each covariate, biased probability \code{p} and the covariate profile of the new patient. 
 }
 \keyword{ CAR }
 \keyword{ user-interface}
