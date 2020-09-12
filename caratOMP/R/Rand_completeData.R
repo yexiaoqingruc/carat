@@ -5,7 +5,7 @@
 ################################################################################
 #HuHuCAR = function(data, omega = NULL, p = 0.85) UseMethod("HuHuCAR")
 
-HuHuCAR.carandom = function(data, omega = NULL, p = 0.85) UseMethod("carandom")
+#HuHuCAR.carandom = function(data, omega = NULL, p = 0.85) UseMethod("carandom")
 
 HuHuCAR = function(data, omega = NULL, p = 0.85){
   
@@ -57,6 +57,9 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
   rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
   R$Cov_Assig = CA;
   
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
+  
   AS = RES[2, 1][[1]];
   colnames(AS) = BBCDname(strt_num, "strt.");
   rownames(AS) = BBCDname(cov_num, "covariate"); 
@@ -82,7 +85,7 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
 ################################################################################
 #PocSimMIN = function(data, weight = NULL, p = 0.85) UseMethod("PocSimMIN")
 
-PocSimMIN.carandom = function(data, weight = NULL, p = 0.85) UseMethod("carandom")
+#PocSimMIN.carandom = function(data, weight = NULL, p = 0.85) UseMethod("carandom")
 
 PocSimMIN = function(data, weight = NULL, p = 0.85){
   
@@ -135,6 +138,9 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
   rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
   R$Cov_Assig = CA;
   
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
+  
   AS = RES[2, 1][[1]];
   colnames(AS) = BBCDname(strt_num, "strt.");
   rownames(AS) = BBCDname(cov_num, "covariate"); 
@@ -160,7 +166,7 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
 ################################################################################
 #StrBCD = function(data, p = 0.85) UseMethod("StrBCD")
 
-StrBCD.carandom = function(data, p = 0.85) UseMethod("carandom")
+#StrBCD.carandom = function(data, p = 0.85) UseMethod("carandom")
 
 StrBCD = function(data, p = 0.85){
   
@@ -203,7 +209,10 @@ StrBCD = function(data, p = 0.85){
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
   rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
-  R$Cov_Assig = CA;
+  R$Cov_Assig = CA; 
+  
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]];
   colnames(AS) = BBCDname(strt_num, "strt.");
@@ -229,7 +238,7 @@ StrBCD = function(data, p = 0.85){
 ################################################################################
 #StrPBR = function(data, bsize = 4) UseMethod("StrPBR")
 
-StrPBR.carandom = function(data, bsize = 4) UseMethod("carandom")
+#StrPBR.carandom = function(data, bsize = 4) UseMethod("carandom")
 
 StrPBR = function(data, bsize = 4){
   
@@ -271,7 +280,10 @@ StrPBR = function(data, bsize = 4){
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
   rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
-  R$Cov_Assig = CA;
+  R$Cov_Assig = CA; 
+  
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]];
   colnames(AS) = BBCDname(strt_num, "strt.");
@@ -303,7 +315,7 @@ StrPBR = function(data, bsize = 4){
 ################################################################################
 #DoptBCD = function(data) UseMethod("DoptBCD")
 
-DoptBCD.carandom = function(data) UseMethod("carandom")
+#DoptBCD.carandom = function(data) UseMethod("carandom")
 
 DoptBCD = function(data){
   
@@ -336,7 +348,10 @@ DoptBCD = function(data){
   R$N = n;
   colnames(CA) = BBCDname(n, "pat"); 
   rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
-  R$Cov_Assig = CA;
+  R$Cov_Assig = CA; 
+  
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]];
   colnames(AS) = BBCDname(strt_num, "strt.");
@@ -362,7 +377,7 @@ DoptBCD = function(data){
 ###############################################################################
 #AdjBCD = function(data, a = 2.0) UseMethod("AdjBCD")
 
-AdjBCD.carandom = function(data, a = 2.0) UseMethod("carandom")
+#AdjBCD.carandom = function(data, a = 2.0) UseMethod("carandom")
 
 AdjBCD = function(data, a = 2.0){
   
@@ -405,6 +420,9 @@ AdjBCD = function(data, a = 2.0){
   colnames(CA) = BBCDname(n, "pat"); 
   rownames(CA) = c(BBCDname(cov_num, "covariate"), "assignment"); 
   R$Cov_Assig = CA;
+  
+  assig_temp = CA[dim(CA)[1], ]; 
+  R$assignments = LETTERS[assig_temp]; 
   
   AS = RES[2, 1][[1]]; 
   colnames(AS) = BBCDname(strt_num, "strt.");
