@@ -3,10 +3,14 @@
 \alias{caratOMP}
 \docType{package}
 \title{
-  carat-package: Covariate-Adaptive Randomization for Clinical Trials Supporting OpenMP
+  caratOMP-package: Covariate-Adaptive Randomization for Clinical Trials using \pkg{OpenMP}
 }
 \description{
-  Provides functions and command-line user interface to generate allocation sequence by covariate-adaptive randomization for clinical trials. It currently supports seven covariate-adaptive randomization procedures, such as stratified randomization, minimization, a general family of designs proposed by Hu and Hu (2012) <doi:10.1214/12-AOS983>. Three hypothesis testing methods that are valid and robust under covariate-adaptive randomization are also available in the package to facilitate the inference for treatment effect under the included randomization procedures. Additionally, the package provides comprehensive and efficient tools to allow one to evaluate and compare the performance of randomization procedures and tests based on various criteria.
+  Provides functions and a command-line user interface to generate allocation sequences for clinical trials with covariate-adaptive randomization methods. It currently supports six different covariate-adaptive randomization procedures, including stratified randomization, minimization, and a general family of designs proposed by Hu and Hu (2012) <doi:10.1214/12-AOS983>. Three hypothesis testing methods, all valid and robust under covariate-adaptive randomization are also included in the package to facilitate the inference for treatment effects under the included randomization procedures. Additionally, the package provides comprehensive and efficient tools for the performance evaluation and comparison of randomization procedures and tests based on various criteria.
+}
+
+\section{Acknowledgement}{
+This work was supported by the Fundamental Research Funds for the Central Universities, and the Research Funds of Renmin University of China (Grant No. 2020030092).
 }
 \references{
 Atkinson A C. \emph{Optimum biased coin designs for sequential clinical trials with prognostic factors}[J]. Biometrika, 1982, 69(1): 61-67. <doi:10.2307/2335853>
@@ -31,11 +35,6 @@ Zelen M. \emph{The randomization and stratification of patients to clinical tria
 }
 \author{
 Fuyi Tu \email{fuyi.tu@ruc.edu.cn};Xiaoqing Ye \email{ye_xiaoq@163.com}; 
-Wei Ma \email{mawei@ruc.edu.cn};  Feifang Hu \email{ffhu68@163.com}.
+Wei Ma \email{mawei@ruc.edu.cn};  Feifang Hu \email{feifang@gwu.edu}.
 }
-\note{
-  The work was supported by the Fundamental Research Funds for the Central Universities, and the Research Funds of Renmin University of China.
-}
-
-\keyword{ carat-package }
-\keyword{caratOMP-package}
+\keyword{ caratOMP-package }
