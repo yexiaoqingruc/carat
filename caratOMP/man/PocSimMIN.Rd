@@ -1,55 +1,54 @@
 \name{PocSimMIN}
 \alias{PocSimMIN}
-\alias{PocSimMIN.carandom}
-\title{Pocock and Simon's Method in Two-arms Case}
+\title{Pocock and Simon's Method in the Two-Arms Case}
 \usage{
-\method{PocSimMIN}{carandom}(data, weight = NULL, p = 0.85)
+PocSimMIN(data, weight = NULL, p = 0.85)
 }
 \description{
 Allocates patients to one of two treatments using Pocock and Simon's method proposed by Pocock S J, Simon R (1975) <Doi:10.2307/2529712>. 
 }
 \arguments{
-  \item{data}{a dataframe or matrix. A row of the dataframe contains the covariate profile of some patient.}
-  \item{weight}{vector of weights for maginal imbalances. It is required that at least one element is larger than 0. If \code{weight = NULL} (default), it weights marginal imbalances with equal proportion \code{1/cov_num} for each margin.}
-  \item{p}{probabilities of assigning one patient to treatment 1. p should be larger than 1 / 2 to obtain balance. The default is \code{0.85}.}
+  \item{data}{a dataframe or matrix. A row of the dataframe contains the covariate profile of a patient.}
+  \item{weight}{the vector of weights for maginal imbalances. It is required that at least one element is larger than 0. If \code{weight = NULL} (default), the marginal imbalances are equally weighted as \code{1/cov_num} for each margin.}
+  \item{p}{the probability of assigning one patient to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. The default is \code{0.85}.}
 }
 \details{
-    Consider \eqn{I} covaraites and \eqn{m_i} levels for the \eqn{i}th covariate. \eqn{T_j} is the assignment of \eqn{j}th ptient and \eqn{Z_j = (k_1,\dots,k_I)} indicates the covariate profile of this patient. For convenience, \eqn{(k_1,\dots,k_I), (i;k_i)} denote stratum and margin respectively; and \eqn{D_n(.)} is the difference between numbers of assigned patients in treatment \eqn{1} and treatment \eqn{2} at the corresponding level after \eqn{n} patinets being assigned.The Pocock and Simon's procedure in two-arms case is as follows:
+    Consider \eqn{I} covariates and \eqn{m_i} levels for the \eqn{i}th covariate. \eqn{T_j} is the assignment of the \eqn{j}th patient and \eqn{Z_j = (k_1,\dots,k_I)} indicates the covariate profile of this patient. For convenience, \eqn{(k_1,\dots,k_I)} and \eqn{ (i;k_i)} denote the stratum and margin respectively. \eqn{D_n(.)} is the difference between the numbers of assigned patients in treatment \eqn{1} and treatment \eqn{2} at the corresponding level after \eqn{n} patinets being assigned.The Pocock and Simon's procedure in the two-arms case is then as follows:
 
 (1) The first patient is assigned to treatment \eqn{1} with probability \eqn{1/2};
 
-(2) Suppose \eqn{n-1} patinents have been assigned to a treatment (\eqn{n>1}) and the \eqn{n}th patinent falls within \eqn{(k_1^*,\dots,k_I^*)};
+(2) Suppose that \eqn{n-1} patients have been assigned to a treatment (\eqn{n>1}) and the \eqn{n}th patient falls within \eqn{(k_1^*,\dots,k_I^*)};
 
-(3)The \eqn{n}th patient were assigned to treatment \eqn{1}, then the potential marginal differences in two groups are
-\deqn{D_n^{(1)}(i;k_i^*)=D_{n-1}(i,k_i^*)+1}
+(3)If the \eqn{n}th patient was assigned to treatment \eqn{1}, then the potential marginal differences between the two groups are
+\deqn{D_n^{(1)}(i;k_i^*)=D_{n-1}(i,k_i^*)+1.}
 
-similarly, potential differences if \eqn{n}th patinent were assigned to treatment \eqn{1} would be obtained in the same way.
+Similarly, the potential differences would be obtained in the same way if the \eqn{n}th patinent was assigned to treatment \eqn{2}.
 
 (4) An imbalance measure is defined by
 \deqn{Imb_n^{(l)}=\sum_{i=1}^{I}\omega_{m,i}[D_n^{(1)}(i;k_i^*)]^2,l=1,2;}
 
-(5)Conditional on the assignments of the first (\eqn{n-1}) patients as well as the covariates'profiles of the first \eqn{n} patients, assign the nth patient to treatment \eqn{1} with probability
-\deqn{P(T_n=1|Z_n,T_1,\dots,T_{n-1})=q,} for \eqn{Imb_n^{(1)}>Imb_n^{(2)};}
-\deqn{P(T_n=1|Z_n,T_1,\dots,T_{n-1})=p,} for \eqn{Imb_n^{(1)}<Imb_n^{(2)};}
+(5)Conditional on the assignments of the first (\eqn{n-1}) patients as well as the covariate profiles of the first \eqn{n} patients, assign the nth patient to treatment \eqn{1} with the probability
+\deqn{P(T_n=1|Z_n,T_1,\dots,T_{n-1})=q,} for \eqn{Imb_n^{(1)}>Imb_n^{(2)},}
+\deqn{P(T_n=1|Z_n,T_1,\dots,T_{n-1})=p,} for \eqn{Imb_n^{(1)}<Imb_n^{(2)}}, and
 \deqn{P(T_n=1|Z_n,T_1,\dots,T_{n-1})=0.5,} for \eqn{Imb_n^{(1)}=Imb_n^{(2)}.}
 }
 \value{
 It returns an object of \code{\link{class}} \code{"carandom"}. 
 
-The functions \code{\link{print}} is used to obtain results. The generic accessor functions \code{Cov_Assig}, \code{Diff}, \code{data}, \code{All strata} and so on extract various useful features of the value returned by that function. 
+The functions \code{\link{print}} is used to obtain results. The generic accessor functions \code{Cov_Assig}, \code{Diff}, \code{data}, \code{All strata} and othes extract various useful features of the value returned by \code{PocSimMIN}. 
 
 An object of class \code{"carandom"} is a list containing at least the following components: 
 
-\item{cov_num}{number of covariates.}
-\item{n}{number of patients.}
-\item{Cov_Assign}{a \code{(cov_num + 1) * n} matrix containing covariates' profile for all patients and corresponding assignments. The \eqn{i}th column represents the \eqn{i}th patient. The first \code{cov_num} rows include patient's covariate profile respectively; and the last row contains the assignment.}
+\item{cov_num}{the number of covariates.}
+\item{n}{the number of patients.}
+\item{Cov_Assign}{a \code{(cov_num + 1) * n} matrix containing covariate profiles for all patients and the corresponding assignments. The \eqn{i}th column represents the \eqn{i}th patient. The first \code{cov_num} rows include patients' covariate profiles, and the last row contains the assignments.}
 \item{All strata}{a matrix containing all strata involved.}
-\item{Diff}{a matrix with only \eqn{1} column. There are final differences at the overall, within-stratum, and marginal levels.}
-\item{Data Type}{data type. \code{Real} or \code{Simulated}. }
+\item{Diff}{a matrix with only one column. There are final differences at the overall, within-stratum, and marginal levels.}
+\item{Data Type}{the data type. \code{Real} or \code{Simulated}. }
 }
 \seealso{
   See \code{\link{PocSimMIN.sim}} for allocating patients with covariate data generating mechanism. 
-  See \code{\link{PocSimMIN.ui}} for command-line user interface.
+  See \code{\link{PocSimMIN.ui}} for the command-line user interface.
 }
 \references{
 Pocock S J, Simon R. \emph{Sequential treatment assignment with balancing for prognostic factors in the controlled clinical trial}[J]. Biometrics, 1975: 103-115.
