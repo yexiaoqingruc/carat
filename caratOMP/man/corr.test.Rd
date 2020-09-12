@@ -8,24 +8,24 @@
    Performs corrected t-test on treatment effects. This test follows the idea of Ma et al. (2015) <doi:10.1080/01621459.2014.922469>.
 }
 \arguments{
-\item{data}{dataframe, consists of patients' profiles, treatment assignments and outputs. See \code{\link{getData}}.}
-\item{conf}{confidence level of the interval. Default is 0.95.}
+\item{data}{a dataframe. It consists of patients' profiles, treatment assignments and outputs. See \code{\link{getData}}.}
+\item{conf}{confidence level of the interval. The default is 0.95.}
 }
 \details{
-  When the working model is the true underlying linear model and the covariate-adaptive design used achieves that the overall imbalance as well as marginal imbalances for all covariates are bounded in probability, we can derive the asymptotic distribution under null distribution: treatment effects of groups are the same. Then we can replace the variance estimator in simple two sample t-test with an adjusted variance estimator. Details can be found in Ma et al.(2015). 
+  When the working model is the true underlying linear model, and the chosen covariate-adaptive design achieves that the overall imbalance and marginal imbalances for all covariates are bounded in probability, we can derive the asymptotic distribution under the null distribution, where the treatment effect of each group is the same. Subsequently, we can replace the variance estimator in a simple two sample t-test with an adjusted variance estimator. Details can be found in Ma et al.(2015). 
 }
 
 \value{
   It returns an object of class \code{"htest"}.
   
-  The function \code{print} is used to obtain results. The generic accessor functions \code{statistic}, \code{p.value}, \code{conf.int} and so on extract various useful features of the value returned by that function.
+  The function \code{print} is used to obtain results. The generic accessor functions \code{statistic}, \code{p.value}, \code{conf.int} and others extract various useful features of the value returned by \code{corr.test}.
   
   An object of class \code{"htest"} is a list containing at least the following components:
   
   \item{data.name}{a character string giving the name(s) of the data.}
-  \item{statistic}{value of the t-statistic.}
-  \item{p.value}{p-value of the test,the null hypothesis is rejected if p-value is less than \code{sl}.}
-  \item{conf.int}{a confidence interval under chosen significance level \code{conf} for the treatment effect difference between treatment \code{1} and treatment \code{2}.}
+  \item{statistic}{the value of the t-statistic.}
+  \item{p.value}{the p-value of the test,the null hypothesis is rejected if p-value is less than \code{sl}.}
+  \item{conf.int}{a confidence interval under chosen level \code{conf} for the difference in treatment effect between treatment \code{1} and treatment \code{2}.}
   \item{estimate}{estimated treatment effect difference between treatment \code{1} and treatment \code{2}.}
   \item{method}{a character string indicating what type of test was performed.}
 }
@@ -50,7 +50,7 @@ type = "linear"
 p = 0.85
 
 dataH = getData(n,cov_num,level_num,pr,type,beta,
-                mu1,mu2,sigma,HuHuCAR,omega,p)
+                mu1,mu2,sigma,"HuHuCAR",omega,p)
 
 #run the corrected t-test
 HHct=corr.test(dataH)
