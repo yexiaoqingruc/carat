@@ -79,15 +79,15 @@ pathout = function(path, folder = "HHCAR", method = "HuHuCAR"){
 EnterSigCov = function(pathvec){
   covariate = vector();
   cov = "Begin"; 
-  message("Please enter the involved covariates: ", "\n"); 
+  message("Please enter the involved covariates: "); 
   while (cov != "") {
-    message("  Please enter a new covariate: ", "\n"); 
-    message("    Notice: If no more covariates to be entered, please PRESS Enter directly", "\n"); 
+    message("  Please enter a new covariate: "); 
+    message("    Notice: If no more covariates to be entered, please PRESS Enter directly"); 
     cov = readline(prompt = "New Covariate: "); 
     while(cov %in% covariate){
       message("INVALID INPUT !", "\n", 
-          "Please DO NOT enter covariate repeatedly!", "\n", 
-          "Notice: If no more covariates to be entered, please PRESS Enter directly", "\n"); 
+              "Please DO NOT enter covariate repeatedly!", "\n", 
+              "Notice: If no more covariates to be entered, please PRESS Enter directly"); 
       cov = readline(prompt = "Reenter a new covariate: "); 
     }
     covariate = c(covariate, cov);
@@ -95,13 +95,13 @@ EnterSigCov = function(pathvec){
   cov_num = length(covariate) - 1;
   covariate = covariate[1 : cov_num];
   covr = as.numeric(as.factor(covariate));
-  CovIndex = data.frame(covariate, covr);
+  CovIndex = data.frame(covariate, covr, stringsAsFactors = TRUE);
   colnames(CovIndex) = c("Real Names", "factors"); 
   rownames(CovIndex) = BBCDname(cov_num, "covariate");
-  message("According to your input, all covariates are stampped to be", "\n");
+  message("According to your input, all covariates are stampped to be");
   message("\n");
   for (j in 1 : cov_num){
-    message("\t", covariate[j], "--", covr[j], sep = " ", "\n")
+    message("\t", covariate[j], "--", covr[j], sep = " ")
   }
   return(list("cov_num" = cov_num, "CovIndex" = CovIndex, 
               "covariate" = covariate, "covr" = covr));
@@ -114,7 +114,7 @@ EnterCov = function(pathvec){
   RSigC = EnterSigCov(pathvec); 
   message("\n"); 
   message("Continue or not?", "\n", 
-      " 'n' -- stop running", "  ", "input 'y' or PRESS Enter -- reenter or save\n"); 
+          " 'n' -- stop running", "  ", "input 'y' or PRESS Enter -- reenter or save\n"); 
   w1 = readline("Enter y or n: "); 
   if(w1 == "n" | w1 == "No" | w1 == "no" | w1 == "exit" | w1 == "Exit"){
     return(NULL);
@@ -123,6 +123,7 @@ EnterCov = function(pathvec){
     w2 = readline("Enter y or n: "); 
     while(w2 == "y" || w2 == "Y" || w2 == "yes" || w2 == "YES" || w2 == "Yes"){
       RSigC = EnterSigCov(pathvec); 
+      message("\n")
       message("Reenter involved covariates?"); 
       w2 = readline("Enter y or n: "); 
     }
@@ -139,15 +140,14 @@ EnterCov = function(pathvec){
 EnterSigLev = function(i, covariate, covr, pth, level_num){
   level = vector();
   lel = "Begin";
-  message("\n");
   while(lel != ""){
-    message("  Enter the new LEVEL for covariate --", covariate[i], ": ", "\n");
-    message("    Notice: If no more level to be entered for", covariate[i],  ", please PRESS Enter directly", "\n"); 
+    message("  Enter the new LEVEL for covariate -- ", covariate[i], ": ");
+    message("    Notice: If no more level to be entered for ", covariate[i],  ", please PRESS Enter directly"); 
     lel = readline(prompt = "New level: "); 
     while(lel %in% level){
       message("INVALID INPUT !", "\n", 
-          "Please DO NOT enter level for ---", covariate[i], "repeatedly.", "\n", 
-          "Notice: If no more level to be entered for", covariate[i],  ", please PRESS Enter directly", "\n");
+              "Please DO NOT enter level for ---", covariate[i], "repeatedly.", "\n", 
+              "Notice: If no more level to be entered for", covariate[i],  ", please PRESS Enter directly", "\n");
       lel = readline(prompt = "New level: ");
     }
     level = c(level, lel);
@@ -157,12 +157,12 @@ EnterSigLev = function(i, covariate, covr, pth, level_num){
   lev = as.numeric(as.factor(level));
   Ccha = rep(covariate[i], times = level_num[covr[i]]); 
   Cfac = rep(covr[i], times = level_num[covr[i]]); 
-  LevIn = data.frame(Ccha, Cfac, level, lev); 
+  LevIn = data.frame(Ccha, Cfac, level, lev, stringsAsFactors = TRUE); 
   save(LevIn, file = pth[i]); 
-  message("According to you input, levels for covariate --", covariate[i], "\n", 
-      covr[i], "--", covariate[i], sep = " ", "\n");
+  message("According to you input, levels for covariate -- ", covariate[i], "\n\n", 
+          covr[i], "--", covariate[i], sep = " ", "\n");
   for(k in 1 : level_num[covr[i]]){
-    message("\t", level[k], "--", lev[k], sep = " ", "\n");
+    message("\t", level[k], "--", lev[k], sep = " ");
   }
   return(list("LevIn" = LevIn, "level_num" = level_num, 
               "lev" = lev, "level" = level));
@@ -173,17 +173,18 @@ EnterSigLev = function(i, covariate, covr, pth, level_num){
 ##############################################################################################################
 EnterLev = function(pathvec, cov_num, covariate, covr, pth){
   level_num = vector();
-  Reference = data.frame();
+  Reference = data.frame(stringsAsFactors = TRUE);
   message("\n");
-  message("Please enter LEVELs for each covariate: ", "\n"); 
+  message("Please enter LEVELs for each covariate: "); 
   for(i in 1 : cov_num){
     RSigL = EnterSigLev(i, covariate, covr, pth, level_num = level_num); 
     message("\n");
-    message("Reenter LEVELs for covariate --", covariate[i], "or not?"); 
+    message("Reenter LEVELs for covariate -- ", covariate[i], " or not?"); 
     w2 = readline(prompt = "Enter y or n: "); 
     while(w2 == "y" || w2 == "Y" || w2 == "yes" || w2 == "YES" || w2 == "Yes"){
       RSigL = EnterSigLev(i, covariate, covr, pth, level_num = level_num); 
-      message("Reenter LEVELs for covariate --", covariate[i], "or not?"); 
+      message("\n"); 
+      message("Reenter LEVELs for covariate -- ", covariate[i], " or not?"); 
       w2 = readline(prompt = "Enter y or n: "); 
     }
     LevIn = RSigL$LevIn; level_num = RSigL$level_num;
@@ -212,12 +213,11 @@ EnterWeig = function(cov_num, covariate, covr, method = "HuH"){
   omega = vector();
   if(method == "HuH"){
     message("Please allocate WEIGHTs to each aspects: ", "\n", 
-        "  Notice: larger the absolute value you enter, stronger tendency to obtain balance on corresponding aspect.")
+            "  Notice: larger the absolute value you enter, stronger tendency to obtain balance on the corresponding aspect.")
   }else if(method == "PocSim"){
     message("Please allocate WEIGHTs to each margins: ", "\n", 
-        "  Notice: larger the absolute value you enter, stronger tendency to obtain balance on corresponding margin.")
+            "  Notice: larger the absolute value you enter, stronger tendency to obtain balance on corresponding margin.")
   }
-  message("\n");
   
   for(i in 1 : (2 + cov_num)){
     if(method == "PocSim" && (i %in% 1 : 2)){
@@ -237,12 +237,12 @@ EnterWeig = function(cov_num, covariate, covr, method = "HuH"){
   }
   omega = abs(omega) / sum(abs(omega)); 
   
-  message("Weights for each aspects are: ", "\n"); 
+  message("Weights for each aspects are: "); 
   message("\n")
   message("\t", "OVERALL", "--", omega[1], sep = " "); 
   message("\t", "WITHIN-STRT.", "--", omega[2], sep = " ", "\n"); 
   for(kc in 1 : (cov_num)){
-    message("\t", covariate[which(covr == kc)], "--", omega[2 + kc], sep = " ", "\n");
+    message("\t", covariate[which(covr == kc)], "--", omega[2 + kc], sep = " ");
   }
   return(omega); 
 }
@@ -252,8 +252,7 @@ EnterWeig = function(cov_num, covariate, covr, method = "HuH"){
 ##############################################################################################################
 EnterCovPrf = function(cov_num, pth, CovIndex, covariate, R){
   cov_profile = lecomvec = vector();
-  message(" ", "Please enter COVARIATE PROFILE of the coming patients: ", "\n");
-  message("\n");
+  message(" ", "Please enter COVARIATE PROFILE of the coming patients: ");
   for(l in 1 : cov_num){
     LevIn = 0; 
     load(pth[l]); 
@@ -289,7 +288,7 @@ HuHuCAR.ui = function(path, folder = "HuHuCAR"){
   
   pathvec = pathout(path, folder, method = "HuHuCAR"); 
   
-  message("Is the first patient? ", "\n");
+  message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
     for(i in 1 : 4){
@@ -335,18 +334,19 @@ HuHuCAR.ui = function(path, folder = "HuHuCAR"){
         ww = readline(prompt = "Enter y or n: ");
         while (ww == "y" || ww == "Y" || ww == "yes" || ww == "YES" || ww == "Yes"){
           omega = EnterWeig(cov_num, covariate, covr); 
+          message("\n"); 
           message("Reenter weights or not?"); 
           ww = readline(prompt = "Enter y or n: ");
         }
         save(omega, file = pathvec[10]); 
         
-        message("Please enter the biased coin probability: \n"); 
+        message("Please enter the biased coin probability (0-1): "); 
         p = readline(prompt = "Enter the probability: ");
         p = as.double(p); 
         warnings("off"); 
         while (is.na(p)){
           message("INVALID INPUT !", "\n", 
-              "Please enter a positive number between 0 and 1: \n"); 
+                  "Please enter a positive number between 0 and 1: \n"); 
           p = readline(prompt = "Reenter the probability: "); 
           p = as.double(p); 
           warnings("off"); 
@@ -409,7 +409,7 @@ PocSimMIN.ui = function(path, folder = "PocSimMIN"){
   
   pathvec = pathout(path, folder, method = "PocSimMIN"); 
   
-  message("Is the first patient? ", "\n");
+  message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
     for(i in 1 : 4){
@@ -456,18 +456,19 @@ PocSimMIN.ui = function(path, folder = "PocSimMIN"){
         ww = readline(prompt = "Enter y or n: ");
         while (ww == "y" || ww == "Y" || ww == "yes" || ww == "YES" || ww == "Yes"){
           omega = EnterWeig(cov_num, covariate, covr, method = "PocSim"); 
+          message("\n"); 
           message("Reenter weights or not?"); 
           ww = readline(prompt = "Enter y or n: ");
         }
         save(omega, file = pathvec[10]); 
         
-        message("Please enter the biased coin probability: \n"); 
+        message("Please enter the biased coin probability:"); 
         p = readline(prompt = "Enter the probability: ");
         p = as.double(p); 
         warnings("off"); 
         while (is.na(p)){
           message("INVALID INPUT !", "\n", 
-              "Please enter a positive number between 0 and 1: \n"); 
+                  "Please enter a positive number between 0 and 1: \n"); 
           p = readline(prompt = "Reenter the probability: "); 
           p = as.double(p); 
           warnings("off"); 
@@ -530,7 +531,7 @@ StrBCD.ui = function(path, folder = "StrBCD"){
   
   pathvec = pathout(path, folder, method = "StrBCD"); 
   
-  message("Is the first patient? ", "\n");
+  message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
     for(i in 1 : 4){
@@ -571,13 +572,13 @@ StrBCD.ui = function(path, folder = "StrBCD"){
         D = matrix(0, ncol = 1 + prod(level_num) + sum(level_num), nrow = 1);
         strp = matrix(0, nrow = prod(level_num), ncol = 1); 
         
-        message("Please enter the biased coin probability: \n"); 
+        message("Please enter the biased coin probability: "); 
         p = readline(prompt = "Enter the probability: ");
         p = as.double(p); 
         warnings("off"); 
         while (is.na(p)){
           message("INVALID INPUT !", "\n", 
-              "Please enter a positive number between 0 and 1: \n"); 
+                  "Please enter a positive number between 0 and 1: \n"); 
           p = readline(prompt = "Reenter the probability: "); 
           p = as.double(p); 
           warnings("off"); 
@@ -639,7 +640,7 @@ StrPBR.ui.carseq = function(path, folder = "StrPBR") UseMethod("carseq")
 StrPBR.ui = function(path, folder = "StrPBR"){
   pathvec = pathout(path, folder, method = "StrPBR"); 
   
-  message("Is the first patient? ", "\n");
+  message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
     for(i in 1 : 4){
@@ -685,7 +686,7 @@ StrPBR.ui = function(path, folder = "StrPBR"){
         warnings("off"); 
         while (is.na(bsize) || bsize %% 2 != 0){
           message("INVALID INPUT !", "\n", 
-              "Please enter a positive number which is also a multiple of 2. : \n"); 
+                  "Please enter a positive number which is also a multiple of 2. : \n"); 
           bsize = readline(prompt = "Reenter the block size "); 
           bsize = as.integer(bsize); 
           warnings("off"); 
@@ -759,7 +760,7 @@ DoptBCD.ui = function(path, folder = "DoptBCD"){
   
   pathvec = pathout(path, folder, method = "DoptBCD"); 
   
-  message("Is the first patient? ", "\n");
+  message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
     for(i in 1 : 4){
@@ -866,7 +867,7 @@ AdjBCD.ui = function(path, folder = "AdjBCD"){
   
   pathvec = pathout(path, folder, method = "AdjBCD"); 
   
-  message("Is the first patient? ", "\n");
+  message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
     for(i in 1 : 4){
@@ -976,7 +977,7 @@ AdjBCD.ui = function(path, folder = "AdjBCD"){
 #   
 #   pathvec = pathout(path, folder, method = "BayesBCD"); 
 #   
-#   message("Is the first patient? ", "\n");
+#   message("Is this the first patient? ");
 #   first = readline(prompt = "Enter T or F: ");
 #   if(first == "T" || first == "True" || first == "TRUE"){
 #     for(i in 1 : 4){
