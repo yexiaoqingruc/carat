@@ -1,38 +1,38 @@
 \name{compRand}
 \alias{compRand}
-\alias{compRand.carcomp}
 \title{Compare Different Randomization Procedures via Tables and Plots}
 \usage{
-\method{compRand}{carcomp}(...)
+compRand(...)
 }
 \description{
-Compares randomization procedures based on several different quantities of imbalances. Among all included randomization procedures of class \code{"careval"}, two or more ones can be compared in this function. 
+Compares randomization procedures based on several different quantities of imbalances. Among all included randomization procedures of class \code{"careval"}, two or more procedures can be compared in this function. 
 }
 \arguments{
   \item{\dots}{objects of class \code{"careval"}.}
 }
 \details{
-We choose 4 rules to measure the absolute imbalances at all-mixed, overall, marginal and withinn-stratum levels, which are maximal, 95\%quantile, median and mean of the absolute imbalances at different aspects.
+The primary goal of using covariate-adaptive randomization in practice is to achieve balance with respect to the key covariates and to the overall treatment assignments. We choose four rules to measure the absolute imbalances at overall, marginal and withinn-stratum levels, which are maximal, 95\%quantile, median and mean of the absolute imbalances at different aspects.
 
 (1) Maximal
 \deqn{\max_{i = 1, \dots, n}|D_n(\cdot)|.}
 (2) 95\% quantile
 \deqn{|D_{\lceil0.95n\rceil}(\cdot)|.}
 (3) Median
-\[
-median\deqn{(|D_n(\cdot)|)= |D_{(n+1)/2}(\cdot)|,}
+
+\deqn{(|D_n(\cdot)|)= |D_{(n+1)/2}(\cdot)|}
 for \eqn{n} is odd; 
-median\deqn{(|D_n(\cdot)|)=\frac{1}{2}(|D_{(n/2)}(\cdot)|+|D_{(n/2+1)}(\cdot)|),}
+\deqn{(|D_n(\cdot)|)=\frac{1}{2}(|D_{(n/2)}(\cdot)|+|D_{(n/2+1)}(\cdot)|)}
 for \eqn{n} is even.
+
 (4) Mean
 \deqn{\frac{1}{n}\sum_{j = 1}^{n}|D_{j}(\cdot)|.}
 
-All the 4 quntities at some aspect are calculated by taking average of all maximal, 95\%quantile, median and mean of each level over \eqn{N} iterations.
+The Monte Carlo method is used to calculate the four types of imbalances.
 }
 \value{
 It returns an object of \code{\link{class}} \code{"carcomp"}. 
 
-The functions \code{\link{print}} is used to obtain results. The generic accessor functions \code{Assig}, \code{Diff}, \code{data}, \code{All strata} and so on extract various useful features of the value returned by that function. 
+The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{Assig}, \code{Diff}, \code{data}, \code{All strata} and others extract various useful features of the value returned by \code{compRand}. 
 
 An object of class \code{"carcomp"} is a list containing at least the following components: 
 
