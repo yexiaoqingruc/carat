@@ -363,16 +363,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // HuHuCAR_RT
-Rcpp::List HuHuCAR_RT(DataFrame data, double Reps, arma::vec omega, double p);
-RcppExport SEXP _caratOMP_HuHuCAR_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+Rcpp::List HuHuCAR_RT(DataFrame data, double Reps, double conf, arma::vec omega, double p);
+RcppExport SEXP _caratOMP_HuHuCAR_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    Rcpp::traits::input_parameter< double >::type conf(confSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type omega(omegaSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(HuHuCAR_RT(data, Reps, omega, p));
+    rcpp_result_gen = Rcpp::wrap(HuHuCAR_RT(data, Reps, conf, omega, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -490,16 +491,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // PocSimMIN_RT
-Rcpp::List PocSimMIN_RT(DataFrame data, double Reps, arma::vec weight, double p);
-RcppExport SEXP _caratOMP_PocSimMIN_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP weightSEXP, SEXP pSEXP) {
+Rcpp::List PocSimMIN_RT(DataFrame data, double Reps, double conf, arma::vec weight, double p);
+RcppExport SEXP _caratOMP_PocSimMIN_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP weightSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    Rcpp::traits::input_parameter< double >::type conf(confSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type weight(weightSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(PocSimMIN_RT(data, Reps, weight, p));
+    rcpp_result_gen = Rcpp::wrap(PocSimMIN_RT(data, Reps, conf, weight, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -616,15 +618,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // StrBCD_RT
-Rcpp::List StrBCD_RT(DataFrame data, double Reps, double p);
-RcppExport SEXP _caratOMP_StrBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP pSEXP) {
+Rcpp::List StrBCD_RT(DataFrame data, double Reps, double conf, double p);
+RcppExport SEXP _caratOMP_StrBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    Rcpp::traits::input_parameter< double >::type conf(confSEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrBCD_RT(data, Reps, p));
+    rcpp_result_gen = Rcpp::wrap(StrBCD_RT(data, Reps, conf, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -749,14 +752,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // DoptBCD_RT
-Rcpp::List DoptBCD_RT(DataFrame data, double Reps);
-RcppExport SEXP _caratOMP_DoptBCD_RT(SEXP dataSEXP, SEXP RepsSEXP) {
+Rcpp::List DoptBCD_RT(DataFrame data, double Reps, double conf);
+RcppExport SEXP _caratOMP_DoptBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
-    rcpp_result_gen = Rcpp::wrap(DoptBCD_RT(data, Reps));
+    Rcpp::traits::input_parameter< double >::type conf(confSEXP);
+    rcpp_result_gen = Rcpp::wrap(DoptBCD_RT(data, Reps, conf));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -878,15 +882,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // AdjBCD_RT
-Rcpp::List AdjBCD_RT(DataFrame data, double Reps, double a);
-RcppExport SEXP _caratOMP_AdjBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP aSEXP) {
+Rcpp::List AdjBCD_RT(DataFrame data, double Reps, double conf, double a);
+RcppExport SEXP _caratOMP_AdjBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    Rcpp::traits::input_parameter< double >::type conf(confSEXP);
     Rcpp::traits::input_parameter< double >::type a(aSEXP);
-    rcpp_result_gen = Rcpp::wrap(AdjBCD_RT(data, Reps, a));
+    rcpp_result_gen = Rcpp::wrap(AdjBCD_RT(data, Reps, conf, a));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -998,15 +1003,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // StrPBR_RT
-Rcpp::List StrPBR_RT(DataFrame data, double Reps, int bsize);
-RcppExport SEXP _caratOMP_StrPBR_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP bsizeSEXP) {
+Rcpp::List StrPBR_RT(DataFrame data, double Reps, double conf, int bsize);
+RcppExport SEXP _caratOMP_StrPBR_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP bsizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< DataFrame >::type data(dataSEXP);
     Rcpp::traits::input_parameter< double >::type Reps(RepsSEXP);
+    Rcpp::traits::input_parameter< double >::type conf(confSEXP);
     Rcpp::traits::input_parameter< int >::type bsize(bsizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(StrPBR_RT(data, Reps, bsize));
+    rcpp_result_gen = Rcpp::wrap(StrPBR_RT(data, Reps, conf, bsize));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1277,21 +1283,21 @@ static const R_CallMethodDef CallEntries[] = {
     {"_caratOMP_C_Summarize", (DL_FUNC) &_caratOMP_C_Summarize, 11},
     {"_caratOMP_C_RSummarize", (DL_FUNC) &_caratOMP_C_RSummarize, 9},
     {"_caratOMP_HuHuCAR_getData", (DL_FUNC) &_caratOMP_HuHuCAR_getData, 11},
-    {"_caratOMP_HuHuCAR_RT", (DL_FUNC) &_caratOMP_HuHuCAR_RT, 4},
+    {"_caratOMP_HuHuCAR_RT", (DL_FUNC) &_caratOMP_HuHuCAR_RT, 5},
     {"_caratOMP_HuHuCAR_BT", (DL_FUNC) &_caratOMP_HuHuCAR_BT, 4},
     {"_caratOMP_HuHuCAR_RT_In", (DL_FUNC) &_caratOMP_HuHuCAR_RT_In, 4},
     {"_caratOMP_HuHuCAR_BT_In", (DL_FUNC) &_caratOMP_HuHuCAR_BT_In, 4},
     {"_caratOMP_HuHuCAR_RT_power", (DL_FUNC) &_caratOMP_HuHuCAR_RT_power, 15},
     {"_caratOMP_HuHuCAR_BT_power", (DL_FUNC) &_caratOMP_HuHuCAR_BT_power, 15},
     {"_caratOMP_PocSimMIN_getData", (DL_FUNC) &_caratOMP_PocSimMIN_getData, 11},
-    {"_caratOMP_PocSimMIN_RT", (DL_FUNC) &_caratOMP_PocSimMIN_RT, 4},
+    {"_caratOMP_PocSimMIN_RT", (DL_FUNC) &_caratOMP_PocSimMIN_RT, 5},
     {"_caratOMP_PocSimMIN_BT", (DL_FUNC) &_caratOMP_PocSimMIN_BT, 4},
     {"_caratOMP_PocSimMIN_RT_In", (DL_FUNC) &_caratOMP_PocSimMIN_RT_In, 4},
     {"_caratOMP_PocSimMIN_BT_In", (DL_FUNC) &_caratOMP_PocSimMIN_BT_In, 4},
     {"_caratOMP_PocSimMIN_RT_power", (DL_FUNC) &_caratOMP_PocSimMIN_RT_power, 15},
     {"_caratOMP_PocSimMIN_BT_power", (DL_FUNC) &_caratOMP_PocSimMIN_BT_power, 15},
     {"_caratOMP_StrBCD_getData", (DL_FUNC) &_caratOMP_StrBCD_getData, 10},
-    {"_caratOMP_StrBCD_RT", (DL_FUNC) &_caratOMP_StrBCD_RT, 3},
+    {"_caratOMP_StrBCD_RT", (DL_FUNC) &_caratOMP_StrBCD_RT, 4},
     {"_caratOMP_StrBCD_BT", (DL_FUNC) &_caratOMP_StrBCD_BT, 3},
     {"_caratOMP_StrBCD_RT_In", (DL_FUNC) &_caratOMP_StrBCD_RT_In, 3},
     {"_caratOMP_StrBCD_BT_In", (DL_FUNC) &_caratOMP_StrBCD_BT_In, 3},
@@ -1299,7 +1305,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_caratOMP_StrBCD_BT_power", (DL_FUNC) &_caratOMP_StrBCD_BT_power, 14},
     {"_caratOMP_DoptBCD_In", (DL_FUNC) &_caratOMP_DoptBCD_In, 4},
     {"_caratOMP_DoptBCD_getData", (DL_FUNC) &_caratOMP_DoptBCD_getData, 9},
-    {"_caratOMP_DoptBCD_RT", (DL_FUNC) &_caratOMP_DoptBCD_RT, 2},
+    {"_caratOMP_DoptBCD_RT", (DL_FUNC) &_caratOMP_DoptBCD_RT, 3},
     {"_caratOMP_DoptBCD_BT", (DL_FUNC) &_caratOMP_DoptBCD_BT, 2},
     {"_caratOMP_DoptBCD_RT_In", (DL_FUNC) &_caratOMP_DoptBCD_RT_In, 2},
     {"_caratOMP_DoptBCD_BT_In", (DL_FUNC) &_caratOMP_DoptBCD_BT_In, 2},
@@ -1307,14 +1313,14 @@ static const R_CallMethodDef CallEntries[] = {
     {"_caratOMP_DoptBCD_BT_power", (DL_FUNC) &_caratOMP_DoptBCD_BT_power, 13},
     {"_caratOMP_AdjBCD_In", (DL_FUNC) &_caratOMP_AdjBCD_In, 5},
     {"_caratOMP_AdjBCD_getData", (DL_FUNC) &_caratOMP_AdjBCD_getData, 10},
-    {"_caratOMP_AdjBCD_RT", (DL_FUNC) &_caratOMP_AdjBCD_RT, 3},
+    {"_caratOMP_AdjBCD_RT", (DL_FUNC) &_caratOMP_AdjBCD_RT, 4},
     {"_caratOMP_AdjBCD_BT", (DL_FUNC) &_caratOMP_AdjBCD_BT, 3},
     {"_caratOMP_AdjBCD_RT_In", (DL_FUNC) &_caratOMP_AdjBCD_RT_In, 3},
     {"_caratOMP_AdjBCD_BT_In", (DL_FUNC) &_caratOMP_AdjBCD_BT_In, 3},
     {"_caratOMP_AdjBCD_RT_power", (DL_FUNC) &_caratOMP_AdjBCD_RT_power, 14},
     {"_caratOMP_AdjBCD_BT_power", (DL_FUNC) &_caratOMP_AdjBCD_BT_power, 14},
     {"_caratOMP_StrPBR_getData", (DL_FUNC) &_caratOMP_StrPBR_getData, 10},
-    {"_caratOMP_StrPBR_RT", (DL_FUNC) &_caratOMP_StrPBR_RT, 3},
+    {"_caratOMP_StrPBR_RT", (DL_FUNC) &_caratOMP_StrPBR_RT, 4},
     {"_caratOMP_StrPBR_BT", (DL_FUNC) &_caratOMP_StrPBR_BT, 3},
     {"_caratOMP_StrPBR_RT_In", (DL_FUNC) &_caratOMP_StrPBR_RT_In, 3},
     {"_caratOMP_StrPBR_BT_In", (DL_FUNC) &_caratOMP_StrPBR_BT_In, 3},
