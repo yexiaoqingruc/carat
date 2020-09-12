@@ -282,7 +282,7 @@ EnterCovPrf = function(cov_num, pth, CovIndex, covariate, R){
 ## Hu and Hu's general covariate-adaptive randomization
 ##############################################################################################################
 
-HuHuCAR.ui.carseq = function(path, folder = "HuHuCAR") UseMethod("carseq")
+#HuHuCAR.ui.carseq = function(path, folder = "HuHuCAR") UseMethod("carseq")
 
 HuHuCAR.ui = function(path, folder = "HuHuCAR"){
   
@@ -403,7 +403,7 @@ HuHuCAR.ui = function(path, folder = "HuHuCAR"){
 ##############################################################################################################
 ## Pocock and Simon's procedure
 ##############################################################################################################
-PocSimMIN.ui.carseq = function(path, folder = "PocSimMIN") UseMethod("carseq")
+#PocSimMIN.ui.carseq = function(path, folder = "PocSimMIN") UseMethod("carseq")
 
 PocSimMIN.ui = function(path, folder = "PocSimMIN"){
   
@@ -525,7 +525,7 @@ PocSimMIN.ui = function(path, folder = "PocSimMIN"){
 ##############################################################################################################
 ## Shao's method
 ##############################################################################################################
-StrBCD.ui.carseq = function(path, folder = "StrBCD") UseMethod("carseq")
+#StrBCD.ui.carseq = function(path, folder = "StrBCD") UseMethod("carseq")
 
 StrBCD.ui = function(path, folder = "StrBCD"){
   
@@ -635,7 +635,7 @@ StrBCD.ui = function(path, folder = "StrBCD"){
 ##############################################################################################################
 ## Stratified permuted block randomization
 ##############################################################################################################
-StrPBR.ui.carseq = function(path, folder = "StrPBR") UseMethod("carseq")
+#StrPBR.ui.carseq = function(path, folder = "StrPBR") UseMethod("carseq")
 
 StrPBR.ui = function(path, folder = "StrPBR"){
   pathvec = pathout(path, folder, method = "StrPBR"); 
@@ -754,7 +754,7 @@ StrPBR.ui = function(path, folder = "StrPBR"){
 ##############################################################################################################
 ## Atkinson's Optimum Biased Coin Design
 ##############################################################################################################
-DoptBCD.ui.carseq = function(path, folder = "DoptBCD") UseMethod("carseq")
+#DoptBCD.ui.carseq = function(path, folder = "DoptBCD") UseMethod("carseq")
 
 DoptBCD.ui = function(path, folder = "DoptBCD"){
   
@@ -861,7 +861,7 @@ DoptBCD.ui = function(path, folder = "DoptBCD"){
 ##############################################################################################################
 ## Covariate-adaptive Biased Coin Design
 ##############################################################################################################
-AdjBCD.ui.carseq = function(path, folder = "AdjBCD") UseMethod("carseq")
+#AdjBCD.ui.carseq = function(path, folder = "AdjBCD") UseMethod("carseq")
 
 AdjBCD.ui = function(path, folder = "AdjBCD"){
   
