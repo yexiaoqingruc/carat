@@ -93,8 +93,8 @@ HuHuCAR_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sig
     .Call(`_caratOMP_HuHuCAR_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, omega, p)
 }
 
-HuHuCAR_RT <- function(data, Reps, omega, p) {
-    .Call(`_caratOMP_HuHuCAR_RT`, data, Reps, omega, p)
+HuHuCAR_RT <- function(data, Reps, conf, omega, p = 0.85) {
+    .Call(`_caratOMP_HuHuCAR_RT`, data, Reps, conf, omega, p)
 }
 
 HuHuCAR_BT <- function(data, B, omega, p) {
@@ -121,8 +121,8 @@ PocSimMIN_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, s
     .Call(`_caratOMP_PocSimMIN_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, weight, p)
 }
 
-PocSimMIN_RT <- function(data, Reps, weight, p) {
-    .Call(`_caratOMP_PocSimMIN_RT`, data, Reps, weight, p)
+PocSimMIN_RT <- function(data, Reps, conf, weight, p = 0.85) {
+    .Call(`_caratOMP_PocSimMIN_RT`, data, Reps, conf, weight, p)
 }
 
 PocSimMIN_BT <- function(data, B, weight, p) {
@@ -149,8 +149,8 @@ StrBCD_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigm
     .Call(`_caratOMP_StrBCD_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, p)
 }
 
-StrBCD_RT <- function(data, Reps, p) {
-    .Call(`_caratOMP_StrBCD_RT`, data, Reps, p)
+StrBCD_RT <- function(data, Reps, conf, p = 0.85) {
+    .Call(`_caratOMP_StrBCD_RT`, data, Reps, conf, p)
 }
 
 StrBCD_BT <- function(data, B, p) {
@@ -181,8 +181,8 @@ DoptBCD_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sig
     .Call(`_caratOMP_DoptBCD_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma)
 }
 
-DoptBCD_RT <- function(data, Reps) {
-    .Call(`_caratOMP_DoptBCD_RT`, data, Reps)
+DoptBCD_RT <- function(data, Reps, conf) {
+    .Call(`_caratOMP_DoptBCD_RT`, data, Reps, conf)
 }
 
 DoptBCD_BT <- function(data, B) {
@@ -213,8 +213,8 @@ AdjBCD_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigm
     .Call(`_caratOMP_AdjBCD_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, a)
 }
 
-AdjBCD_RT <- function(data, Reps, a) {
-    .Call(`_caratOMP_AdjBCD_RT`, data, Reps, a)
+AdjBCD_RT <- function(data, Reps, conf, a) {
+    .Call(`_caratOMP_AdjBCD_RT`, data, Reps, conf, a)
 }
 
 AdjBCD_BT <- function(data, B, a) {
@@ -241,8 +241,8 @@ StrPBR_getData <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigm
     .Call(`_caratOMP_StrPBR_getData`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, bsize)
 }
 
-StrPBR_RT <- function(data, Reps, bsize) {
-    .Call(`_caratOMP_StrPBR_RT`, data, Reps, bsize)
+StrPBR_RT <- function(data, Reps, conf, bsize) {
+    .Call(`_caratOMP_StrPBR_RT`, data, Reps, conf, bsize)
 }
 
 StrPBR_BT <- function(data, B, bsize) {
