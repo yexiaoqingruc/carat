@@ -29,7 +29,7 @@
   }
 }
 
-\section{version 1.3 (September 10, 2020)}{
+\section{version 1.3 (September 10th, 2020)}{
 \itemize{
     \item A small modification was added to the function \code{evalRand}. 
     \item The modification is consistent with the \pkg{OpenMP}-supported version in \issue{carat}. 
