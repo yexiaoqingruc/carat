@@ -1,41 +1,40 @@
 \name{evalRand}
 \alias{evalRand}
-\alias{evalRand.careval}
 \title{Evaluation of Randomization Procedures}
 \usage{
-\method{evalRand}{careval}(data, method = "HuHuCAR", N = 500, ...)
+evalRand(data, method = "HuHuCAR", N = 500, ...)
 }
 \description{
 Evaluates a specific randomization procedure based on several different quantities of imbalances. 
 }
 \arguments{
   \item{data}{a dataframe. A row of the dataframe contains the covariate profile of a patient.}
-  \item{N}{iteration number.}
-  \item{method}{the randomization to be used in allocating patients. The default randomization \dQuote{\code{HuHuCAR}} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \dQuote{\code{PocSimMIN}}, \dQuote{\code{StrBCD}}, \dQuote{\code{StrPBR}}, \dQuote{\code{DoptBCD}} as well as  \dQuote{\code{AdjBCD}}.}
-  \item{\dots}{arguments to be passed to methods. It depends on the \code{method} and the following arguments are accepted:
+  \item{N}{the iteration number.}
+  \item{method}{the randomization method to be used in allocating patients. The default randomization \dQuote{\code{HuHuCAR}} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \dQuote{\code{PocSimMIN}}, \dQuote{\code{StrBCD}}, \dQuote{\code{StrPBR}}, \dQuote{\code{DoptBCD}}, and \dQuote{\code{AdjBCD}}.}
+  \item{\dots}{arguments to be passed to methods. These depend on the \code{method} and the following arguments are accepted:
   \describe{
-  \item{omega}{vector of weights at the overall, within-stratum as well as maginal levels. It is required that at least one element is larger than 0. Notice that \code{omega} is only needed when \code{HuHuCAR} is to be assessed.}
-  \item{weight}{vector of weights for all involved margins. It is required that at least one element is NOT 0 and \code{length(weight) = cov_num}. Notice that \code{weight} is only needed when \code{PocSimMIN} is to be assessed.}
-  \item{p}{probabilities of assigning one patinet to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. Notice that \code{p} is only needed when \code{"HuHuCAR"},  \code{"PocSimMIN"} and \code{"StrBCD"} are to be assessed.}
-  \item{a}{a design parameter. As \code{a} goes to \eqn{\infty}, the design becomes more deteministic. Notice that \code{a} is only needed when \code{"AdjBCD"} is to be assessed.}
-  \item{bsize}{block size for stratified permuted block randomization. It should be multiple of \code{2}. Notice that \code{bsize} is only needed when \code{"StrPBR"} is to be assessed.}
+  \item{omega}{the vector of weights at the overall, within-stratum, and marginal levels. It is required that at least one element is larger than 0. Note that \code{omega} is only needed when \code{HuHuCAR} is to be assessed.}
+  \item{weight}{the vector of weights for all involved margins. It is required that at least one element is NOT 0 and \code{length(weight) = cov_num}. Note that \code{weight} is only needed when \code{PocSimMIN} is to be assessed.}
+  \item{p}{the probability of assigning one patinet to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. Note that \code{p} is only needed when \code{"HuHuCAR"},  \code{"PocSimMIN"} and \code{"StrBCD"} are to be assessed.}
+  \item{a}{a design parameter. As \code{a} goes to \eqn{\infty}, the design becomes more deteministic. Note that \code{a} is only needed when \code{"AdjBCD"} is to be assessed.}
+  \item{bsize}{the block size for stratified permuted block randomization. It is required to be a multiple of \code{2}. Note that \code{bsize} is only needed when \code{"StrPBR"} is to be assessed.}
   }}
 }
 \details{
-    \code{data} is designed for \code{N} times using \code{method}.
+    The \code{data} is designed for \code{N} times using \code{method}.
 }
 \value{
 It returns an object of \code{\link{class}} \code{"careval"}. 
 
-The functions \code{\link{print}} is used to obtain results. The generic accessor functions \code{Assig}, \code{Diff}, \code{data}, \code{All strata} and so on extract various useful features of the value returned by that function. 
+The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{Assig}, \code{Diff}, \code{data}, \code{All strata} and others extract various useful features of the value returned by \code{evalRand}. 
 
 An object of class \code{"careval"} is a list containing at least the following components: 
 
-\item{N}{number of patients.}
-\item{Assig}{a \code{n*N} matrix containing assignments for each patient for N iterationsd. }
-\item{Imb}{matrix containing maximum, 95\%-quantile, median, and mean of absolute imbalances at overall, each within-stratum and each marginal levels.}
+\item{N}{the number of patients.}
+\item{Assig}{a \code{n*N} matrix containing assignments for each patient for N iterations. }
+\item{Imb}{a matrix containing maximum, 95\%-quantile, median, and mean of absolute imbalances at overall, each within-stratum and each marginal levels.}
 \item{SNUM}{a matrix with \code{N} colunms containing number of patients at overall, each marginal and each within-stratum levels for each iteration.}
-\item{Data Type}{data type. \code{Real} or \code{Simulated}. }
+\item{Data Type}{the data type. \code{Real} or \code{Simulated}. }
 }
 \seealso{
   See \code{\link{evalRand.sim}} to evaluate a randomization procedure with covariate data generating mechanism.
