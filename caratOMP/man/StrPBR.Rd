@@ -1,39 +1,38 @@
 \name{StrPBR}
 \alias{StrPBR}
-\alias{StrPBR.carandom}
 \title{Stratified Permuted Block Randomization}
 \usage{
-\method{StrPBR}{carandom}(data, bsize = 4)
+StrPBR(data, bsize = 4)
 }
 \description{
 Allocates patients to one of two treatments using stratified permuted block randomization proposed by Zelen M (1974) <Doi: 10.1016/0021-9681(74)90015-0>. 
 }
 \arguments{
   \item{data}{a dataframe. A row of the dataframe contains the covariate profile of a patient.}
-  \item{bsize}{block size for stratified randomization. It is required to be multiple of 2. Default is \code{4}.}
+  \item{bsize}{the block size for stratified randomization. It is required to be a multiple of 2. The default is \code{4}.}
 }
 \details{
-   Different covariate-profiles are defined to be strata, and then permuted block randomization is applied to each strata. It works efficiently when the number of strata is small while with the number of strata increasing, stratified permuted block randomization fails to obtain balance between two treatments.
+   Different covariate profiles are defined to be strata, and then permuted block randomization is applied to each stratum. It works efficiently when the number of strata is small, but when the number of strata increases, the stratified permuted block randomization fails to obtain balance between two treatments.
     
-    \code{Permuted-block randomization}, or blocking, is used to balance treatment arms within a block so that there are the same number of subjects in each treatment arm. A block contains the same number of each treatment. Blocks of different sizes are combined to make up the randomization list. 
+    \code{Permuted-block randomization}, or blocking, is used to balance treatment arms within a block so that there are the same number of subjects in each treatment arm. A block contains the same number of each treatment and blocks of different sizes are combined to make up the randomization list. 
 }
 \value{
 It returns an object of \code{\link{class}} \code{"carandom"}. 
 
-The functions \code{\link{print}} is used to obtain results. The generic accessor functions \code{Cov_Assig}, \code{Diff}, \code{data}, \code{All strata} and so on extract various useful features of the value returned by that function. 
+The functions \code{\link{print}} is used to obtain results. The generic accessor functions \code{Cov_Assig}, \code{Diff}, \code{data}, \code{All strata} and others extract various useful features of the value returned by \code{StrPBR}. 
 
 An object of class \code{"carandom"} is a list containing at least the following components: 
 
-\item{cov_num}{number of covariates.}
-\item{n}{number of patients.}
-\item{Cov_Assign}{a \code{(cov_num + 1) * n} matrix containing covariates' profile for all patients and corresponding assignments. The \eqn{i}th column represents the \eqn{i}th patient. The first \code{cov_num} rows include patient's covariate profile respectively; and the last row contains the assignment.}
+\item{cov_num}{the number of covariates.}
+\item{n}{the number of patients.}
+\item{Cov_Assign}{a \code{(cov_num + 1) * n} matrix containing covariate profiles for all patients and corresponding assignments. The \eqn{i}th column represents the \eqn{i}th patient. The first \code{cov_num} rows include patients' covariate profiles, and the last row contains the assignments.}
 \item{All strata}{a matrix containing all strata involved.}
-\item{Diff}{a matrix with only \eqn{1} column. There are final differences at the overall, within-stratum, and marginal levels.}
-\item{Data Type}{data type. \code{Real} or \code{Simulated}. }
+\item{Diff}{a matrix with only one column. There are final differences at the overall, within-stratum, and marginal levels.}
+\item{Data Type}{the data type. \code{Real} or \code{Simulated}. }
 }
 \seealso{
   See \code{\link{StrPBR.sim}} for allocating patients with covariate data generating mechanism. 
-  See \code{\link{StrPBR.ui}} for command-line user interface.
+  See \code{\link{StrPBR.ui}} for the command-line user interface.
 }
 \references{
 Zelen M. \emph{The randomization and stratification of patients to clinical trials}[J]. Journal of chronic diseases, 1974, 27(7): 365-375.
