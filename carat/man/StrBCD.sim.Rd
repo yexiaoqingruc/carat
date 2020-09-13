@@ -23,6 +23,9 @@ See \code{\link{StrBCD}}.
 \value{
 See \code{\link{StrBCD}}.
 }
+\references{
+Shao J, Yu X, Zhong B. \emph{A theory for testing hypotheses under covariate-adaptive randomization}[J]. Biometrika, 2010, 97(2): 347-360. 
+}
 \seealso{
   See \code{\link{StrBCD}} for allocating patients with complete covariate data; See \code{\link{StrBCD.ui}} for the command-line user interface. 
 }
