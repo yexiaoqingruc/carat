@@ -24,6 +24,9 @@ See \code{\link{PocSimMIN}}.
 \value{
 See \code{\link{PocSimMIN}}. 
 }
+\references{
+Pocock S J, Simon R. \emph{Sequential treatment assignment with balancing for prognostic factors in the controlled clinical trial}[J]. Biometrics, 1975: 103-115.
+}
 \seealso{
   See \code{\link{PocSimMIN}} for allocating patients with complete covariate data; See \code{\link{PocSimMIN.ui}} for the command-line user interface. 
 }
