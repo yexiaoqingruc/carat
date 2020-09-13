@@ -1,0 +1,20 @@
+Package: carat
+Type: Package
+Title: Covariate-Adaptive Randomization for Clinical Trials
+Version: 1.3.2
+Date: 2020-09-11
+Authors@R: c(
+    person(given="Fuyi", family="Tu", email="fuyi.tu@ruc.edu.cn", role="aut"),
+    person(given="Xiaoqing", family="Ye", email="ye_xiaoq@163.com", role=c("aut","cre")),
+    person(given="Wei", family="Ma", email="mawei@ruc.edu.cn", role=c("aut", "ths")), 
+    person(given="Feifang", family="Hu", email="ffhu68@163.com", role=c("aut","ths"))
+    )
+Author: Fuyi Tu [aut], Xiaoqing Ye [aut, cre], Wei Ma [aut, ths], Feifang Hu [aut, ths]
+Maintainer: Xiaoqing Ye <ye_xiaoq@163.com>
+Description: Provides functions and command-line user interface to generate allocation sequence by covariate-adaptive randomization for clinical trials. The package currently supports six covariate-adaptive randomization procedures. Three hypothesis testing methods that are valid and robust under covariate-adaptive randomization are also available in the package to facilitate the inference for treatment effect under the included randomization procedures. Additionally, the package provides comprehensive and efficient tools to allow one to evaluate and compare the performance of randomization procedures and tests based on various criteria.
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.4.6), ggplot2 (>= 3.3.0), gridExtra (>= 2.3), stringr (>= 1.4.0), methods
+Suggests: dplyr (>= 0.8.5) 
+Depends: R (>= 3.6.0)
+NeedsCompilation: yes
+LinkingTo: Rcpp, RcppArmadillo
