@@ -26,5 +26,8 @@ The function \code{\link{print}} is used to obtain results. The generic accessor
 }
 \note{This function provides a command-line interface so that users should follow the prompts to enter data, including covariates as well as levels for each covariate, weights \code{omega}, biased probability \code{p} and the covariate profile of the new patient. 
 }
+\references{
+Hu Y, Hu F. \emph{Asymptotic properties of covariate-adaptive randomization}[J]. The Annals of Statistics, 2012, 40(3): 1794-1815.
+}
 \keyword{CAR}% use one of  RShowDoc("KEYWORDS")
 \keyword{ user-interface}% __ONLY ONE__ keyword per line
