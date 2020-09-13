@@ -27,6 +27,9 @@ It returns an object of \code{\link{class}} \code{"carseq"}.
 
 The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{assignment}, \code{covariate}, \code{cov_num}, \code{cov_profile} and others extract various useful features of the value returned by \code{PocSimMIN.ui}. 
 }
+\references{
+Pocock S J, Simon R. \emph{Sequential treatment assignment with balancing for prognostic factors in the controlled clinical trial}[J]. Biometrics, 1975: 103-115.
+}
 \keyword{ CAR }% use one of  RShowDoc("KEYWORDS")
 \keyword{ user-interface }% __ONLY ONE__ keyword per line
 
