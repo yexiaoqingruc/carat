@@ -14,6 +14,13 @@ The OpenMP-supported version of carat, named caratOMP, can be installed from Git
 devtools::install_github('yexiaoqingruc/carat/caratOMP')
 ```
 
+and the package without **OpenMP**, names carat, can be installed from Github: 
+
+```{R, eval = FALSE}
+#install.packages('devtools')
+devtools::install_github('yexiaoqingruc/carat/carat')
+```
+
 ## Install the current release from CRAN:
 
 The package without **OpenMP** is available for Windows, Linux and Mac OS X from CRAN: 
