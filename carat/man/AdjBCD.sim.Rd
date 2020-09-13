@@ -23,6 +23,9 @@ See \code{\link{AdjBCD}}.
 \value{
 See \code{\link{AdjBCD}}. 
 }
+\references{
+Baldi Antognini A, Zagoraiou M. \emph{The covariate-adaptive biased coin design for balancing clinical trials in the presence of prognostic factors}[J]. Biometrika, 2011, 98(3): 519-535.
+}
 \seealso{
 See \code{\link{AdjBCD}} for allocating patients with complete covariate data; See \code{\link{AdjBCD.ui}} for the command-line user interface. 
 }
