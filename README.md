@@ -10,14 +10,16 @@ Provides functions and command-line user interface to generate allocation sequen
 The OpenMP-supported version of carat, named caratOMP, can be installed from GitHub:
 
 ```{R, eval = FALSE}
-#install.packages('devtools')
+if(!requireNamespace("devtools", quietly = TRUE))
+  install.packages("devtools")
 devtools::install_github('yexiaoqingruc/carat/caratOMP')
 ```
 
 and the package without **OpenMP**, names carat, can be installed from Github: 
 
 ```{R, eval = FALSE}
-#install.packages('devtools')
+if(!requireNamespace("devtools", quietly = TRUE))
+  install.packages("devtools")
 devtools::install_github('yexiaoqingruc/carat/carat')
 ```
 
