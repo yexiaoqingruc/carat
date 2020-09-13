@@ -23,6 +23,9 @@ See \code{\link{StrPBR}}.
 \value{
 See \code{\link{StrPBR}}.
 }
+\references{
+Zelen M. \emph{The randomization and stratification of patients to clinical trials}[J]. Journal of chronic diseases, 1974, 27(7): 365-375.
+}
 \seealso{
   See \code{\link{StrPBR}} for allocating patients with complete covariate data; See \code{\link{StrPBR.ui}} for the command-line user interface. 
 }
