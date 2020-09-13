@@ -22,6 +22,9 @@ See \code{\link{DoptBCD}}.
 \value{
 See \code{\link{DoptBCD}}. 
 }
+\references{
+Atkinson A C. \emph{Optimum biased coin designs for sequential clinical trials with prognostic factors}[J]. Biometrika, 1982, 69(1): 61-67.
+}
 \seealso{
 See \code{\link{DoptBCD}} for allocating patients with complete covariate data; See \code{\link{DoptBCD.ui}} for the command-line user interface. 
 }
