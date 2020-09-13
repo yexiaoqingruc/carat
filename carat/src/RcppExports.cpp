@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // Rprod
 double Rprod(arma::vec v);
-RcppExport SEXP _carat132_Rprod(SEXP vSEXP) {
+RcppExport SEXP _carat_Rprod(SEXP vSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // Bpert
 arma::mat Bpert(int bsize, int tr_num);
-RcppExport SEXP _carat132_Bpert(SEXP bsizeSEXP, SEXP tr_numSEXP) {
+RcppExport SEXP _carat_Bpert(SEXP bsizeSEXP, SEXP tr_numSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -31,7 +31,7 @@ END_RCPP
 }
 // PStrGen
 arma::mat PStrGen(unsigned int cov_num, arma::vec level_num);
-RcppExport SEXP _carat132_PStrGen(SEXP cov_numSEXP, SEXP level_numSEXP) {
+RcppExport SEXP _carat_PStrGen(SEXP cov_numSEXP, SEXP level_numSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -43,7 +43,7 @@ END_RCPP
 }
 // Prob_S
 arma::mat Prob_S(unsigned int cov_num, arma::vec level_num, arma::vec pr);
-RcppExport SEXP _carat132_Prob_S(SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP) {
+RcppExport SEXP _carat_Prob_S(SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -56,7 +56,7 @@ END_RCPP
 }
 // nameString
 Rcpp::StringVector nameString(unsigned int cov_num, arma::vec level_num, int strt_num, Rcpp::String type, Rcpp::String typeData);
-RcppExport SEXP _carat132_nameString(SEXP cov_numSEXP, SEXP level_numSEXP, SEXP strt_numSEXP, SEXP typeSEXP, SEXP typeDataSEXP) {
+RcppExport SEXP _carat_nameString(SEXP cov_numSEXP, SEXP level_numSEXP, SEXP strt_numSEXP, SEXP typeSEXP, SEXP typeDataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -71,7 +71,7 @@ END_RCPP
 }
 // BBCDname
 Rcpp::CharacterVector BBCDname(int n, Rcpp::String S);
-RcppExport SEXP _carat132_BBCDname(SEXP nSEXP, SEXP SSEXP) {
+RcppExport SEXP _carat_BBCDname(SEXP nSEXP, SEXP SSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -83,7 +83,7 @@ END_RCPP
 }
 // Preprocess
 Rcpp::List Preprocess(Rcpp::DataFrame data);
-RcppExport SEXP _carat132_Preprocess(SEXP dataSEXP) {
+RcppExport SEXP _carat_Preprocess(SEXP dataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -94,7 +94,7 @@ END_RCPP
 }
 // genData_sim
 arma::mat genData_sim(int n, unsigned int cov_num, arma::vec level_num, arma::mat ProbS);
-RcppExport SEXP _carat132_genData_sim(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP ProbSSEXP) {
+RcppExport SEXP _carat_genData_sim(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP ProbSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -108,7 +108,7 @@ END_RCPP
 }
 // HPSOne
 arma::field<arma::mat> HPSOne(arma::mat D, arma::mat PStr, arma::vec cov_profile, unsigned int cov_num, arma::vec level_num, arma::vec omega, arma::vec strp, double p);
-RcppExport SEXP _carat132_HPSOne(SEXP DSEXP, SEXP PStrSEXP, SEXP cov_profileSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP omegaSEXP, SEXP strpSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_HPSOne(SEXP DSEXP, SEXP PStrSEXP, SEXP cov_profileSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP omegaSEXP, SEXP strpSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -126,7 +126,7 @@ END_RCPP
 }
 // StrROne
 arma::field<arma::mat> StrROne(arma::mat D, arma::mat PS, arma::vec cov_profile, unsigned int cov_num, arma::vec level_num, int bsize, arma::mat B, arma::mat BG, arma::vec strp);
-RcppExport SEXP _carat132_StrROne(SEXP DSEXP, SEXP PSSEXP, SEXP cov_profileSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP bsizeSEXP, SEXP BSEXP, SEXP BGSEXP, SEXP strpSEXP) {
+RcppExport SEXP _carat_StrROne(SEXP DSEXP, SEXP PSSEXP, SEXP cov_profileSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP bsizeSEXP, SEXP BSEXP, SEXP BGSEXP, SEXP strpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -145,7 +145,7 @@ END_RCPP
 }
 // AtBCDOne
 arma::field<arma::mat> AtBCDOne(arma::vec D, arma::mat PStr, arma::vec cov_profile, unsigned int cov_num, arma::vec level_num, arma::mat F, arma::vec b, arma::vec strp, int No);
-RcppExport SEXP _carat132_AtBCDOne(SEXP DSEXP, SEXP PStrSEXP, SEXP cov_profileSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP FSEXP, SEXP bSEXP, SEXP strpSEXP, SEXP NoSEXP) {
+RcppExport SEXP _carat_AtBCDOne(SEXP DSEXP, SEXP PStrSEXP, SEXP cov_profileSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP FSEXP, SEXP bSEXP, SEXP strpSEXP, SEXP NoSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -164,7 +164,7 @@ END_RCPP
 }
 // AdBCDOne
 arma::field<arma::mat> AdBCDOne(arma::mat D, arma::mat PStr, arma::vec cov_profile, unsigned int cov_num, arma::vec level_num, arma::vec strp, double a);
-RcppExport SEXP _carat132_AdBCDOne(SEXP DSEXP, SEXP PStrSEXP, SEXP cov_profileSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP strpSEXP, SEXP aSEXP) {
+RcppExport SEXP _carat_AdBCDOne(SEXP DSEXP, SEXP PStrSEXP, SEXP cov_profileSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP strpSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -181,7 +181,7 @@ END_RCPP
 }
 // C_HPS
 arma::field<arma::mat> C_HPS(int n, unsigned int cov_num, arma::vec level_num, arma::mat ProbS, arma::mat PStr, arma::vec omega, double p);
-RcppExport SEXP _carat132_C_HPS(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP ProbSSEXP, SEXP PStrSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_C_HPS(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP ProbSSEXP, SEXP PStrSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -198,7 +198,7 @@ END_RCPP
 }
 // C_StrR
 arma::field<arma::mat> C_StrR(int n, unsigned int cov_num, arma::vec level_num, arma::mat ProbS, arma::mat PS, int bsize, int tr_num);
-RcppExport SEXP _carat132_C_StrR(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP ProbSSEXP, SEXP PSSEXP, SEXP bsizeSEXP, SEXP tr_numSEXP) {
+RcppExport SEXP _carat_C_StrR(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP ProbSSEXP, SEXP PSSEXP, SEXP bsizeSEXP, SEXP tr_numSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -215,7 +215,7 @@ END_RCPP
 }
 // C_AtkinBCD
 arma::field<arma::mat> C_AtkinBCD(int n, unsigned int cov_num, arma::vec level_num, arma::mat ProbS, arma::mat PS);
-RcppExport SEXP _carat132_C_AtkinBCD(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP ProbSSEXP, SEXP PSSEXP) {
+RcppExport SEXP _carat_C_AtkinBCD(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP ProbSSEXP, SEXP PSSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -230,7 +230,7 @@ END_RCPP
 }
 // C_AdjustBCD
 arma::field<arma::mat> C_AdjustBCD(int n, unsigned int cov_num, arma::vec level_num, arma::mat ProbS, arma::mat PS, double a);
-RcppExport SEXP _carat132_C_AdjustBCD(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP ProbSSEXP, SEXP PSSEXP, SEXP aSEXP) {
+RcppExport SEXP _carat_C_AdjustBCD(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP ProbSSEXP, SEXP PSSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -246,7 +246,7 @@ END_RCPP
 }
 // C_RHPS
 arma::field<arma::mat> C_RHPS(arma::mat data_proc, unsigned int cov_num, arma::vec level_num, arma::vec omega, double p);
-RcppExport SEXP _carat132_C_RHPS(SEXP data_procSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_C_RHPS(SEXP data_procSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -261,7 +261,7 @@ END_RCPP
 }
 // C_RStrR
 arma::field<arma::mat> C_RStrR(arma::mat data_proc, unsigned int cov_num, arma::vec level_num, int bsize, int tr_num);
-RcppExport SEXP _carat132_C_RStrR(SEXP data_procSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP bsizeSEXP, SEXP tr_numSEXP) {
+RcppExport SEXP _carat_C_RStrR(SEXP data_procSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP bsizeSEXP, SEXP tr_numSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -276,7 +276,7 @@ END_RCPP
 }
 // C_RAtkinBCD
 arma::field<arma::mat> C_RAtkinBCD(arma::mat data_proc, unsigned int cov_num, arma::vec level_num);
-RcppExport SEXP _carat132_C_RAtkinBCD(SEXP data_procSEXP, SEXP cov_numSEXP, SEXP level_numSEXP) {
+RcppExport SEXP _carat_C_RAtkinBCD(SEXP data_procSEXP, SEXP cov_numSEXP, SEXP level_numSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -289,7 +289,7 @@ END_RCPP
 }
 // C_RAdjustBCD
 arma::field<arma::mat> C_RAdjustBCD(arma::mat data_proc, unsigned int cov_num, arma::vec level_num, double a);
-RcppExport SEXP _carat132_C_RAdjustBCD(SEXP data_procSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP aSEXP) {
+RcppExport SEXP _carat_C_RAdjustBCD(SEXP data_procSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -303,7 +303,7 @@ END_RCPP
 }
 // C_Summarize
 arma::field<arma::mat> C_Summarize(bool Replace, unsigned int cov_num, arma::vec level_num, arma::vec pr, Rcpp::String method, arma::vec omega, double p, int bsize, double a, int n, int N);
-RcppExport SEXP _carat132_C_Summarize(SEXP ReplaceSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP methodSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP bsizeSEXP, SEXP aSEXP, SEXP nSEXP, SEXP NSEXP) {
+RcppExport SEXP _carat_C_Summarize(SEXP ReplaceSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP methodSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP bsizeSEXP, SEXP aSEXP, SEXP nSEXP, SEXP NSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -324,7 +324,7 @@ END_RCPP
 }
 // C_RSummarize
 arma::field<arma::mat> C_RSummarize(arma::mat data_proc, unsigned int cov_num, arma::vec level_num, Rcpp::String method, arma::vec omega, double p, int bsize, double a, int N);
-RcppExport SEXP _carat132_C_RSummarize(SEXP data_procSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP methodSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP bsizeSEXP, SEXP aSEXP, SEXP NSEXP) {
+RcppExport SEXP _carat_C_RSummarize(SEXP data_procSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP methodSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP bsizeSEXP, SEXP aSEXP, SEXP NSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -343,7 +343,7 @@ END_RCPP
 }
 // HuHuCAR_getData
 arma::mat HuHuCAR_getData(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, double mu1, double mu2, double sigma, arma::vec omega, double p);
-RcppExport SEXP _carat132_HuHuCAR_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_HuHuCAR_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -364,7 +364,7 @@ END_RCPP
 }
 // HuHuCAR_RT
 Rcpp::List HuHuCAR_RT(DataFrame data, double Reps, double conf, arma::vec omega, double p);
-RcppExport SEXP _carat132_HuHuCAR_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_HuHuCAR_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -379,7 +379,7 @@ END_RCPP
 }
 // HuHuCAR_BT
 arma::vec HuHuCAR_BT(DataFrame data, double B, arma::vec omega, double p);
-RcppExport SEXP _carat132_HuHuCAR_BT(SEXP dataSEXP, SEXP BSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_HuHuCAR_BT(SEXP dataSEXP, SEXP BSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -393,7 +393,7 @@ END_RCPP
 }
 // HuHuCAR_RT_In
 double HuHuCAR_RT_In(arma::mat data, double Reps, arma::vec omega, double p);
-RcppExport SEXP _carat132_HuHuCAR_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_HuHuCAR_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -407,7 +407,7 @@ END_RCPP
 }
 // HuHuCAR_BT_In
 double HuHuCAR_BT_In(arma::mat data, double B, arma::vec omega, double p);
-RcppExport SEXP _carat132_HuHuCAR_BT_In(SEXP dataSEXP, SEXP BSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_HuHuCAR_BT_In(SEXP dataSEXP, SEXP BSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -421,7 +421,7 @@ END_RCPP
 }
 // HuHuCAR_RT_power
 arma::vec HuHuCAR_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p, double Reps, int nthreads);
-RcppExport SEXP _carat132_HuHuCAR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_HuHuCAR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -446,7 +446,7 @@ END_RCPP
 }
 // HuHuCAR_BT_power
 arma::vec HuHuCAR_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p, double B, int nthreads);
-RcppExport SEXP _carat132_HuHuCAR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_HuHuCAR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -471,7 +471,7 @@ END_RCPP
 }
 // PocSimMIN_getData
 arma::mat PocSimMIN_getData(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, double mu1, double mu2, double sigma, arma::vec weight, double p);
-RcppExport SEXP _carat132_PocSimMIN_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP weightSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_PocSimMIN_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP weightSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -492,7 +492,7 @@ END_RCPP
 }
 // PocSimMIN_RT
 Rcpp::List PocSimMIN_RT(DataFrame data, double Reps, double conf, arma::vec weight, double p);
-RcppExport SEXP _carat132_PocSimMIN_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP weightSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_PocSimMIN_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP weightSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -507,7 +507,7 @@ END_RCPP
 }
 // PocSimMIN_BT
 arma::vec PocSimMIN_BT(DataFrame data, double B, arma::vec weight, double p);
-RcppExport SEXP _carat132_PocSimMIN_BT(SEXP dataSEXP, SEXP BSEXP, SEXP weightSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_PocSimMIN_BT(SEXP dataSEXP, SEXP BSEXP, SEXP weightSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -521,7 +521,7 @@ END_RCPP
 }
 // PocSimMIN_RT_In
 double PocSimMIN_RT_In(arma::mat data, double Reps, arma::vec weight, double p);
-RcppExport SEXP _carat132_PocSimMIN_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP weightSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_PocSimMIN_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP weightSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -535,7 +535,7 @@ END_RCPP
 }
 // PocSimMIN_BT_In
 double PocSimMIN_BT_In(arma::mat data, double B, arma::vec weight, double p);
-RcppExport SEXP _carat132_PocSimMIN_BT_In(SEXP dataSEXP, SEXP BSEXP, SEXP weightSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_PocSimMIN_BT_In(SEXP dataSEXP, SEXP BSEXP, SEXP weightSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -549,7 +549,7 @@ END_RCPP
 }
 // PocSimMIN_RT_power
 arma::vec PocSimMIN_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p, double Reps, int nthreads);
-RcppExport SEXP _carat132_PocSimMIN_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_PocSimMIN_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -574,7 +574,7 @@ END_RCPP
 }
 // PocSimMIN_BT_power
 arma::vec PocSimMIN_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p, double B, int nthreads);
-RcppExport SEXP _carat132_PocSimMIN_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_PocSimMIN_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -599,7 +599,7 @@ END_RCPP
 }
 // StrBCD_getData
 arma::mat StrBCD_getData(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, double mu1, double mu2, double sigma, double p);
-RcppExport SEXP _carat132_StrBCD_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_StrBCD_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -619,7 +619,7 @@ END_RCPP
 }
 // StrBCD_RT
 Rcpp::List StrBCD_RT(DataFrame data, double Reps, double conf, double p);
-RcppExport SEXP _carat132_StrBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_StrBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -633,7 +633,7 @@ END_RCPP
 }
 // StrBCD_BT
 arma::vec StrBCD_BT(DataFrame data, double B, double p);
-RcppExport SEXP _carat132_StrBCD_BT(SEXP dataSEXP, SEXP BSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_StrBCD_BT(SEXP dataSEXP, SEXP BSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -646,7 +646,7 @@ END_RCPP
 }
 // StrBCD_RT_In
 double StrBCD_RT_In(arma::mat data, double Reps, double p);
-RcppExport SEXP _carat132_StrBCD_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_StrBCD_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -659,7 +659,7 @@ END_RCPP
 }
 // StrBCD_BT_In
 double StrBCD_BT_In(arma::mat data, double B, double p);
-RcppExport SEXP _carat132_StrBCD_BT_In(SEXP dataSEXP, SEXP BSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_StrBCD_BT_In(SEXP dataSEXP, SEXP BSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -672,7 +672,7 @@ END_RCPP
 }
 // StrBCD_RT_power
 arma::vec StrBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double p, double Iternum, double sl, double Reps, int nthreads);
-RcppExport SEXP _carat132_StrBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP pSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_StrBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP pSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -696,7 +696,7 @@ END_RCPP
 }
 // StrBCD_BT_power
 arma::vec StrBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double p, double B, int nthreads);
-RcppExport SEXP _carat132_StrBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP pSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_StrBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP pSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -720,7 +720,7 @@ END_RCPP
 }
 // DoptBCD_In
 arma::mat DoptBCD_In(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr);
-RcppExport SEXP _carat132_DoptBCD_In(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP) {
+RcppExport SEXP _carat_DoptBCD_In(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -734,7 +734,7 @@ END_RCPP
 }
 // DoptBCD_getData
 arma::mat DoptBCD_getData(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, double mu1, double mu2, double sigma);
-RcppExport SEXP _carat132_DoptBCD_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _carat_DoptBCD_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -753,7 +753,7 @@ END_RCPP
 }
 // DoptBCD_RT
 Rcpp::List DoptBCD_RT(DataFrame data, double Reps, double conf);
-RcppExport SEXP _carat132_DoptBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP) {
+RcppExport SEXP _carat_DoptBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -766,7 +766,7 @@ END_RCPP
 }
 // DoptBCD_BT
 arma::vec DoptBCD_BT(DataFrame data, double B);
-RcppExport SEXP _carat132_DoptBCD_BT(SEXP dataSEXP, SEXP BSEXP) {
+RcppExport SEXP _carat_DoptBCD_BT(SEXP dataSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -778,7 +778,7 @@ END_RCPP
 }
 // DoptBCD_RT_In
 double DoptBCD_RT_In(arma::mat data, double Reps);
-RcppExport SEXP _carat132_DoptBCD_RT_In(SEXP dataSEXP, SEXP RepsSEXP) {
+RcppExport SEXP _carat_DoptBCD_RT_In(SEXP dataSEXP, SEXP RepsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -790,7 +790,7 @@ END_RCPP
 }
 // DoptBCD_BT_In
 double DoptBCD_BT_In(arma::mat data, double B);
-RcppExport SEXP _carat132_DoptBCD_BT_In(SEXP dataSEXP, SEXP BSEXP) {
+RcppExport SEXP _carat_DoptBCD_BT_In(SEXP dataSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -802,7 +802,7 @@ END_RCPP
 }
 // DoptBCD_RT_power
 arma::vec DoptBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double Reps, int nthreads);
-RcppExport SEXP _carat132_DoptBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_DoptBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -825,7 +825,7 @@ END_RCPP
 }
 // DoptBCD_BT_power
 arma::vec DoptBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double B, int nthreads);
-RcppExport SEXP _carat132_DoptBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_DoptBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -848,7 +848,7 @@ END_RCPP
 }
 // AdjBCD_In
 arma::mat AdjBCD_In(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, double a);
-RcppExport SEXP _carat132_AdjBCD_In(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP aSEXP) {
+RcppExport SEXP _carat_AdjBCD_In(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -863,7 +863,7 @@ END_RCPP
 }
 // AdjBCD_getData
 arma::mat AdjBCD_getData(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, double mu1, double mu2, double sigma, double a);
-RcppExport SEXP _carat132_AdjBCD_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP aSEXP) {
+RcppExport SEXP _carat_AdjBCD_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -883,7 +883,7 @@ END_RCPP
 }
 // AdjBCD_RT
 Rcpp::List AdjBCD_RT(DataFrame data, double Reps, double conf, double a);
-RcppExport SEXP _carat132_AdjBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP aSEXP) {
+RcppExport SEXP _carat_AdjBCD_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -897,7 +897,7 @@ END_RCPP
 }
 // AdjBCD_BT
 arma::vec AdjBCD_BT(DataFrame data, double B, double a);
-RcppExport SEXP _carat132_AdjBCD_BT(SEXP dataSEXP, SEXP BSEXP, SEXP aSEXP) {
+RcppExport SEXP _carat_AdjBCD_BT(SEXP dataSEXP, SEXP BSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -910,7 +910,7 @@ END_RCPP
 }
 // AdjBCD_RT_In
 double AdjBCD_RT_In(arma::mat data, double Reps, double a);
-RcppExport SEXP _carat132_AdjBCD_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP aSEXP) {
+RcppExport SEXP _carat_AdjBCD_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -923,7 +923,7 @@ END_RCPP
 }
 // AdjBCD_BT_In
 double AdjBCD_BT_In(arma::mat data, double B, double a);
-RcppExport SEXP _carat132_AdjBCD_BT_In(SEXP dataSEXP, SEXP BSEXP, SEXP aSEXP) {
+RcppExport SEXP _carat_AdjBCD_BT_In(SEXP dataSEXP, SEXP BSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -936,7 +936,7 @@ END_RCPP
 }
 // AdjBCD_RT_power
 arma::vec AdjBCD_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double a, double Reps, int nthreads);
-RcppExport SEXP _carat132_AdjBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_AdjBCD_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -960,7 +960,7 @@ END_RCPP
 }
 // AdjBCD_BT_power
 arma::vec AdjBCD_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double a, double B, int nthreads);
-RcppExport SEXP _carat132_AdjBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_AdjBCD_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -984,7 +984,7 @@ END_RCPP
 }
 // StrPBR_getData
 arma::mat StrPBR_getData(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, double mu1, double mu2, double sigma, int bsize);
-RcppExport SEXP _carat132_StrPBR_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP bsizeSEXP) {
+RcppExport SEXP _carat_StrPBR_getData(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP bsizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1004,7 +1004,7 @@ END_RCPP
 }
 // StrPBR_RT
 Rcpp::List StrPBR_RT(DataFrame data, double Reps, double conf, int bsize);
-RcppExport SEXP _carat132_StrPBR_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP bsizeSEXP) {
+RcppExport SEXP _carat_StrPBR_RT(SEXP dataSEXP, SEXP RepsSEXP, SEXP confSEXP, SEXP bsizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1018,7 +1018,7 @@ END_RCPP
 }
 // StrPBR_BT
 arma::vec StrPBR_BT(DataFrame data, double B, int bsize);
-RcppExport SEXP _carat132_StrPBR_BT(SEXP dataSEXP, SEXP BSEXP, SEXP bsizeSEXP) {
+RcppExport SEXP _carat_StrPBR_BT(SEXP dataSEXP, SEXP BSEXP, SEXP bsizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1031,7 +1031,7 @@ END_RCPP
 }
 // StrPBR_RT_In
 double StrPBR_RT_In(arma::mat data, double Reps, int bsize);
-RcppExport SEXP _carat132_StrPBR_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP bsizeSEXP) {
+RcppExport SEXP _carat_StrPBR_RT_In(SEXP dataSEXP, SEXP RepsSEXP, SEXP bsizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1044,7 +1044,7 @@ END_RCPP
 }
 // StrPBR_BT_In
 double StrPBR_BT_In(arma::mat data, double B, int bsize);
-RcppExport SEXP _carat132_StrPBR_BT_In(SEXP dataSEXP, SEXP BSEXP, SEXP bsizeSEXP) {
+RcppExport SEXP _carat_StrPBR_BT_In(SEXP dataSEXP, SEXP BSEXP, SEXP bsizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1057,7 +1057,7 @@ END_RCPP
 }
 // StrPBR_RT_power
 arma::vec StrPBR_RT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize, double Reps, int nthreads);
-RcppExport SEXP _carat132_StrPBR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_StrPBR_RT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP RepsSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1081,7 +1081,7 @@ END_RCPP
 }
 // StrPBR_BT_power
 arma::vec StrPBR_BT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize, double B, int nthreads);
-RcppExport SEXP _carat132_StrPBR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
+RcppExport SEXP _carat_StrPBR_BT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP, SEXP BSEXP, SEXP nthreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1105,7 +1105,7 @@ END_RCPP
 }
 // CTT
 arma::vec CTT(DataFrame data);
-RcppExport SEXP _carat132_CTT(SEXP dataSEXP) {
+RcppExport SEXP _carat_CTT(SEXP dataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1116,7 +1116,7 @@ END_RCPP
 }
 // CTT_In
 double CTT_In(arma::mat data);
-RcppExport SEXP _carat132_CTT_In(SEXP dataSEXP) {
+RcppExport SEXP _carat_CTT_In(SEXP dataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1127,7 +1127,7 @@ END_RCPP
 }
 // HuHuCAR_CT_power
 arma::vec HuHuCAR_CT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec omega, double p);
-RcppExport SEXP _carat132_HuHuCAR_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_HuHuCAR_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP omegaSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1150,7 +1150,7 @@ END_RCPP
 }
 // PocSimMIN_CT_power
 arma::vec PocSimMIN_CT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, arma::vec weight, double p);
-RcppExport SEXP _carat132_PocSimMIN_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_PocSimMIN_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP weightSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1173,7 +1173,7 @@ END_RCPP
 }
 // StrBCD_CT_power
 arma::vec StrBCD_CT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, double p);
-RcppExport SEXP _carat132_StrBCD_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP pSEXP) {
+RcppExport SEXP _carat_StrBCD_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1195,7 +1195,7 @@ END_RCPP
 }
 // DoptBCD_CT_power
 arma::vec DoptBCD_CT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, int Iternum, double sl);
-RcppExport SEXP _carat132_DoptBCD_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP) {
+RcppExport SEXP _carat_DoptBCD_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1216,7 +1216,7 @@ END_RCPP
 }
 // AdjBCD_CT_power
 arma::vec AdjBCD_CT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, int Iternum, double sl, double a);
-RcppExport SEXP _carat132_AdjBCD_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP) {
+RcppExport SEXP _carat_AdjBCD_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1238,7 +1238,7 @@ END_RCPP
 }
 // StrPBR_CT_power
 arma::vec StrPBR_CT_power(int n, unsigned int cov_num, arma::vec level_num, arma::vec pr, std::string type, arma::vec beta, arma::vec mu1, arma::vec mu2, double sigma, double Iternum, double sl, int bsize);
-RcppExport SEXP _carat132_StrPBR_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP) {
+RcppExport SEXP _carat_StrPBR_CT_power(SEXP nSEXP, SEXP cov_numSEXP, SEXP level_numSEXP, SEXP prSEXP, SEXP typeSEXP, SEXP betaSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigmaSEXP, SEXP IternumSEXP, SEXP slSEXP, SEXP bsizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1260,84 +1260,84 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_carat132_Rprod", (DL_FUNC) &_carat132_Rprod, 1},
-    {"_carat132_Bpert", (DL_FUNC) &_carat132_Bpert, 2},
-    {"_carat132_PStrGen", (DL_FUNC) &_carat132_PStrGen, 2},
-    {"_carat132_Prob_S", (DL_FUNC) &_carat132_Prob_S, 3},
-    {"_carat132_nameString", (DL_FUNC) &_carat132_nameString, 5},
-    {"_carat132_BBCDname", (DL_FUNC) &_carat132_BBCDname, 2},
-    {"_carat132_Preprocess", (DL_FUNC) &_carat132_Preprocess, 1},
-    {"_carat132_genData_sim", (DL_FUNC) &_carat132_genData_sim, 4},
-    {"_carat132_HPSOne", (DL_FUNC) &_carat132_HPSOne, 8},
-    {"_carat132_StrROne", (DL_FUNC) &_carat132_StrROne, 9},
-    {"_carat132_AtBCDOne", (DL_FUNC) &_carat132_AtBCDOne, 9},
-    {"_carat132_AdBCDOne", (DL_FUNC) &_carat132_AdBCDOne, 7},
-    {"_carat132_C_HPS", (DL_FUNC) &_carat132_C_HPS, 7},
-    {"_carat132_C_StrR", (DL_FUNC) &_carat132_C_StrR, 7},
-    {"_carat132_C_AtkinBCD", (DL_FUNC) &_carat132_C_AtkinBCD, 5},
-    {"_carat132_C_AdjustBCD", (DL_FUNC) &_carat132_C_AdjustBCD, 6},
-    {"_carat132_C_RHPS", (DL_FUNC) &_carat132_C_RHPS, 5},
-    {"_carat132_C_RStrR", (DL_FUNC) &_carat132_C_RStrR, 5},
-    {"_carat132_C_RAtkinBCD", (DL_FUNC) &_carat132_C_RAtkinBCD, 3},
-    {"_carat132_C_RAdjustBCD", (DL_FUNC) &_carat132_C_RAdjustBCD, 4},
-    {"_carat132_C_Summarize", (DL_FUNC) &_carat132_C_Summarize, 11},
-    {"_carat132_C_RSummarize", (DL_FUNC) &_carat132_C_RSummarize, 9},
-    {"_carat132_HuHuCAR_getData", (DL_FUNC) &_carat132_HuHuCAR_getData, 11},
-    {"_carat132_HuHuCAR_RT", (DL_FUNC) &_carat132_HuHuCAR_RT, 5},
-    {"_carat132_HuHuCAR_BT", (DL_FUNC) &_carat132_HuHuCAR_BT, 4},
-    {"_carat132_HuHuCAR_RT_In", (DL_FUNC) &_carat132_HuHuCAR_RT_In, 4},
-    {"_carat132_HuHuCAR_BT_In", (DL_FUNC) &_carat132_HuHuCAR_BT_In, 4},
-    {"_carat132_HuHuCAR_RT_power", (DL_FUNC) &_carat132_HuHuCAR_RT_power, 15},
-    {"_carat132_HuHuCAR_BT_power", (DL_FUNC) &_carat132_HuHuCAR_BT_power, 15},
-    {"_carat132_PocSimMIN_getData", (DL_FUNC) &_carat132_PocSimMIN_getData, 11},
-    {"_carat132_PocSimMIN_RT", (DL_FUNC) &_carat132_PocSimMIN_RT, 5},
-    {"_carat132_PocSimMIN_BT", (DL_FUNC) &_carat132_PocSimMIN_BT, 4},
-    {"_carat132_PocSimMIN_RT_In", (DL_FUNC) &_carat132_PocSimMIN_RT_In, 4},
-    {"_carat132_PocSimMIN_BT_In", (DL_FUNC) &_carat132_PocSimMIN_BT_In, 4},
-    {"_carat132_PocSimMIN_RT_power", (DL_FUNC) &_carat132_PocSimMIN_RT_power, 15},
-    {"_carat132_PocSimMIN_BT_power", (DL_FUNC) &_carat132_PocSimMIN_BT_power, 15},
-    {"_carat132_StrBCD_getData", (DL_FUNC) &_carat132_StrBCD_getData, 10},
-    {"_carat132_StrBCD_RT", (DL_FUNC) &_carat132_StrBCD_RT, 4},
-    {"_carat132_StrBCD_BT", (DL_FUNC) &_carat132_StrBCD_BT, 3},
-    {"_carat132_StrBCD_RT_In", (DL_FUNC) &_carat132_StrBCD_RT_In, 3},
-    {"_carat132_StrBCD_BT_In", (DL_FUNC) &_carat132_StrBCD_BT_In, 3},
-    {"_carat132_StrBCD_RT_power", (DL_FUNC) &_carat132_StrBCD_RT_power, 14},
-    {"_carat132_StrBCD_BT_power", (DL_FUNC) &_carat132_StrBCD_BT_power, 14},
-    {"_carat132_DoptBCD_In", (DL_FUNC) &_carat132_DoptBCD_In, 4},
-    {"_carat132_DoptBCD_getData", (DL_FUNC) &_carat132_DoptBCD_getData, 9},
-    {"_carat132_DoptBCD_RT", (DL_FUNC) &_carat132_DoptBCD_RT, 3},
-    {"_carat132_DoptBCD_BT", (DL_FUNC) &_carat132_DoptBCD_BT, 2},
-    {"_carat132_DoptBCD_RT_In", (DL_FUNC) &_carat132_DoptBCD_RT_In, 2},
-    {"_carat132_DoptBCD_BT_In", (DL_FUNC) &_carat132_DoptBCD_BT_In, 2},
-    {"_carat132_DoptBCD_RT_power", (DL_FUNC) &_carat132_DoptBCD_RT_power, 13},
-    {"_carat132_DoptBCD_BT_power", (DL_FUNC) &_carat132_DoptBCD_BT_power, 13},
-    {"_carat132_AdjBCD_In", (DL_FUNC) &_carat132_AdjBCD_In, 5},
-    {"_carat132_AdjBCD_getData", (DL_FUNC) &_carat132_AdjBCD_getData, 10},
-    {"_carat132_AdjBCD_RT", (DL_FUNC) &_carat132_AdjBCD_RT, 4},
-    {"_carat132_AdjBCD_BT", (DL_FUNC) &_carat132_AdjBCD_BT, 3},
-    {"_carat132_AdjBCD_RT_In", (DL_FUNC) &_carat132_AdjBCD_RT_In, 3},
-    {"_carat132_AdjBCD_BT_In", (DL_FUNC) &_carat132_AdjBCD_BT_In, 3},
-    {"_carat132_AdjBCD_RT_power", (DL_FUNC) &_carat132_AdjBCD_RT_power, 14},
-    {"_carat132_AdjBCD_BT_power", (DL_FUNC) &_carat132_AdjBCD_BT_power, 14},
-    {"_carat132_StrPBR_getData", (DL_FUNC) &_carat132_StrPBR_getData, 10},
-    {"_carat132_StrPBR_RT", (DL_FUNC) &_carat132_StrPBR_RT, 4},
-    {"_carat132_StrPBR_BT", (DL_FUNC) &_carat132_StrPBR_BT, 3},
-    {"_carat132_StrPBR_RT_In", (DL_FUNC) &_carat132_StrPBR_RT_In, 3},
-    {"_carat132_StrPBR_BT_In", (DL_FUNC) &_carat132_StrPBR_BT_In, 3},
-    {"_carat132_StrPBR_RT_power", (DL_FUNC) &_carat132_StrPBR_RT_power, 14},
-    {"_carat132_StrPBR_BT_power", (DL_FUNC) &_carat132_StrPBR_BT_power, 14},
-    {"_carat132_CTT", (DL_FUNC) &_carat132_CTT, 1},
-    {"_carat132_CTT_In", (DL_FUNC) &_carat132_CTT_In, 1},
-    {"_carat132_HuHuCAR_CT_power", (DL_FUNC) &_carat132_HuHuCAR_CT_power, 13},
-    {"_carat132_PocSimMIN_CT_power", (DL_FUNC) &_carat132_PocSimMIN_CT_power, 13},
-    {"_carat132_StrBCD_CT_power", (DL_FUNC) &_carat132_StrBCD_CT_power, 12},
-    {"_carat132_DoptBCD_CT_power", (DL_FUNC) &_carat132_DoptBCD_CT_power, 11},
-    {"_carat132_AdjBCD_CT_power", (DL_FUNC) &_carat132_AdjBCD_CT_power, 12},
-    {"_carat132_StrPBR_CT_power", (DL_FUNC) &_carat132_StrPBR_CT_power, 12},
+    {"_carat_Rprod", (DL_FUNC) &_carat_Rprod, 1},
+    {"_carat_Bpert", (DL_FUNC) &_carat_Bpert, 2},
+    {"_carat_PStrGen", (DL_FUNC) &_carat_PStrGen, 2},
+    {"_carat_Prob_S", (DL_FUNC) &_carat_Prob_S, 3},
+    {"_carat_nameString", (DL_FUNC) &_carat_nameString, 5},
+    {"_carat_BBCDname", (DL_FUNC) &_carat_BBCDname, 2},
+    {"_carat_Preprocess", (DL_FUNC) &_carat_Preprocess, 1},
+    {"_carat_genData_sim", (DL_FUNC) &_carat_genData_sim, 4},
+    {"_carat_HPSOne", (DL_FUNC) &_carat_HPSOne, 8},
+    {"_carat_StrROne", (DL_FUNC) &_carat_StrROne, 9},
+    {"_carat_AtBCDOne", (DL_FUNC) &_carat_AtBCDOne, 9},
+    {"_carat_AdBCDOne", (DL_FUNC) &_carat_AdBCDOne, 7},
+    {"_carat_C_HPS", (DL_FUNC) &_carat_C_HPS, 7},
+    {"_carat_C_StrR", (DL_FUNC) &_carat_C_StrR, 7},
+    {"_carat_C_AtkinBCD", (DL_FUNC) &_carat_C_AtkinBCD, 5},
+    {"_carat_C_AdjustBCD", (DL_FUNC) &_carat_C_AdjustBCD, 6},
+    {"_carat_C_RHPS", (DL_FUNC) &_carat_C_RHPS, 5},
+    {"_carat_C_RStrR", (DL_FUNC) &_carat_C_RStrR, 5},
+    {"_carat_C_RAtkinBCD", (DL_FUNC) &_carat_C_RAtkinBCD, 3},
+    {"_carat_C_RAdjustBCD", (DL_FUNC) &_carat_C_RAdjustBCD, 4},
+    {"_carat_C_Summarize", (DL_FUNC) &_carat_C_Summarize, 11},
+    {"_carat_C_RSummarize", (DL_FUNC) &_carat_C_RSummarize, 9},
+    {"_carat_HuHuCAR_getData", (DL_FUNC) &_carat_HuHuCAR_getData, 11},
+    {"_carat_HuHuCAR_RT", (DL_FUNC) &_carat_HuHuCAR_RT, 5},
+    {"_carat_HuHuCAR_BT", (DL_FUNC) &_carat_HuHuCAR_BT, 4},
+    {"_carat_HuHuCAR_RT_In", (DL_FUNC) &_carat_HuHuCAR_RT_In, 4},
+    {"_carat_HuHuCAR_BT_In", (DL_FUNC) &_carat_HuHuCAR_BT_In, 4},
+    {"_carat_HuHuCAR_RT_power", (DL_FUNC) &_carat_HuHuCAR_RT_power, 15},
+    {"_carat_HuHuCAR_BT_power", (DL_FUNC) &_carat_HuHuCAR_BT_power, 15},
+    {"_carat_PocSimMIN_getData", (DL_FUNC) &_carat_PocSimMIN_getData, 11},
+    {"_carat_PocSimMIN_RT", (DL_FUNC) &_carat_PocSimMIN_RT, 5},
+    {"_carat_PocSimMIN_BT", (DL_FUNC) &_carat_PocSimMIN_BT, 4},
+    {"_carat_PocSimMIN_RT_In", (DL_FUNC) &_carat_PocSimMIN_RT_In, 4},
+    {"_carat_PocSimMIN_BT_In", (DL_FUNC) &_carat_PocSimMIN_BT_In, 4},
+    {"_carat_PocSimMIN_RT_power", (DL_FUNC) &_carat_PocSimMIN_RT_power, 15},
+    {"_carat_PocSimMIN_BT_power", (DL_FUNC) &_carat_PocSimMIN_BT_power, 15},
+    {"_carat_StrBCD_getData", (DL_FUNC) &_carat_StrBCD_getData, 10},
+    {"_carat_StrBCD_RT", (DL_FUNC) &_carat_StrBCD_RT, 4},
+    {"_carat_StrBCD_BT", (DL_FUNC) &_carat_StrBCD_BT, 3},
+    {"_carat_StrBCD_RT_In", (DL_FUNC) &_carat_StrBCD_RT_In, 3},
+    {"_carat_StrBCD_BT_In", (DL_FUNC) &_carat_StrBCD_BT_In, 3},
+    {"_carat_StrBCD_RT_power", (DL_FUNC) &_carat_StrBCD_RT_power, 14},
+    {"_carat_StrBCD_BT_power", (DL_FUNC) &_carat_StrBCD_BT_power, 14},
+    {"_carat_DoptBCD_In", (DL_FUNC) &_carat_DoptBCD_In, 4},
+    {"_carat_DoptBCD_getData", (DL_FUNC) &_carat_DoptBCD_getData, 9},
+    {"_carat_DoptBCD_RT", (DL_FUNC) &_carat_DoptBCD_RT, 3},
+    {"_carat_DoptBCD_BT", (DL_FUNC) &_carat_DoptBCD_BT, 2},
+    {"_carat_DoptBCD_RT_In", (DL_FUNC) &_carat_DoptBCD_RT_In, 2},
+    {"_carat_DoptBCD_BT_In", (DL_FUNC) &_carat_DoptBCD_BT_In, 2},
+    {"_carat_DoptBCD_RT_power", (DL_FUNC) &_carat_DoptBCD_RT_power, 13},
+    {"_carat_DoptBCD_BT_power", (DL_FUNC) &_carat_DoptBCD_BT_power, 13},
+    {"_carat_AdjBCD_In", (DL_FUNC) &_carat_AdjBCD_In, 5},
+    {"_carat_AdjBCD_getData", (DL_FUNC) &_carat_AdjBCD_getData, 10},
+    {"_carat_AdjBCD_RT", (DL_FUNC) &_carat_AdjBCD_RT, 4},
+    {"_carat_AdjBCD_BT", (DL_FUNC) &_carat_AdjBCD_BT, 3},
+    {"_carat_AdjBCD_RT_In", (DL_FUNC) &_carat_AdjBCD_RT_In, 3},
+    {"_carat_AdjBCD_BT_In", (DL_FUNC) &_carat_AdjBCD_BT_In, 3},
+    {"_carat_AdjBCD_RT_power", (DL_FUNC) &_carat_AdjBCD_RT_power, 14},
+    {"_carat_AdjBCD_BT_power", (DL_FUNC) &_carat_AdjBCD_BT_power, 14},
+    {"_carat_StrPBR_getData", (DL_FUNC) &_carat_StrPBR_getData, 10},
+    {"_carat_StrPBR_RT", (DL_FUNC) &_carat_StrPBR_RT, 4},
+    {"_carat_StrPBR_BT", (DL_FUNC) &_carat_StrPBR_BT, 3},
+    {"_carat_StrPBR_RT_In", (DL_FUNC) &_carat_StrPBR_RT_In, 3},
+    {"_carat_StrPBR_BT_In", (DL_FUNC) &_carat_StrPBR_BT_In, 3},
+    {"_carat_StrPBR_RT_power", (DL_FUNC) &_carat_StrPBR_RT_power, 14},
+    {"_carat_StrPBR_BT_power", (DL_FUNC) &_carat_StrPBR_BT_power, 14},
+    {"_carat_CTT", (DL_FUNC) &_carat_CTT, 1},
+    {"_carat_CTT_In", (DL_FUNC) &_carat_CTT_In, 1},
+    {"_carat_HuHuCAR_CT_power", (DL_FUNC) &_carat_HuHuCAR_CT_power, 13},
+    {"_carat_PocSimMIN_CT_power", (DL_FUNC) &_carat_PocSimMIN_CT_power, 13},
+    {"_carat_StrBCD_CT_power", (DL_FUNC) &_carat_StrBCD_CT_power, 12},
+    {"_carat_DoptBCD_CT_power", (DL_FUNC) &_carat_DoptBCD_CT_power, 11},
+    {"_carat_AdjBCD_CT_power", (DL_FUNC) &_carat_AdjBCD_CT_power, 12},
+    {"_carat_StrPBR_CT_power", (DL_FUNC) &_carat_StrPBR_CT_power, 12},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_carat132(DllInfo *dll) {
+RcppExport void R_init_carat(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }
