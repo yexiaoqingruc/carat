@@ -28,5 +28,8 @@ It returns an object of \code{\link{class}} \code{"carseq"}.
 
 The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{assignment}, \code{covariate}, \code{cov_num}, \code{cov_profile} and others extract various useful features of the value returned by \code{AdjBCD.ui}. 
 }
+\references{
+Baldi Antognini A, Zagoraiou M. \emph{The covariate-adaptive biased coin design for balancing clinical trials in the presence of prognostic factors}[J]. Biometrika, 2011, 98(3): 519-535.
+}
 \keyword{CAR}
 \keyword{user-interface}
