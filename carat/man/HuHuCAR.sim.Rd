@@ -22,6 +22,9 @@ See \code{\link{HuHuCAR}}.
 \value{
 See \code{\link{HuHuCAR}}. 
 }
+\references{
+Hu Y, Hu F. \emph{Asymptotic properties of covariate-adaptive randomization}[J]. The Annals of Statistics, 2012, 40(3): 1794-1815.
+}
 \seealso{
   See \code{\link{HuHuCAR}} for allocating patients with complete covariate data; See \code{\link{HuHuCAR.ui}} for the command-line user interface. 
 }
