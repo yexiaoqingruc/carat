@@ -37,12 +37,16 @@ pathout = function(path, folder = "HHCAR", method = "HuHuCAR"){
     pathvec[11] = path8;
     path6 = paste(pathgg, "strp.RData", sep = "/"); 
     pathvec[12] = path6; 
+    pathvec[13] = paste(pathg, "pathlog", sep = "/")
+    pathvec[14] = paste(pathvec[13], "pathvec.RData", sep = "/")
   }
   if(method == "StrBCD"){
     path8 = paste(pathg, "p.RData", sep = "/");
     pathvec[10] = path8;
     path6 = paste(pathgg, "strp.RData", sep = "/"); 
     pathvec[11] = path6; 
+    pathvec[12] = paste(pathg, "pathlog", sep = "/")
+    pathvec[13] = paste(pathvec[12], "pathvec.RData", sep = "/")
   }
   if(method == "StrPBR"){
     path9 = paste(pathgg, "BG.RData", sep = "/"); 
@@ -53,6 +57,8 @@ pathout = function(path, folder = "HHCAR", method = "HuHuCAR"){
     pathvec[11] = path10; 
     pathvec[12] = path11
     pathvec[13] = path12; 
+    pathvec[14] = paste(pathg, "pathlog", sep = "/")
+    pathvec[15] = paste(pathvec[14], "pathvec.RData", sep = "/")
   }
   if(method == "DoptBCD"){
     patha1 = paste(pathgg, "Fmatrix.RData", sep = "/");
@@ -61,12 +67,16 @@ pathout = function(path, folder = "HHCAR", method = "HuHuCAR"){
     pathvec[10 : 12] = c(patha1, patha2, patha3); 
     path6 = paste(pathgg, "strp.RData", sep = "/"); 
     pathvec[13] = path6; 
+    pathvec[14] = paste(pathg, "pathlog", sep = "/")
+    pathvec[15] = paste(pathvec[14], "pathvec.RData", sep = "/")
   }
   if(method == "AdjBCD"){
     pathaj = paste(pathg, "a.RData", sep = "/"); 
     pathvec[10] = pathaj; 
     path6 = paste(pathgg, "strp.RData", sep = "/"); 
     pathvec[11] = path6; 
+    pathvec[12] = paste(pathg, "pathlog", sep = "/")
+    pathvec[13] = paste(pathvec[12], "pathvec.RData", sep = "/")
   }
   return(pathvec);
 }
@@ -94,15 +104,14 @@ EnterSigCov = function(pathvec){
   }
   cov_num = length(covariate) - 1;
   covariate = covariate[1 : cov_num];
-  covr = as.numeric(as.factor(covariate));
+  #covr = as.numeric(as.factor(covariate));
+  covr = 1 : cov_num;
   CovIndex = data.frame(covariate, covr, stringsAsFactors = TRUE);
   colnames(CovIndex) = c("Real Names", "factors"); 
   rownames(CovIndex) = BBCDname(cov_num, "covariate");
-  message("According to your input, all covariates are stampped to be");
+  message("According to your input, all covariates are stamped to be");
   message("\n");
-  for (j in 1 : cov_num){
-    message("\t", covariate[j], "--", covr[j], sep = " ")
-  }
+  message(paste("\t", covariate, "--", covr, "\n", sep = " "))
   return(list("cov_num" = cov_num, "CovIndex" = CovIndex, 
               "covariate" = covariate, "covr" = covr));
 }
@@ -154,7 +163,8 @@ EnterSigLev = function(i, covariate, covr, pth, level_num){
   }
   level_num[covr[i]] = length(level) - 1;
   level = level[1 : level_num[covr[i]]];
-  lev = as.numeric(as.factor(level));
+  #lev = as.numeric(as.factor(level));
+  lev = 1 : level_num[covr[i]]; 
   Ccha = rep(covariate[i], times = level_num[covr[i]]); 
   Cfac = rep(covr[i], times = level_num[covr[i]]); 
   LevIn = data.frame(Ccha, Cfac, level, lev, stringsAsFactors = TRUE); 
@@ -197,9 +207,9 @@ EnterLev = function(pathvec, cov_num, covariate, covr, pth){
 }
 
 ##############################################################################################################
-## Function used to Enter omega for "HuH" and weight for "PocSim"
+## Function used to Enter omega for "HuHuCAR" and weight for "PocSimMIN"
 ##############################################################################################################
-EnterWeig = function(cov_num, covariate, covr, method = "HuH"){
+EnterWeig = function(cov_num, covariate, covr, method = "HuHuCAR"){
   warnings("off");
   aspect = reaspect = character();
   atp = "Enter the weight for the"; btp = "aspect: ";
@@ -211,16 +221,16 @@ EnterWeig = function(cov_num, covariate, covr, method = "HuH"){
     reaspect[2 + k] = paste(reatp, paste("MARGIN", "--", covariate[which(covr == k)], ": "), sep = " ");
   }
   omega = vector();
-  if(method == "HuH"){
+  if(method == "HuHuCAR"){
     message("Please allocate WEIGHTs to each aspects: ", "\n", 
             "  Notice: larger the absolute value you enter, stronger tendency to obtain balance on the corresponding aspect.")
-  }else if(method == "PocSim"){
+  }else if(method == "PocSimMIN"){
     message("Please allocate WEIGHTs to each margins: ", "\n", 
             "  Notice: larger the absolute value you enter, stronger tendency to obtain balance on corresponding margin.")
   }
   
   for(i in 1 : (2 + cov_num)){
-    if(method == "PocSim" && (i %in% 1 : 2)){
+    if(method == "PocSimMIN" && (i %in% 1 : 2)){
       omega[i] = 0; 
     }else{
       omov = readline(prompt = aspect[i]); 
@@ -266,11 +276,12 @@ EnterCovPrf = function(cov_num, pth, CovIndex, covariate, R){
     }
     lecomvec[l] = lecoming;
     cov_profile[CovIndex[l, 2]] = LevIn[which(LevIn[, 3] == lecoming, arr.ind = T), 4]; 
+    # equal to ## cov_profile[l] = match(lecoming, LevIn$level); 
   }
   message("COVARIATE PROFILE of the coming patient is: \n");
   message("\n"); 
   for(ll in 1 : cov_num){
-    message("\t", covariate[ll], "--", lecomvec[ll], sep = " ", "\n");
+    message("\t", covariate[ll], " -- ", lecomvec[ll], "\n");
   }
   R$cov_profile = cov_profile; 
   return(R); 
@@ -286,15 +297,22 @@ EnterCovPrf = function(cov_num, pth, CovIndex, covariate, R){
 
 HuHuCAR.ui = function(path, folder = "HuHuCAR"){
   
-  pathvec = pathout(path, folder, method = "HuHuCAR"); 
-  
   message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
-    for(i in 1 : 4){
+    pathvec = pathout(path, folder, method = "HuHuCAR"); 
+    while(dir.exists(pathvec[1])){
+      folder = paste(folder, "tymh", sep = "_"); 
+      warning(paste("Homonym exists! A file named '",  
+                    folder, 
+                    "' is created. ", sep = "")); 
+      pathvec = pathout(path, folder, method = "HuHuCAR");
+    }
+    for(i in c(1 : 4, length(pathvec) - 1)){
       dir.create(pathvec[i]); 
     }
     warnings("off");
+    save(pathvec, file = pathvec[length(pathvec)])
     
     Rcov = EnterCov(pathvec);
     if(is.null(Rcov)){
@@ -355,6 +373,18 @@ HuHuCAR.ui = function(path, folder = "HuHuCAR"){
       }
     }
   }else{
+    
+    pathverify = paste(path, folder, sep = "/"); 
+    while(dir.exists(pathverify)){
+      folder = paste(folder, "tymh", sep = "_")
+      pathverify = paste(path, folder, sep = "/"); 
+    }
+    folderpathlog = sub('.....$', '', folder)
+    
+    load(paste(path, folderpathlog, 
+               "static", "pathlog", "pathvec.RData", 
+               sep = "/")); 
+    
     for(m in 6 : 12){
       load(pathvec[m]);
     }
@@ -367,7 +397,7 @@ HuHuCAR.ui = function(path, folder = "HuHuCAR"){
     covariate = as.character(CovIndex[, 1]);
     covr = CovIndex[, 2];
   }
-  R = list(); 
+  R = NULL; 
   CPR = EnterCovPrf(cov_num, pth, CovIndex, covariate, R); 
   message("\n"); 
   message("Reenter COVARIATE PROFILE or not?"); 
@@ -379,7 +409,8 @@ HuHuCAR.ui = function(path, folder = "HuHuCAR"){
     wc = readline("Enter y or n: "); 
   }
   
-  RES = HPSOne(t(D), PStrGen(cov_num, level_num), CPR$cov_profile, cov_num, 
+  PS = PStrGen(cov_num, level_num); 
+  RES = HPSOne(t(D), PS, CPR$cov_profile, cov_num, 
                level_num, omega, strp, p);
   
   strp = RES[1, 1][[1]]; 
@@ -390,7 +421,7 @@ HuHuCAR.ui = function(path, folder = "HuHuCAR"){
   CPR$method = "Hu and Hu's General CAR";
   
   D = t(RES[4, 1][[1]]); 
-  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", "Real"); 
+  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", PS); 
   save(D, file = pathvec[9]);
   
   ass = RES[3, 1][[1]]
@@ -407,15 +438,22 @@ HuHuCAR.ui = function(path, folder = "HuHuCAR"){
 
 PocSimMIN.ui = function(path, folder = "PocSimMIN"){
   
-  pathvec = pathout(path, folder, method = "PocSimMIN"); 
-  
   message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
-    for(i in 1 : 4){
+    pathvec = pathout(path, folder, method = "PocSimMIN"); 
+    while(dir.exists(pathvec[1])){
+      folder = paste(folder, "tymh", sep = "_"); 
+      warning(paste("Homonym exists! A file named '",  
+                    folder, 
+                    "' is created. ", sep = "")); 
+      pathvec = pathout(path, folder, method = "PocSimMIN");
+    }
+    for(i in c(1 : 4, length(pathvec) - 1)){
       dir.create(pathvec[i]); 
     }
     warnings("off");
+    save(pathvec, file = pathvec[length(pathvec)]); 
     
     Rcov = EnterCov(pathvec);
     if(is.null(Rcov)){
@@ -450,19 +488,19 @@ PocSimMIN.ui = function(path, folder = "PocSimMIN"){
         D = matrix(0, ncol = 1 + prod(level_num) + sum(level_num), nrow = 1);
         strp = matrix(0, nrow = prod(level_num), ncol = 1); 
         
-        omega = EnterWeig(cov_num, covariate, covr, method = "PocSim"); 
+        omega = EnterWeig(cov_num, covariate, covr, method = "PocSimMIN"); 
         message("\n"); 
         message("Reenter weights or not?"); 
         ww = readline(prompt = "Enter y or n: ");
         while (ww == "y" || ww == "Y" || ww == "yes" || ww == "YES" || ww == "Yes"){
-          omega = EnterWeig(cov_num, covariate, covr, method = "PocSim"); 
+          omega = EnterWeig(cov_num, covariate, covr, method = "PocSimMIN"); 
           message("\n"); 
           message("Reenter weights or not?"); 
           ww = readline(prompt = "Enter y or n: ");
         }
         save(omega, file = pathvec[10]); 
         
-        message("Please enter the biased coin probability:"); 
+        message("Please enter the biased coin probability (0-1):"); 
         p = readline(prompt = "Enter the probability: ");
         p = as.double(p); 
         warnings("off"); 
@@ -477,6 +515,18 @@ PocSimMIN.ui = function(path, folder = "PocSimMIN"){
       }
     }
   }else{
+    
+    pathverify = paste(path, folder, sep = "/"); 
+    while(dir.exists(pathverify)){
+      folder = paste(folder, "tymh", sep = "_")
+      pathverify = paste(path, folder, sep = "/"); 
+    }
+    folderpathlog = sub('.....$', '', folder)
+    
+    load(paste(path, folderpathlog, 
+               "static", "pathlog", "pathvec.RData", 
+               sep = "/")); 
+    
     for(m in 6 : 12){
       load(pathvec[m]);
     }
@@ -501,14 +551,15 @@ PocSimMIN.ui = function(path, folder = "PocSimMIN"){
     wc = readline("Enter y or n: "); 
   }
   
-  RES = HPSOne(t(D), PStrGen(cov_num, level_num), CPR$cov_profile, cov_num, 
+  PS = PStrGen(cov_num, level_num); 
+  RES = HPSOne(t(D), PS, CPR$cov_profile, cov_num, 
                level_num, omega, strp, p);
   
   CPR$covariate = covariate; CPR$covr = covr; CPR$cov_num = cov_num; 
   CPR$method = "Pocock and Simon's Procedure with Two Arms";
   
   D = t(RES[4, 1][[1]]); 
-  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", "Real"); 
+  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", PS); 
   save(D, file = pathvec[9]);
   
   strp = RES[1, 1][[1]]; 
@@ -529,15 +580,22 @@ PocSimMIN.ui = function(path, folder = "PocSimMIN"){
 
 StrBCD.ui = function(path, folder = "StrBCD"){
   
-  pathvec = pathout(path, folder, method = "StrBCD"); 
-  
   message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
-    for(i in 1 : 4){
+    pathvec = pathout(path, folder, method = "StrBCD"); 
+    while(dir.exists(pathvec[1])){
+      folder = paste(folder, "tymh", sep = "_"); 
+      warning(paste("Homonym exists! A file named '",  
+                    folder, 
+                    "' is created. ", sep = "")); 
+      pathvec = pathout(path, folder, method = "StrBCD");
+    }
+    for(i in c(1 : 4, length(pathvec) - 1)){
       dir.create(pathvec[i]); 
     }
     warnings("off");
+    save(pathvec, file = pathvec[length(pathvec)]); 
     
     Rcov = EnterCov(pathvec);
     if(is.null(Rcov)){
@@ -572,7 +630,7 @@ StrBCD.ui = function(path, folder = "StrBCD"){
         D = matrix(0, ncol = 1 + prod(level_num) + sum(level_num), nrow = 1);
         strp = matrix(0, nrow = prod(level_num), ncol = 1); 
         
-        message("Please enter the biased coin probability: "); 
+        message("Please enter the biased coin probability (0-1): "); 
         p = readline(prompt = "Enter the probability: ");
         p = as.double(p); 
         warnings("off"); 
@@ -587,6 +645,18 @@ StrBCD.ui = function(path, folder = "StrBCD"){
       }
     }
   }else{
+    
+    pathverify = paste(path, folder, sep = "/"); 
+    while(dir.exists(pathverify)){
+      folder = paste(folder, "tymh", sep = "_")
+      pathverify = paste(path, folder, sep = "/"); 
+    }
+    folderpathlog = sub('.....$', '', folder)
+    
+    load(paste(path, folderpathlog, 
+               "static", "pathlog", "pathvec.RData", 
+               sep = "/")); 
+    
     for(m in 6 : 11){
       load(pathvec[m]);
     }
@@ -611,14 +681,15 @@ StrBCD.ui = function(path, folder = "StrBCD"){
     wc = readline("Enter y or n: "); 
   }
   
-  RES = HPSOne(t(D), PStrGen(cov_num, level_num), CPR$cov_profile, cov_num, 
+  PS = PStrGen(cov_num, level_num); 
+  RES = HPSOne(t(D), PS, CPR$cov_profile, cov_num, 
                level_num, omega = c(0, 1, rep(0, times = cov_num)), strp, p);
   
   CPR$covariate = covariate; CPR$covr = covr; CPR$cov_num = cov_num; 
   CPR$method = "Shao's Procedure";
   
   D = t(RES[4, 1][[1]]); 
-  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", "Real"); 
+  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", PS); 
   save(D, file = pathvec[9]);
   
   strp = RES[1, 1][[1]]; 
@@ -638,15 +709,23 @@ StrBCD.ui = function(path, folder = "StrBCD"){
 #StrPBR.ui.carseq = function(path, folder = "StrPBR") UseMethod("carseq")
 
 StrPBR.ui = function(path, folder = "StrPBR"){
-  pathvec = pathout(path, folder, method = "StrPBR"); 
   
   message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
-    for(i in 1 : 4){
+    pathvec = pathout(path, folder, method = "StrPBR"); 
+    while(dir.exists(pathvec[1])){
+      folder = paste(folder, "tymh", sep = "_"); 
+      warning(paste("Homonym exists! A file named '",  
+                    folder, 
+                    "' is created. ", sep = "")); 
+      pathvec = pathout(path, folder, method = "StrPBR");
+    }
+    for(i in c(1 : 4, length(pathvec) - 1)){
       dir.create(pathvec[i]); 
     }
     warnings("off");
+    save(pathvec, file = pathvec[length(pathvec)])
     
     Rcov = EnterCov(pathvec);
     if(is.null(Rcov)){
@@ -705,6 +784,18 @@ StrPBR.ui = function(path, folder = "StrPBR"){
       }
     }
   }else{
+    
+    pathverify = paste(path, folder, sep = "/"); 
+    while(dir.exists(pathverify)){
+      folder = paste(folder, "tymh", sep = "_")
+      pathverify = paste(path, folder, sep = "/"); 
+    }
+    folderpathlog = sub('.....$', '', folder)
+    
+    load(paste(path, folderpathlog, 
+               "static", "pathlog", "pathvec.RData", 
+               sep = "/")); 
+    
     for(m in 6 : 13){
       load(pathvec[m]);
     }
@@ -737,7 +828,7 @@ StrPBR.ui = function(path, folder = "StrPBR"){
   CPR$method = "Stratified Permuted Block Randomization";
   
   D = t(RES[4, 1][[1]]); 
-  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", "Real"); 
+  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", PS); 
   save(D, file = pathvec[9]);
   
   strp = RES[1, 1][[1]]; 
@@ -758,15 +849,22 @@ StrPBR.ui = function(path, folder = "StrPBR"){
 
 DoptBCD.ui = function(path, folder = "DoptBCD"){
   
-  pathvec = pathout(path, folder, method = "DoptBCD"); 
-  
   message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
-    for(i in 1 : 4){
+    pathvec = pathout(path, folder, method = "DoptBCD"); 
+    while(dir.exists(pathvec[1])){
+      folder = paste(folder, "tymh", sep = "_"); 
+      warning(paste("Homonym exists! A file named '",  
+                    folder, 
+                    "' is created. ", sep = "")); 
+      pathvec = pathout(path, folder, method = "DoptBCD");
+    }
+    for(i in c(1 : 4, length(pathvec) - 1)){
       dir.create(pathvec[i]); 
     }
     warnings("off");
+    save(pathvec, file = pathvec[length(pathvec)]); 
     
     Rcov = EnterCov(pathvec);
     if(is.null(Rcov)){
@@ -807,6 +905,18 @@ DoptBCD.ui = function(path, folder = "DoptBCD"){
       }
     }
   }else{
+    
+    pathverify = paste(path, folder, sep = "/"); 
+    while(dir.exists(pathverify)){
+      folder = paste(folder, "tymh", sep = "_")
+      pathverify = paste(path, folder, sep = "/"); 
+    }
+    folderpathlog = sub('.....$', '', folder)
+    
+    load(paste(path, folderpathlog, 
+               "static", "pathlog", "pathvec.RData", 
+               sep = "/")); 
+    
     for(m in 6 : 13){
       load(pathvec[m]);
     }
@@ -831,7 +941,8 @@ DoptBCD.ui = function(path, folder = "DoptBCD"){
     wc = readline("Enter y or n: "); 
   }
   
-  RES = AtBCDOne(t(D), PStrGen(cov_num, level_num), CPR$cov_profile, cov_num,
+  PS = PStrGen(cov_num, level_num); 
+  RES = AtBCDOne(t(D), PS, CPR$cov_profile, cov_num,
                  level_num, Fmatrix, b, strp, No);
   
   Fmatrix = RES[3, 1][[1]]; 
@@ -844,7 +955,7 @@ DoptBCD.ui = function(path, folder = "DoptBCD"){
   CPR$method = "Atkinson's Optimum Biased Coin Design";
   
   D = t(RES[6, 1][[1]]); 
-  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", "Real"); 
+  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", PS); 
   save(D, file = pathvec[9]);
   
   strp = RES[1, 1][[1]]; 
@@ -865,15 +976,22 @@ DoptBCD.ui = function(path, folder = "DoptBCD"){
 
 AdjBCD.ui = function(path, folder = "AdjBCD"){
   
-  pathvec = pathout(path, folder, method = "AdjBCD"); 
-  
   message("Is this the first patient? ");
   first = readline(prompt = "Enter T or F: ");
   if(first == "T" || first == "True" || first == "TRUE"){
-    for(i in 1 : 4){
+    pathvec = pathout(path, folder, method = "AdjBCD"); 
+    while(dir.exists(pathvec[1])){
+      folder = paste(folder, "tymh", sep = "_"); 
+      warning(paste("Homonym exists! A file named '",  
+                    folder, 
+                    "' is created. ", sep = "")); 
+      pathvec = pathout(path, folder, method = "AdjBCD");
+    }
+    for(i in c(1 : 4, length(pathvec) - 1)){
       dir.create(pathvec[i]); 
     }
     warnings("off");
+    save(pathvec, file = pathvec[length(pathvec)])
     
     Rcov = EnterCov(pathvec);
     if(is.null(Rcov)){
@@ -922,6 +1040,18 @@ AdjBCD.ui = function(path, folder = "AdjBCD"){
       }
     }
   }else{
+    
+    pathverify = paste(path, folder, sep = "/"); 
+    while(dir.exists(pathverify)){
+      folder = paste(folder, "tymh", sep = "_")
+      pathverify = paste(path, folder, sep = "/"); 
+    }
+    folderpathlog = sub('.....$', '', folder)
+    
+    load(paste(path, folderpathlog, 
+               "static", "pathlog", "pathvec.RData", 
+               sep = "/")); 
+    
     for(m in 6 : 11){
       load(pathvec[m]);
     }
@@ -934,7 +1064,7 @@ AdjBCD.ui = function(path, folder = "AdjBCD"){
     covariate = as.character(CovIndex[, 1]);
     covr = CovIndex[, 2]; 
   }
-  R = list(); 
+  R = NULL; 
   CPR = EnterCovPrf(cov_num, pth, CovIndex, covariate, R); 
   message("\n"); 
   message("Reenter COVARIATE PROFILE or not?"); 
@@ -946,14 +1076,15 @@ AdjBCD.ui = function(path, folder = "AdjBCD"){
     wc = readline("Enter y or n: "); 
   }
   
-  RES = AdBCDOne(t(D), PStrGen(cov_num, level_num), CPR$cov_profile, 
+  PS = PStrGen(cov_num, level_num); 
+  RES = AdBCDOne(t(D), PS, CPR$cov_profile, 
                  cov_num, level_num, strp, a);
   
   CPR$covariate = covariate; CPR$covr = covr; CPR$cov_num = cov_num; 
   CPR$method = "Atkinson's Optimum Biased Coin Design";
   
   D = t(RES[3, 1][[1]]); 
-  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", "Real"); 
+  colnames(D) = nameString(cov_num, level_num, prod(level_num), "All", PS); 
   save(D, file = pathvec[9]);
   
   strp = RES[1, 1][[1]]; 
