@@ -17,8 +17,16 @@ Prob_S <- function(cov_num, level_num, pr) {
     .Call(`_caratOMP_Prob_S`, cov_num, level_num, pr)
 }
 
-nameString <- function(cov_num, level_num, strt_num, type, typeData) {
-    .Call(`_caratOMP_nameString`, cov_num, level_num, strt_num, type, typeData)
+ReturnCol <- function(M, V) {
+    .Call(`_caratOMP_ReturnCol`, M, V)
+}
+
+MVReturnM <- function(M, MV) {
+    .Call(`_caratOMP_MVReturnM`, M, MV)
+}
+
+nameString <- function(cov_num, level_num, strt_num, type, AllStrata) {
+    .Call(`_caratOMP_nameString`, cov_num, level_num, strt_num, type, AllStrata)
 }
 
 BBCDname <- function(n, S = "pat") {
