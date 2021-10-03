@@ -4,14 +4,14 @@
 Command-line User Interface Using Atkinson's \eqn{D_A}-optimal Biased Coin Design
 }
 \description{
-A call to the user-interface function used to allocate patients to one of two treatments using Atkinson's \eqn{D_A}-optimal biased coin design proposed by Atkinson A C (1982) <Doi:10.2307/2335853>. 
+A call to the user-interface function used to allocate patients to one of two treatments using Atkinson's \eqn{D_A}-optimal biased coin design proposed by Atkinson A C (1982) <doi:10.2307/2335853>. 
 }
 \usage{
 DoptBCD.ui(path, folder = "DoptBCD")
 }
 \arguments{
   \item{path}{the path in which a folder used to store variables will be created. }
-  \item{folder}{name of the folder. If it is the default, a folder named \code{"DoptBCD"} will be created.}
+  \item{folder}{name of the folder. If default, a folder named \code{"DoptBCD"} will be created.}
 }
 \details{
 See \code{\link{DoptBCD}}.
@@ -26,6 +26,9 @@ This function provides a command-line user interface and users should follow the
 It returns an object of \code{\link{class}} \code{"carseq"}.
 
 The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{assignment}, \code{covariate}, \code{cov_num}, \code{cov_profile} and others extract various useful features of the value returned by that function. 
+}
+\references{
+Atkinson A C. \emph{Optimum biased coin designs for sequential clinical trials with prognostic factors}[J]. Biometrika, 1982, 69(1): 61-67.
 }
 \keyword{ CAR }
 \keyword{ user-interface }
