@@ -25,13 +25,22 @@
      \item We corrected the man pages of the corresponding randomization functions, such as \code{PocSimMIN}. 
      \item The underlying S3 methods are not exported to users. 
      \item The generation of names vector in \code{getData} was altered. 
-     \item All of the modifications are consistent with the \pkg{OpenMP}-supported version in \issue{carat}. 
   }
 }
 
-\section{version 1.3 (September 10th, 2020)}{
+\section{version 1.3.2 (September 10th, 2020)}{
 \itemize{
     \item A small modification was added to the function \code{evalRand}. 
-    \item The modification is consistent with the \pkg{OpenMP}-supported version in \issue{carat}. 
+    \item References were added to the man files. 
+    \item Some modifications were added to Remark Index, including modifications in functions of \code{nameString}, \code{PreProcess}, \code{print.carandom}, and \code{print.careval}. 
   }
 }
+
+
+\section{version 2.0 (September 29th, 2021)}{
+\itemize{
+    \item Some modifications were added to Remark Index to fixed some issues, including modifications in functions of \code{\link{print.carandom}}, and \code{print.careval}. 
+    \item Some modifications were made to \code{\link{evalPower}}, by which we reported the standard error instead of standard deviations. 
+    \item Some modifications were made to preprocessing the complete covaraite data frame. 
+    }
+  }
