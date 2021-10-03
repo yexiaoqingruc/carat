@@ -132,32 +132,6 @@ int sample_one(double prob){
   arma::vec T_One = arma::randu<arma::vec>(1);
   return(sum(T_One > prob) + 1);
 }
-/*
- * PStr:
- *   Generate matrix filled with 1 and 2, and no duplications among columns.
- */
-
-arma::mat PStr(int n){
-  arma::mat PStr;
-  int i;
-  arma::vec one(n), result(n);
-  arma::mat final(n, pow(2, n));
-  arma::uvec id;
-  one(n - 1) = 1; result(n - 1) = 1; final(n - 1, 1) = 1;
-  
-  final.col(0) = one;
-  for(i = 1; i < (pow(2, n) - 1); i++){
-    result = result + one;
-    while(sum(result == 2) > 0){
-      id = find(result == 2);
-      result(id - 1) = result(id - 1) + 1;
-      result(id).fill(0);
-    }
-    final.col(i) = result;
-  }
-  final(find(final != 1.0)).fill(2);
-  return final;
-}
 
 /*
  * PStrGen: 
@@ -168,33 +142,28 @@ arma::mat PStr(int n){
  *           a number among 1 to number which equals to i-th element of level_num.
  */
 
-// [[Rcpp::export]]
+//[[Rcpp::export]]
 arma::mat PStrGen(unsigned int cov_num, arma::vec level_num){
-  arma::mat PS, P;
-  arma::uvec ind = find(level_num >= 2.000001);
-  arma::vec lel = level_num(ind);
-  int leng = lel.n_elem;
-  arma::mat PStr_temp = PStr(cov_num);
-  int dimen = PStr_temp.n_cols;
-  PS = arma::zeros<arma::mat>(cov_num, arma::prod(lel - 1) * dimen);
-  if(leng == 0){
-    return PStr_temp;
-  }
-  else{
-    PS.cols(0, dimen - 1) = PStr_temp;
-    int dimn = dimen;
-    for(int j = 0; j < leng; j++){
-      for(int l = 0; l < (lel(j) - 2); l++){
-        PS.cols((l + 1) * dimn, (l + 2) * dimn - 1) = PS.cols(0, dimn - 1);
-        arma::uvec b1(1); b1(0) = ind(j);
-        arma::rowvec b2(dimn); b2.fill(l + 3);
-        PS.submat(b1, arma::linspace<arma::uvec>((l + 1) * dimn, ((l + 2) * dimn - 1), dimn)) = b2;
+  
+  int strt_num = prod(level_num); 
+  arma::mat final(cov_num, strt_num); 
+  
+  int ground = 1; 
+  for(unsigned int i = 0; i < cov_num; i++){
+    
+    int ground_tree_num = strt_num / ground; //the total number of trees planted in each ground; 
+    int tree_num = ground_tree_num / level_num(i); //the number of each variety of tree; Here, plant level_num(i) kinds of tree in each ground; 
+    for(int j = 0; j < ground; j++){
+      arma::rowvec pad(ground_tree_num); 
+      for(int k = 0; k < level_num(i); k++){
+        pad.subvec(k * tree_num + 0, (k + 1) * tree_num - 1).fill(k + 1); 
       }
-      dimn *= (lel(j) - 1);
+      final.submat(i, j * ground_tree_num + 0, i, (j + 1) * ground_tree_num - 1) = pad; 
     }
-    P = PStrR(PS); 
-    return P;
+    ground = ground * level_num(i); 
   }
+  
+  return final; 
 }
 
 
@@ -243,6 +212,7 @@ arma::mat Prob_S(unsigned int cov_num, arma::vec level_num, arma::vec pr){
   return p_mat;
 }
 
+//[[Rcpp::export]]
 arma::uvec ReturnCol(arma::mat M, arma::vec V){
   unsigned int leng = V.n_elem;
   arma::uvec Ind = find(M.row(0) == V(0));
@@ -254,62 +224,55 @@ arma::uvec ReturnCol(arma::mat M, arma::vec V){
   return Ind + 1;
 }
 
-// [[Rcpp::export]]
+//[[Rcpp::export]]
+arma::uvec MVReturnM(arma::mat M, arma::mat MV){
+  int colsnum = MV.n_cols; 
+  arma::uvec ind(colsnum); 
+  for(int i = 0; i < colsnum; i++){
+    ind(i) = ReturnCol(M, MV.col(i))(0); 
+  }
+  return ind; 
+}
+
+//[[Rcpp::export]]
 Rcpp::StringVector nameString(unsigned int cov_num, arma::vec level_num, int strt_num,
-                              Rcpp::String type, Rcpp::String typeData){
+                              Rcpp::String type, arma::mat AllStrata){
   
   Rcpp::Environment base("package:base");
   Rcpp::Function paste = base["paste"];
   
   int suml = sum(level_num);
   
-  if(type == "All" && typeData == "Simulation"){
-    int prods = arma::prod(level_num);
+  if(type == "All"){
+    int strt_num = AllStrata.n_cols;
     
-    Rcpp::StringVector name(1 + prods + suml);
+    Rcpp::StringVector name(1 + strt_num + suml);
     name(0) = "overall";
     
-    for(int i = 0; i < prods; i++){
-      SEXP namL_temp = paste("level", i + 1, Rcpp::Named("sep", ""));
+    for(int i = 0; i < strt_num; i++){
+      SEXP namL_temp = paste("stratum", i + 1, 
+                             "(", paste(AllStrata.col(i), Rcpp::Named("collapse", ",")), ")", 
+                             Rcpp::Named("sep", ""));
       Rcpp::String namL = Rcpp::as<Rcpp::String>(namL_temp);
       name(i + 1) = namL;
     }
     int sums = 0;
     for(unsigned int l = 0; l < cov_num; l++){
       for(int j = 0; j < level_num(l); j++){
-        SEXP namM_temp = paste("margin", l + 1, j + 1, Rcpp::Named("sep", ""));
+        SEXP namM_temp = paste("margin", "(", paste(l + 1, j + 1, Rcpp::Named("sep", ";")), ")", Rcpp::Named("sep", ""));
         Rcpp::String namM = Rcpp::as<Rcpp::String>(namM_temp);
-        name(1 + prods + sums + j) = namM;
+        name(1 + strt_num + sums + j) = namM;
       }
       sums += level_num(l);
     }
     return name;
   }
-  if(typeData == "Simulation" && type == "Margin"){
+  if(type == "Margin"){
     Rcpp::StringVector name(cov_num);
     for(unsigned int i = 0; i < cov_num; i++){
       SEXP nameM_temp = paste("margin", i + 1, Rcpp::Named("sep", ""));
       Rcpp::String nameM = Rcpp::as<Rcpp::String>(nameM_temp);
       name(i) = nameM;
-    }
-    return name;
-  }
-  if(typeData == "Real" && type == "All"){
-    Rcpp::StringVector name(1 + strt_num + suml);
-    name(0) = "overall";
-    for(int i = 0; i < strt_num; i++){
-      SEXP nameRL_temp = paste("level", i + 1, Rcpp::Named("sep", ""));
-      Rcpp::String nameRL = Rcpp::as<Rcpp::String>(nameRL_temp);
-      name(i + 1) = nameRL;
-    }
-    int sumsR = 0;
-    for(unsigned int l = 0; l < cov_num; l++){
-      for(int j = 0; j < level_num(l); j++){
-        SEXP nameRM_temp = paste("margin", l + 1, j + 1, Rcpp::Named("sep", ""));
-        Rcpp::String nameRM = Rcpp::as<Rcpp::String>(nameRM_temp);
-        name(1 + strt_num + sumsR + j) = nameRM;
-      }
-      sumsR += level_num(l);
     }
     return name;
   }
@@ -343,15 +306,24 @@ Rcpp::List Preprocess(Rcpp::DataFrame data){
   }
   else{
     Rcpp::Environment base("package:base");
-    Rcpp::Function numeric = base["as.numeric"];
-    Rcpp::Function sapply = base["sapply"];
+    //Rcpp::Function Asnumeric = base["as.numeric"];
+    //Rcpp::Function Asfactor = base["as.factor"];
+    Rcpp::Function Runique = base["unique"];
+    Rcpp::Function Rmatch = base["match"];
     
-    SEXP data_temp = sapply(data, numeric);
-    Rcpp::NumericMatrix dat = Rcpp::as<Rcpp::NumericMatrix>(data_temp);
-    arma::mat data_new = Rcpp::as<arma::mat>(dat);
+    int nc = data.ncol(), nr = data.nrow(); 
+    arma::mat data_new(nr, nc); 
     
-    unsigned int cov_num = data_new.n_cols;
-    arma::vec level_num = max(trans(data_new), 1);
+    unsigned int cov_num = nc;
+    arma::vec level_num(cov_num); 
+    
+    for(int i = 0; i < nc; i++){
+      SEXP levnamei = Runique(data[i]);
+      Rcpp::CharacterVector levname = Rcpp::as<Rcpp::CharacterVector>(levnamei);
+      SEXP datai = Rmatch(data[i], levnamei); 
+      data_new.col(i) = Rcpp::as<arma::vec>(datai); 
+      level_num(i) = levname.length(); 
+    }
     
     return Rcpp::List::create(Rcpp::Named("data") = trans(data_new),
                               Rcpp::Named("cov_num") = cov_num,
@@ -359,30 +331,30 @@ Rcpp::List Preprocess(Rcpp::DataFrame data){
   }
 }
 
-List Preprocess_out(DataFrame data){
-  DataFrame comp;
-  if(typeid(data).name() != typeid(comp).name()){
-    Rcpp::Rcout<<"Error in data: data type must be dataframe!"<<std::endl;
-    return List::create(Named("data") = data);
+arma::mat TransDataFrame(Rcpp::DataFrame data){
+  int nc = data.ncol(), nr = data.nrow(); 
+  arma::mat datat(nc, nr); 
+  for(int i = 0; i < nr; i++){
+    arma::vec rowi(nc); 
+    for(int j = 0; j < nc; j++){
+      Rcpp::NumericVector colj = data[j]; 
+      rowi(j) = colj(i); 
+    }
+    datat.col(i) = rowi; 
   }
-  else{
-    Environment base("package:base");
-    Function numeric = base["as.numeric"];
-    Function sapply = base["sapply"];
-    Function matrix = base["apply"];
-    
-    SEXP data_temp = sapply(data, numeric);
-    NumericMatrix dat = as<NumericMatrix>(data_temp);
-    arma::mat data_new = as<arma::mat>(dat);
-    
-    int cov_num = data_new.n_rows-2;
-    arma::vec level_num = max(data_new.rows(0,cov_num-1), 1);
-    
-    return List::create(Named("data") = data_new,
-                        Named("cov_num") = cov_num,
-                        Named("level_num") = level_num);
-  }
+  return datat; 
 }
+
+Rcpp::List Preprocess_out(Rcpp::DataFrame data){
+  arma::mat datat = TransDataFrame(data); 
+  int nc = datat.n_cols, cov_num = nc - 2; 
+  arma::mat data_new = datat.cols(0, cov_num - 1); 
+  arma::vec level_num = max(trans(data_new), 1);
+  return Rcpp::List::create(Rcpp::Named("data") = trans(datat), 
+                            Rcpp::Named("cov_num") = cov_num, 
+                            Rcpp::Named("level_num") = level_num); 
+}
+
 
 arma::mat remd(arma::mat A, int bsize){
   int nr = A.n_rows, nc = A.n_cols; 
@@ -420,23 +392,23 @@ arma::field<arma::mat> Analyze(arma::mat DIF, int row, int strt_num, int bsize,
   R.col(3) = m; 
   
   /*arma::vec SM(bsize);
-  arma::mat Dstr = AD.rows(1, strt_num);
-  
-  arma::mat ypar = remd(SNUM, bsize);
-  arma::uvec isum(bsize); isum(0) = bsize; 
-  isum.subvec(1, bsize - 1) = arma::linspace<arma::uvec>(1, bsize - 1, bsize - 1);
-  for(int s = 0; s < bsize; s++){
-    arma::uvec ind = arma::find(ypar == s);
-    arma::vec Dstr_c = Dstr(ind);
-    if(Dstr_c.n_elem == 0){
-      SM(isum(s) - 1) = arma::datum::nan;
-    }
-    else{
-      double M = mean(Dstr_c);
-      SM(isum(s) - 1) = M; 
-    }
-  }
-  */
+   arma::mat Dstr = AD.rows(1, strt_num);
+   
+   arma::mat ypar = remd(SNUM, bsize);
+   arma::uvec isum(bsize); isum(0) = bsize; 
+   isum.subvec(1, bsize - 1) = arma::linspace<arma::uvec>(1, bsize - 1, bsize - 1);
+   for(int s = 0; s < bsize; s++){
+   arma::uvec ind = arma::find(ypar == s);
+   arma::vec Dstr_c = Dstr(ind);
+   if(Dstr_c.n_elem == 0){
+   SM(isum(s) - 1) = arma::datum::nan;
+   }
+   else{
+   double M = mean(Dstr_c);
+   SM(isum(s) - 1) = M; 
+   }
+   }
+   */
   
   Res(0, 0) = ASSIG; 
   Res(1, 0) = R; 
@@ -1909,7 +1881,7 @@ arma::vec HuHuCAR_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma::
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -1940,7 +1912,7 @@ arma::vec HuHuCAR_BT_power(int n,unsigned int cov_num,arma::vec level_num,arma::
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -2316,7 +2288,7 @@ arma::vec PocSimMIN_RT_power(int n,unsigned int cov_num,arma::vec level_num,arma
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -2352,7 +2324,7 @@ arma::vec PocSimMIN_BT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -2640,7 +2612,7 @@ arma::vec StrBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -2676,7 +2648,7 @@ arma::vec StrBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -3019,7 +2991,7 @@ arma::vec DoptBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -3055,7 +3027,7 @@ arma::vec DoptBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -3431,7 +3403,7 @@ arma::vec AdjBCD_RT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -3466,7 +3438,7 @@ arma::vec AdjBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -3850,7 +3822,7 @@ arma::vec StrPBR_RT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -3886,7 +3858,7 @@ arma::vec StrPBR_BT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -3945,7 +3917,7 @@ arma::vec HuHuCAR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                            arma::vec mu1, arma::vec mu2,double sigma,
                            double Iternum,double sl,arma::vec omega,double p){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -3964,7 +3936,7 @@ arma::vec HuHuCAR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -3976,7 +3948,7 @@ arma::vec PocSimMIN_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                              arma::vec mu1, arma::vec mu2,double sigma,
                              double Iternum,double sl,arma::vec weight,double p){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -3995,7 +3967,7 @@ arma::vec PocSimMIN_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -4007,7 +3979,7 @@ arma::vec StrBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec mu1, arma::vec mu2,double sigma,
                           double Iternum,double sl,double p){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -4026,7 +3998,7 @@ arma::vec StrBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -4038,7 +4010,7 @@ arma::vec DoptBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                            arma::vec mu1, arma::vec mu2,double sigma,
                            int Iternum,double sl){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -4057,7 +4029,7 @@ arma::vec DoptBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -4069,7 +4041,7 @@ arma::vec AdjBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           int Iternum,double sl,double a){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -4088,7 +4060,7 @@ arma::vec AdjBCD_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
@@ -4100,7 +4072,7 @@ arma::vec StrPBR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec mu1,arma::vec mu2,double sigma,
                           double Iternum,double sl,int bsize){
   if(mu1.n_elem != mu2.n_elem){
-    arma::vec result(mu1.n_elem);
+    arma::vec result(2*mu1.n_elem);
     Rcpp::Rcout<<"The length of two mu's must match!"<<std::endl;
     return result;
   }
@@ -4119,7 +4091,7 @@ arma::vec StrPBR_CT_power(int n,unsigned int cov_num,arma::vec level_num,
     arma::vec result(2*N1);
     for(i = 0; i < N1; i++){
       result(i) = sum(p_all.row(i))/Iternum;
-      result(i+N1) = stddev(p_all.row(i));
+      result(i+N1) = sqrt(result(i)*(1.0-result(i))/Iternum);
     }
     return result;
   }
