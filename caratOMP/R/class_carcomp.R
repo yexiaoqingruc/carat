@@ -31,19 +31,19 @@ print.carcomp = function(x, digits = getOption("digits"), prefix = "\t", ...){
     meth = paste(meth, x$mechanism[k], sep = ", ")
   }
   cat("Randomization", "=", meth, "\n", sep = " ")
-  if(length(unique(x$DataType)) != 1){
-    cat("Data Type: ", x$DataType, "\n"); 
+  if(length(unique(x$`Data Type`)) != 1){
+    cat("Data Type: ", x$`Data Type`, "\n"); 
   }else{
-    cat("Data Type: ", x$DataType[1], "\n"); 
+    cat("Data Type: ", x$`Data Type`[1], "\n"); 
     if(!"TRUE" %in% is.na(x$DataGeneration)){
       cat("Data generation: ", x$DataGeneration[1], "\n"); 
     }
   }
   cat("group", "=",  LETTERS[1 : 2], "\n", sep = " ")
-  if(is.na(x$N)){
+  if(is.na(x$n)){
     cat("iteration: no consistency between methods.", "\n")
   }else{
-    cat("N", "=", x$N, "\n", sep = " ")
+    cat("Sample size", "=", x$n, "\n", sep = " ")
   }
   if(is.na(x$iteration)){
     cat("iteration: no consistency between methods.", "\n")
@@ -59,15 +59,15 @@ print.carcomp = function(x, digits = getOption("digits"), prefix = "\t", ...){
   
   cat("\n")
   
-  cat("absolute mean at overall, marginal and within-strt. levels:\n")
+  cat("Mean absolute imbalances at overall, within-strt. and within-cov.-margin levels:\n")
   cat("Overall:", "\n")
   print(x$`Overall Imbalances`, digits = 3)
   cat("\n")
-  cat("Marginal:\n")
-  print(x$`Marginal Imbalances`, digits = 3)
-  cat("\n")
   cat("Within-strt.:\n")
   print(x$`Within-stratum Imbalances`, digits = 3)
+  cat("\n")
+  cat("Within-cov.-margin:\n")
+  print(x$`Within-covariate-margin Imbalances`, digits = 3)
   
   if(!is.null(x$dfmm) && !is.null(x$df_abm)){
     dfmm = x$dfmm; 
@@ -116,7 +116,7 @@ print.carcomp = function(x, digits = getOption("digits"), prefix = "\t", ...){
     position = "bottom";
     ncol = 3; nrow = 1; 
     
-    plots = list(p1, p2, p3); 
+    plots = list(p1, p3, p2); 
     g = ggplot2::ggplotGrob(plots[[1]] + 
                               ggplot2::theme(legend.position = position))$grobs; 
     legend = g[[which(sapply(g, function(x) x$name) == "guide-box")]]; 
