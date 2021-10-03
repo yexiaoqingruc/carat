@@ -11,34 +11,40 @@ Compares randomization procedures based on several different quantities of imbal
   \item{\dots}{objects of class \code{"careval"}.}
 }
 \details{
-The primary goal of using covariate-adaptive randomization in practice is to achieve balance with respect to the key covariates and to the overall treatment assignments. We choose four rules to measure the absolute imbalances at overall, marginal and withinn-stratum levels, which are maximal, 95\%quantile, median and mean of the absolute imbalances at different aspects.
+The primary goal of using covariate-adaptive randomization in practice is to achieve balance with respect to the key covariates. We choose four rules to measure the absolute imbalances at overall, within-covariate-margin, and within-stratum levels, which are maximal, 95\%quantile, median and mean of the absolute imbalances at different aspects. The Monte Carlo method is used to calculate the four types of imbalances. Let \eqn{D_{n,i}(\cdot)} be the final difference at the corresponding level for \eqn{i}th iteration, \eqn{i=1,\ldots}, \code{N}, and \code{N} is the number of iterations.
 
 (1) Maximal
-\deqn{\max_{i = 1, \dots, n}|D_n(\cdot)|.}
-(2) 95\% quantile
-\deqn{|D_{\lceil0.95n\rceil}(\cdot)|.}
-(3) Median
+\deqn{\max_{i = 1, \dots, N}|D_{n,i}(\cdot)|.}
 
-\deqn{(|D_n(\cdot)|)= |D_{(n+1)/2}(\cdot)|}
-for \eqn{n} is odd; 
-\deqn{(|D_n(\cdot)|)=\frac{1}{2}(|D_{(n/2)}(\cdot)|+|D_{(n/2+1)}(\cdot)|)}
-for \eqn{n} is even.
+(2) 95\% quantile
+\deqn{|D_{n,\lceil0.95N\rceil}(\cdot)|.}
+
+(3) Median
+\deqn{|D_{n,(N+1)/2}(\cdot)|}
+for \code{N} is odd, and
+\deqn{\frac{1}{2}(|D_{(N/2)}(\cdot)|+|D_{(N/2+1)}(\cdot)|)}
+for \code{N} is even.
 
 (4) Mean
-\deqn{\frac{1}{n}\sum_{j = 1}^{n}|D_{j}(\cdot)|.}
-
-The Monte Carlo method is used to calculate the four types of imbalances.
+\deqn{\frac{1}{N}\sum_{i = 1}^{N}|D_{n, i}(\cdot)|.}
 }
 \value{
 It returns an object of \code{\link{class}} \code{"carcomp"}. 
 
-The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{Assig}, \code{Diff}, \code{data}, \code{All strata} and others extract various useful features of the value returned by \code{compRand}. 
+An object of class \code{"carcomp"} is a list containing the following components: 
 
-An object of class \code{"carcomp"} is a list containing at least the following components: 
-
-\item{Overall Imbalances}{a matrix containing maximum, 95\%-quantile, median, mean, and loss of absolute overall imbalances for all the input methods.}
-\item{Marginal Imbalances}{a matrix containing maximum, 95\%-quantile, median, mean, and loss of absolute marginal imbalances for all the input methods.}
-\item{Within-stratum Imbalances}{a matrix containing maximum, 95\%-quantile, median, mean, loss of absolute imbalances, and also containing mean absolute imbalances of the strata with \eqn{i} patients falling in, where \eqn{i = 1, \dots, bsize} for all the input methods.}
+\item{Overall Imbalances}{a matrix containing the maximum, 95\%-quantile, median, and mean of the absolute overall imbalances for the randomization method(s) to be evaluated.}
+\item{Within-covariate-margin Imbalances Imbalances}{a matrix containing the maximum, 95\%-quantile, median, and mean of the absolute within-covariate-margin imbalances for the randomization method(s) to be evaluated.}
+\item{Within-stratum Imbalances}{a matrix containing the maximum, 95\%-quantile, median, and mean of the absolute within-stratum imbalances for the randomization method(s) to be evaluated.}
+\item{dfmm}{a data frame containing the mean absolute imbalances at the overall, within-stratum, and within-covariate-margin levels for the randomization method(s) to be evaluated.}
+\item{df_abm}{a data frame containing the absolute imbalances at the overall, within-stratum, and within-covariate-margin levels.}
+\item{mechanism}{a character string giving the randomization method(s) to be evaluated.}
+\item{n}{the number of patients.}
+\item{iteration}{the number of iterations.}
+\item{cov_num}{the number of covariates.}
+\item{level_num}{a vector of level numbers for each covariate.}
+\item{Data Type}{a character string giving the data type, \code{Real} or \code{Simulated}. }
+\item{DataGeneration}{a bool vector indicating whether the data used for all the iterations is the same for the randomization method(s) to be evaluated.}
 }
 \seealso{
   See \code{\link{evalRand}} or \code{\link{evalRand.sim}} to evaluate a specific randomization procedure.
