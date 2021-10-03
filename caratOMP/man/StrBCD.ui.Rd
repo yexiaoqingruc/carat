@@ -4,7 +4,7 @@
 Command-line User Interface Using Shao's Method 
 }
 \description{
-A call to the user-interface function used to allocate patients to one of two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <Doi:10.1093/biomet/asq014>. 
+A call to the user-interface function used to allocate patients to one of two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <doi:10.1093/biomet/asq014>. 
 }
 \usage{
 StrBCD.ui(path, folder = "StrBCD")
@@ -23,6 +23,9 @@ See \code{\link{StrBCD}}.
 It returns an object of \code{\link{class}} \code{"carseq"}.
 
 The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{assignment}, \code{covariate}, \code{cov_num}, \code{cov_profile} and others extract various useful features of the value returned by \code{StrBCD.ui}. 
+}
+\references{
+Shao J, Yu X, Zhong B. \emph{A theory for testing hypotheses under covariate-adaptive randomization}[J]. Biometrika, 2010, 97(2): 347-360. 
 }
 \note{
 This function provides a command-line interface and users should follow the prompts to enter data including covariates as well as levels for each covariate, biased probability \code{p} and the covariate profile of the new patient. 
