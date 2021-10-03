@@ -23,10 +23,14 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
   cat(strwrap(meth, prefix = prefix), sep = "\n")
   cat("\n")
   cat("call:\n", 
-      paste("evalRand.sim(", "method = ", x$method, ")\n", sep = ""));
+      if(x$`Data Type` == "Real"){
+        paste("evalRand(", "method = ", x$method, ")\n", sep = "")
+      }else{
+        paste("evalRand.sim(", "method = ", x$method, ")\n", sep = "")
+      });
   cat("\n"); 
   cat("group", "=",  LETTERS[1 : 2], "\n", sep = " ")
-  cat("N", "=", x$N, "\n", sep = " ")
+  cat("Sample size", "=", x$n, "\n", sep = " ")
   cat("iteration", "=", x$iteration, "\n", sep = " ")
   cat("cov_num", "=", x$cov_num, "\n", sep = " ")
   cat("level_num", "=", as.character(x$level_num), "\n", sep = " ")
@@ -43,7 +47,7 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
   }
   
   cat("\n")
-  if(x$N <= 7){K = x$N}else{K = 7}
+  if(x$n <= 7){K = x$n}else{K = 7}
   if(x$iteration <= 3){I = x$iteration}else{I = 3}
   cat("assignments of the first", I, "iterations for the first", K, 
       "patients", ":", "\n", sep = " ")
@@ -51,18 +55,18 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
   for(l in 1 : I){
     ass[l, ] = LETTERS[as.numeric(ass[l, ])]
   }
-  ass$' ' = rep("...", times = I)
+  #ass$' ' = rep("...", times = I)
   print(ass)
   cat("\n")
-  cat("evaluation by imbalances: \n"); 
+  cat("Evaluation by imbalances: \n"); 
   cat("absolute overall imbalances:\n")
-  print(x$Imb[1, ], digits = 3);
+  print(x$Imb[1, ], digits = 3); 
   cat("\n"); 
   if(x$strt_num <= 3){s = x$strt_num}else{s = 3}
   cat("absolute within-strt. imbalances for the first", s, "strata:", "\n", sep = " "); 
   print(x$Imb[2 : (s + 1), ], digits = 3)
   cat("\n"); 
-  cat("absolute marginal imbalances for", x$cov_num, "margins:", "\n", sep = " "); 
+  cat("absolute within-cov.-margin imbalances for", x$cov_num, "margins:", "\n", sep = " "); 
   v = vector(); 
   r = 1 + x$strt_num + 1; 
   for(i in 1 :x$cov_num){
@@ -70,6 +74,40 @@ print.careval = function(x, digits = getOption("digits"), prefix = "\t", ...){
     r = r + x$level_num[i]; 
   }
   print(x$Imb[v, ], digits = 3); 
+  
   cat("\n")
+  if(x$`Data Type` == "Real"){
+    Rlist = apply(x$data, 2, unique); 
+    cat("Remark-Index: \n"); 
+    if(!x$datanumeric){
+      for(i in 1 : x$cov_num){
+        cat(i, "--", x$covariates[i], "\n"); 
+        if(length(unique(x$level_num)) > 1){
+          cat("\t", paste(1 : x$level_num[i], as.factor(Rlist[[i]]), 
+                          sep = " <--> "), 
+              sep = "  ", "\n"); 
+        }else{
+          cat("\t", paste(1 : x$level_num[i], as.factor(Rlist[, i]), 
+                          sep = " <--> "), 
+              sep = "  ", "\n"); 
+        }
+      }
+    }else{
+      for(i in 1 : x$cov_num){
+        cat(i, "--", x$covariates[i], "\n"); 
+        if(length(unique(x$level_num)) > 1){
+          cat("\t", paste(1 : x$level_num[i], 
+                          as.factor(Rlist[[i]])[match(1 : x$level_num[i], as.numeric(as.factor(Rlist[[i]])))], 
+                          sep = " <--> "), 
+              sep = "  ", "\n"); 
+        }else{
+          cat("\t", paste(1 : x$level_num[i], 
+                          as.factor(Rlist[, i])[match(1 : x$level_num[i], as.numeric(as.factor(Rlist[, i])))], 
+                          sep = " <--> "), 
+              sep = "  ", "\n"); 
+        }
+      }
+    }
+  }
   invisible(x)
 }
