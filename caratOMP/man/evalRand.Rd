@@ -8,15 +8,15 @@ evalRand(data, method = "HuHuCAR", N = 500, ...)
 Evaluates a specific randomization procedure based on several different quantities of imbalances. 
 }
 \arguments{
-  \item{data}{a dataframe. A row of the dataframe contains the covariate profile of a patient.}
-  \item{N}{the iteration number.}
-  \item{method}{the randomization method to be used in allocating patients. The default randomization \dQuote{\code{HuHuCAR}} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \dQuote{\code{PocSimMIN}}, \dQuote{\code{StrBCD}}, \dQuote{\code{StrPBR}}, \dQuote{\code{DoptBCD}}, and \dQuote{\code{AdjBCD}}.}
-  \item{\dots}{arguments to be passed to methods. These depend on the \code{method} and the following arguments are accepted:
+  \item{data}{a data frame. A row of the dataframe corresponds to the covariate profile of a patient.}
+  \item{N}{the iteration number. The default is 500.}
+  \item{method}{the randomization procedure to be evaluated. This package provides assessment for \code{"HuHuCAR"}, \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"AdjBCD"}, and \code{"DoptBCD"}.}
+  \item{\dots}{arguments to be passed to \code{method}. These arguments depend on the randomization method assessed and the following arguments are accepted:
   \describe{
-  \item{omega}{the vector of weights at the overall, within-stratum, and marginal levels. It is required that at least one element is larger than 0. Note that \code{omega} is only needed when \code{HuHuCAR} is to be assessed.}
-  \item{weight}{the vector of weights for all involved margins. It is required that at least one element is NOT 0 and \code{length(weight) = cov_num}. Note that \code{weight} is only needed when \code{PocSimMIN} is to be assessed.}
-  \item{p}{the probability of assigning one patinet to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. Note that \code{p} is only needed when \code{"HuHuCAR"},  \code{"PocSimMIN"} and \code{"StrBCD"} are to be assessed.}
-  \item{a}{a design parameter. As \code{a} goes to \eqn{\infty}, the design becomes more deteministic. Note that \code{a} is only needed when \code{"AdjBCD"} is to be assessed.}
+  \item{omega}{a vector of weights at the overall, within-stratum, and within-covariate-margin levels. It is required that at least one element is larger than 0. Note that \code{omega} is only needed when \code{HuHuCAR} is to be assessed.}
+  \item{weight}{a vector of weights for within-covariate-margin imbalances. It is required that at least one element is larger than 0. Note that \code{weight} is only needed when \code{PocSimMIN} is to be assessed.}
+  \item{p}{the biased coin probability. \code{p} should be larger than \code{1/2} and less than \code{1}. Note that \code{p} is only needed when \code{"HuHuCAR"},  \code{"PocSimMIN"} and \code{"StrBCD"} are to be assessed.}
+  \item{a}{a design parameter governing the degree of randomness. Note that \code{a} is only needed when \code{"AdjBCD"} is to be assessed.}
   \item{bsize}{the block size for stratified permuted block randomization. It is required to be a multiple of \code{2}. Note that \code{bsize} is only needed when \code{"StrPBR"} is to be assessed.}
   }}
 }
@@ -26,15 +26,25 @@ Evaluates a specific randomization procedure based on several different quantiti
 \value{
 It returns an object of \code{\link{class}} \code{"careval"}. 
 
-The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{Assig}, \code{Diff}, \code{data}, \code{All strata} and others extract various useful features of the value returned by \code{evalRand}. 
+An object of class \code{"careval"} is a list containing the following components: 
 
-An object of class \code{"careval"} is a list containing at least the following components: 
-
-\item{N}{the number of patients.}
-\item{Assig}{a \code{n*N} matrix containing assignments for each patient for N iterations. }
-\item{Imb}{a matrix containing maximum, 95\%-quantile, median, and mean of absolute imbalances at overall, each within-stratum and each marginal levels.}
-\item{SNUM}{a matrix with \code{N} colunms containing number of patients at overall, each marginal and each within-stratum levels for each iteration.}
-\item{Data Type}{the data type. \code{Real} or \code{Simulated}. }
+\item{datanumeric}{a bool indicating whether the data is a numeric data frame.}
+\item{weight}{a vector giving the weights imposed on each covariate.}
+\item{bsize}{the block size.}
+\item{covariates}{a character string giving the name(s) of the included covariates.}
+\item{Assig}{a \code{n*N} matrix containing assignments for each patient for N iterations.}
+\item{strt_num}{the number of strata.}
+\item{All strata}{a matrix containing all strata involved.}
+\item{Imb}{a matrix containing maximum, 95\%-quantile, median, and mean of absolute imbalances at overall, within-stratum and within-covariate-margin levels. Note that, we refer users to the \eqn{i}th column of \code{`All strata`} for details of \code{level} \eqn{i, i=1,\ldots,}\code{strt_num}. }
+\item{SNUM}{a matrix with \code{N} colunms containing the number of patients in each stratum for each iteration.}
+\item{method}{the randomization method to be evaluated.}
+\item{cov_num}{the number of covariates.}
+\item{level_num}{a vector of level numbers for each covariate.}
+\item{n}{the number of patients.}
+\item{iteration}{the number of iterations.}
+\item{Data Type}{the data type. \code{Real} or \code{Simulated}.}
+\item{DIF}{a matrix containing the final differences at the overall, within-stratum, and within-covariate-margin levels for each iteration.}
+\item{data}{the data frame.}
 }
 \seealso{
   See \code{\link{evalRand.sim}} to evaluate a randomization procedure with covariate data generating mechanism.
