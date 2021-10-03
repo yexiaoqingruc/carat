@@ -10,7 +10,7 @@
 }
 
 \section{Acknowledgement}{
-This work was supported by the Fundamental Research Funds for the Central Universities, and the Research Funds of Renmin University of China (Grant No. 2020030092).
+This work was supported by the Fundamental Research Funds for the Central Universities, and the Research Funds of Renmin University of China [grant number 20XNA023].
 }
 \references{
 Atkinson A C. \emph{Optimum biased coin designs for sequential clinical trials with prognostic factors}[J]. Biometrika, 1982, 69(1): 61-67. <doi:10.2307/2335853>
@@ -21,7 +21,7 @@ Hu Y, Hu F. \emph{Asymptotic properties of covariate-adaptive randomization}[J].
 
 Ma W, Hu F, Zhang L. \emph{Testing hypotheses of covariate-adaptive randomized clinical trials}[J]. Journal of the American Statistical Association, 2015, 110(510): 669-680. <doi:10.1080/01621459.2014.922469>
 
-Ma W, Qin Y, Li Y, et al. \emph{Statistical Inference for Covariate-Adaptive Randomization Procedures}[J]. Journal of the American Statistical Association, 2019 (in press): 1-21. <doi:10.1080/01621459.2019.1635483>
+Ma W, Qin Y, Li Y, et al. \emph{Statistical Inference for Covariate-Adaptive Randomization Procedures}[J]. Journal of the American Statistical Association, 2020, 115(531): 1488-1597. <doi:10.1080/01621459.2019.1635483>
 
 Pocock S J, Simon R. \emph{Sequential treatment assignment with balancing for prognostic factors in the controlled clinical trial}[J]. Biometrics, 1975: 103-115. <doi:10.2307/2529712>
 
