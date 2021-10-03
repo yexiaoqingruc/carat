@@ -18,11 +18,11 @@ print.carseq = function(x, digits = getOption("digits"), prefix = "\t", ...)
   cat(strwrap(x$method, prefix = prefix), sep = "\n")
   cat("\n")
   cat("group", "=",  LETTERS[1 : 2], "\n", sep = " ")
-  cat("Stamps for covariates: ", " ", paste(x$covariate, x$covr, sep = "--"), "\n"); 
+  cat("Stamps for covariates: ", " ", paste(paste(x$covr, x$covariate, sep = "--"), collapse = "; "), "\n"); 
   cat("Stamps for levels of each covariate: \n"); 
   for(i in 1 : x$cov_num){
-    cat(" ", x$covariate[i], "--", x$covr[i], "\n")
-    cat("\t",paste(x[[i]][, 3], x[[i]][, 4], sep = "--"), "\n")
+    cat(" ", x$covr[i], "--", x$covariate[i], "\n")
+    cat("\t",paste(paste(x[[i]][, 4], x[[i]][, 3], sep = " <--> "), collapse = "; "), "\n")
   }
   cat("covariate profile: ", x$cov_profile, "\n"); 
   brid = c("A", "B"); 
