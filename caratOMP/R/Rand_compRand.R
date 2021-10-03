@@ -18,7 +18,7 @@ compRand = function(...){
   for(j in 1 : leng){
     R = Objects[[j]]; 
     mechanism[j] = R$method; 
-    nvec[j] = R$N; 
+    nvec[j] = R$n; 
     Nvec[j] = R$iteration; 
     DataType[j] = R$`Data Type`;
     cnvec[j] = R$cov_num; 
@@ -81,7 +81,7 @@ compRand = function(...){
   
   
   RR = list("Overall Imbalances" = C_O, 
-            "Marginal Imbalances" = C_M, "Within-stratum Imbalances" = C_S);
+            "Within-covariate-margin Imbalances" = C_M, "Within-stratum Imbalances" = C_S);
   
   df_abm = data.frame(t(AbM), stringsAsFactors = TRUE); 
   Randomization = rep(mechanism, each = N); 
@@ -111,11 +111,11 @@ compRand = function(...){
   RR$df_abm = df_abm; 
   
   RR$mechanism = mechanism; 
-  RR$N = n;
+  RR$n = n;
   RR$iteration = N;
   RR$cov_num = cov_num; 
   RR$level_num = level_num; 
-  RR$DataType = DataType; 
+  RR$`Data Type` = DataType; 
   RR$DataGeneration = DataG; 
   
   class(RR) = "carcomp";
