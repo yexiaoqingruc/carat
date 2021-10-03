@@ -4,7 +4,7 @@
 Command-line User Interface Using Pocock and Simon's Procedure with Two-Arms Case
 }
 \description{
-A call to the user-iterface function used to allocate patients to one of two treatments using Pocock and Simon's method proposed by Pocock S J, Simon R (1975) <Doi:10.2307/2529712>. 
+A call to the user-iterface function used to allocate patients to one of two treatments using Pocock and Simon's method proposed by Pocock S J, Simon R (1975) <doi:10.2307/2529712>. 
 }
 \usage{
 PocSimMIN.ui(path, folder = "PocSimMIN")
@@ -21,6 +21,9 @@ This function provides a command-line interface and users should follow the prom
 }
 \seealso{
   See \code{\link{PocSimMIN}} for allocating a given completely collected data; See \code{\link{PocSimMIN.sim}} for allocating patients with covariate data generating mechanism.
+}
+\references{
+Pocock S J, Simon R. \emph{Sequential treatment assignment with balancing for prognostic factors in the controlled clinical trial}[J]. Biometrics, 1975: 103-115.
 }
 \value{
 It returns an object of \code{\link{class}} \code{"carseq"}.
