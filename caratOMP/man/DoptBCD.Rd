@@ -5,31 +5,37 @@
 DoptBCD(data)
 }
 \description{
-Allocates patients to one of two treatments based on the \eqn{D_A}-optimal biased coin design with in the presence of the prognostic factors proposed by Atkinson A C (1982) <Doi:10.2307/2335853>.
+Allocates patients to one of two treatments based on the \eqn{D_A}-optimal biased coin design in the presence of the prognostic factors proposed by Atkinson A C (1982) <doi:10.2307/2335853>.
 }
 \arguments{
-  \item{data}{a dataframe. A row of the dataframe contains the covariate profile of a patient.}
+  \item{data}{a data frame. A row of the dataframe corresponds to the covariate profile of a patient.}
 }
 \details{
-To minimize the loss associated with an experiment involving \eqn{n} patients, Atkinson's optimal applied \eqn{D_A}-optimality to the method, in which the probability of assigning the \eqn{(n+1)}th patient to treatment 1 in the presence of prognostic factors is
-    \deqn{\frac{[1 - (1; \bold{x}^t_{n+1})(\bold{F}^t_n\bold{F}_n)^{-1}\bold{b}_n]^2}{[1-(1; \bold{x}^t_{n+1})(\bold{F}_n^t\bold{F}_n)^{-1}\bold{b}_n]^2+[1 + (1; \bold{x}_{n+1}^t)(\bold{F}_n^t\bold{F}_n)^{-1}\bold{b}_n]^2},}
-where \eqn{\bold{X} = (\bold{x_i}, i = 1, \dots, n)} and \eqn{\bold{x}_i = (x_{i1}, \dots, x_{in})} denote the covariate profile of the \eqn{i}th patient; and \eqn{\bold{F}_n = [\bold{1}_n; \bold{X}]} is the information matrix; and \eqn{\bold{b}_n^T=(2\bold{T}_n-\bold{1}_n)^T\bold{F}_n}, \eqn{\bold{T}_n = (T_1, \dots, T_n)} is a sequence containing the first \eqn{n} patients' allocations.
+Consider an experiment involving \eqn{n} patients. Assuming a linear model between response and covariates, Atkinson's \eqn{D_A}-optimal biased coin design sequentially assigns patients to minimize the variance of estimated treatment effects. Supposing \eqn{j} patients have been assigned, the probability of assigning the \eqn{(j+1)}th patient to treatment 1 is
+    \deqn{\frac{[1 - (1; \bold{x}^t_{j+1})(\bold{F}^t_j\bold{F}_j)^{-1}\bold{b}_j]^2}{[1-(1; \bold{x}^t_{j+1})(\bold{F}_j^t\bold{F}_j)^{-1}\bold{b}_j]^2+[1 + (1; \bold{x}_{j+1}^t)(\bold{F}_j^t\bold{F}_j)^{-1}\bold{b}_j]^2},}
+where \eqn{\bold{X} = (\bold{x_i}, i = 1, \dots, j)} and \eqn{\bold{x}_i = (x_{i1}, \dots, x_{ij})} denote the covariate profile of the \eqn{i}th patient; and \eqn{\bold{F}_j = [\bold{1}_j; \bold{X}]} is the information matrix; and \eqn{\bold{b}_j^T=(2\bold{T}_j-\bold{1}_j)^T\bold{F}_j}, \eqn{\bold{T}_j = (T_1, \dots, T_j)} is a sequence containing the first \eqn{j} patients' allocations.
 
     Details of the procedure can be found in A.C.Atkinson (1982).
 }
 \value{
 It returns an object of \code{\link{class}} \code{"carandom"}. 
 
-The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{Cov_Assig}, \code{Diff}, \code{data}, \code{All strata} and others extract various useful features of the value returned by \code{DoptBCD}. 
+An object of class \code{"carandom"} is a list containing the following components: 
 
-An object of class \code{"carandom"} is a list containing at least the following components: 
-
+\item{datanumeric}{a bool indicating whether the data is a numeric data frame.}
+\item{covariates}{a character string giving the name(s) of the included covariates.}
+\item{strt_num}{the number of strata.}
 \item{cov_num}{the number of covariates.}
+\item{level_num}{a vector of level numbers for each covariate.}
 \item{n}{the number of patients.}
-\item{Cov_Assign}{a \code{(cov_num + 1) * n} matrix containing covariate profiles for all patients and the corresponding assignments. The \eqn{i}th column represents the \eqn{i}th patient. The first \code{cov_num} rows include patients' covariate profiles and the last row contains the assignment.}
+\item{Cov_Assig}{a \code{(cov_num + 1) * n} matrix containing covariate profiles for all patients and the corresponding assignments. The \eqn{i}th column represents the \eqn{i}th patient. The first \code{cov_num} rows include patients' covariate profiles, and the last row contains the assignments.}
+\item{assignments}{the randomization sequence.}
 \item{All strata}{a matrix containing all strata involved.}
-\item{Diff}{a matrix with only one column. There are final differences at the overall, within-stratum, and marginal levels.}
-\item{Data Type}{the data type. \code{Real} or \code{Simulated}. }
+\item{Diff}{a matrix with only one column. There are final differences at the overall, within-stratum, and within-covariate-margin levels.}
+\item{method}{a character string describing the randomization procedure to be used.}
+\item{Data Type}{a character string giving the data type, \code{Real} or \code{Simulated}. }
+\item{framework}{the framework of the used randomization procedure: stratified randomization, or model-based method.}
+\item{data}{the data frame.}
 }
 \seealso{
   See \code{\link{DoptBCD.sim}} for allocating patients with covariate data generating mechanism.  
