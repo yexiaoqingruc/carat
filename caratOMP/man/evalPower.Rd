@@ -11,28 +11,28 @@
   Returns powers and a plot of the chosen test and method under different treatment effects.
 }
 \arguments{
-  \item{n}{number of patients.}
-  \item{cov_num}{number of covariates.}
-  \item{level_num}{the vector of level numbers for each covariate. Hence the length of \code{level_num} should be equal to the number of covariates.}
-  \item{pr}{the vector of probabilities. Under the assumption of independence between covariates, \code{pr} is a vector containing probabilities for each level of each covariate. The length of pr should correspond to the number of all levels, and the vector sum of \code{pr} should be equal to \code{cov_num}.}
-  \item{type}{the type of models when generating data. Optional input: \code{linear} or \code{logit}.}
-  \item{beta}{the vector of coefficients of covariates. The length of \code{beta} must correspond to \code{cov_num}.}
-  \item{di}{the vector of values of difference in treatment effects. The default value is a sequence from \code{0} to \code{0.5} with increment being \code{0.1}.}
-  \item{sigma}{the error variance for the linear model. The default value is 1. It is only used when \code{type} is \code{linear}.}
-  \item{Iternum}{an integer. It is the number of iterations required for calculating the average power.}
-  \item{sl}{the significance level. If the p-value returned by the test is less than \code{sl}, we will reject the null hypothesis. The default value is \code{0.05}.}
-  \item{method}{a character string specifying the alternative randomization methods to be used in allocating patients, must be one of \code{"HuHuCAR"} (default), \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"DoptBCD"} or \code{"AdjBCD"}.}
-  \item{test}{a charater string specifying the alternative test used to verify hypothesis, must one of \code{"rand.test"}, \code{"boot.test"} or \code{"corr.test"}, which are the randomization test, the bootstrap t-test and the corrected t-test respectively.}
-  \item{plot}{bool. It shows whether to plot or not. Optional input: \code{TRUE} or \code{FALSE}.}
-  \item{...}{arguments to be passed to methods. These depend on the \code{method} and \code{test} used and the following arguments are accepted:
+  \item{n}{the number of patients.}
+  \item{cov_num}{the number of covariates.}
+  \item{level_num}{a vector of level numbers for each covariate. Hence the length of \code{level_num} should be equal to the number of covariates.}
+  \item{pr}{a vector of probabilities. Under the assumption of independence between covariates, \code{pr} is a vector containing probabilities for each level of each covariate. The length of \code{pr} should correspond to the number of all levels, and the sum of the probabilities for each margin should be \code{1}.}
+  \item{type}{a data-generating method. Optional input: \code{"linear"} or \code{"logit"}.}
+  \item{beta}{a vector of coefficients of covariates. The length of \code{beta} must correspond to \code{cov_num}.}
+  \item{di}{a value or a vector of values of difference in treatment effects. The default value is a sequence from \code{0} to \code{0.5} with increments of \code{0.1}. The value(s) forms the horizontal axis of the plot.}
+  \item{sigma}{the error variance for the linear model. The default is 1. This should be a positive value and is only used when \code{type = linear}.}
+  \item{Iternum}{an integer. It is the number of iterations required for power calculation.}
+  \item{sl}{the significance level. If the \eqn{p} value returned by the test is less than \code{sl}, the null hypothesis will be rejected. The default value is \code{0.05}.}
+  \item{method}{the randomization procedure to be used for power calculation. This package provides power calculation for \code{"HuHuCAR"}, \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"AdjBCD"}, and \code{"DoptBCD"}.}
+  \item{test}{a character string specifying the alternative tests used to verify hypothesis, must be one of \code{"boot.test"}, \code{"corr.test"} or \code{"rand.test"}, which are the randomization test, the bootstrap \eqn{t} test, and the corrected \eqn{t} test, respectively. The arguments associated with the testing function can be specified; otherwise, the default value will be used.}
+  \item{plot}{a bool. It indicates whether to plot or not. Optional input: \code{TRUE} or \code{FALSE}.}
+  \item{\dots}{arguments to be passed to \code{method}. These arguments depend on the randomization method used and the following arguments are accepted:
   \describe{
-      \item{omega}{the vector of weights at the overall, within-stratum, and marginal levels. It is required that at least one element is larger than 0. Note that \code{omega} is only needed when \code{HuHuCAR} is to be used.}
-      \item{weight}{the vector of weights for marginal imbalances. It is required that at least one element is larger than 0. Note that \code{weight} is only needed when \code{PocSimMIN} is to be used.}
-      \item{p}{the probability of assigning one patient to treatment 1, where \code{p} should be larger than \code{1/2} to obtain balance. Note that \code{p} is only needed when \code{"HuHuCAR", "PocSimMIN"} and \code{"StrBCD"} are to be used.}
-      \item{a}{a design parameter. As \code{a} goes to \eqn{\infty}, the design becomes more deterministic.}
-  \item{bsize}{block size for the stratified randomization. It is required to be a multiple of 2. Note that \code{bsize} is only needed when \code{"StrPBR"} is to be used.}
-  \item{B}{an integer. It is the number of bootstrap samplings. It is needed only when \code{test} is \code{boot.test}.}
-  \item{Reps}{an integer. It represents the number of randomized replications. It is needed only when \code{test} is \code{rand.test}.}
+      \item{omega}{a vector of weights at the overall, within-stratum, and within-covariate-margin levels. It is required that at least one element is larger than 0. Note that \code{omega} is only needed when \code{HuHuCAR} is to be used.}
+      \item{weight}{a vector of weights for within-covariate-margin imbalances. It is required that at least one element is larger than 0. Note that \code{weight} is only needed when \code{PocSimMIN} is to be used.}
+      \item{p}{the biased coin probability. \code{p} should be larger than \code{1/2} and less than \code{1}. Note that \code{p} is only needed when \code{"HuHuCAR", "PocSimMIN"} and \code{"StrBCD"} are to be used.}
+      \item{a}{a design parameter governing the degree of randomness. Note that \code{a} is only needed when \code{"AdjBCD"} is to be used.}
+  \item{bsize}{the block size for the stratified randomization. It is required to be a multiple of 2. Note that \code{bsize} is only needed when \code{"StrPBR"} is to be used.}
+  \item{B}{an integer. It is the number of bootstrap samples. It is needed only when \code{test} is \code{boot.test}.}
+  \item{Reps}{an integer. It is the number of randomized replications used in the randomization test. It is needed only when \code{test} is \code{rand.test}.}
   \item{nthreads}{the number of threads to be used in parallel computation. This is needed only under \code{rand.test} and \code{boot.test}. The default is \code{1}. }
   }}
 }
