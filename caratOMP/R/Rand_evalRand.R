@@ -27,9 +27,22 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
     datap = data;
   }
   
-  rdata = Preprocess(datap); 
-  data_proc = rdata$data; 
-  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  dataverify = unique(apply(data[1, ], 2, class)); 
+  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
+    data_proc = t(data); 
+    cov_num = nrow(data_proc); 
+    level_num = vector(); 
+    for(i in 1 : cov_num){
+      level_num[i] = length(unique(data_proc[i, ])); 
+    }
+    R$datanumeric = TRUE; 
+  }else{
+    rdata = Preprocess(datap); 
+    data_proc = rdata$data; 
+    cov_num = rdata$cov_num; level_num = rdata$level_num; 
+    R$datanumeric = FALSE; 
+  }
+  
   n = ncol(data_proc); 
   if("bsize" %in% varnam){
     bsize = varl[[which(varnam == "bsize")]]; 
@@ -290,34 +303,49 @@ evalRand = function(data, method = "HuHuCAR", N = 500, ...){
     R$bsize = bsize; 
   }
   
+  covn = colnames(data); 
+  R$covariates = covn; 
+  
   A = RES[1, 1][[1]];
   colnames(A) = BBCDname(N, "iter"); 
   rownames(A) = BBCDname(n, "pat");
   R$Assig = A;
   
-  PS = RES[4, 1][[1]]; 
-  R$`All strata` = PS;
+  PS0 = RES[4, 1][[1]]; 
+  PS0ordinPS = MVReturnM(PStrGen(cov_num, level_num), PS0); 
+  PS = PS0[, order(PS0ordinPS)]; 
   strt_num = ncol(PS); 
   R$strt_num = strt_num; 
+  colnames(PS) = BBCDname(strt_num, "stratum"); 
+  rownames(PS) = paste("covariate", 1 : cov_num,"(", covn, ")", sep = ""); 
+  R$`All strata` = PS;
   
-  Imbmat = RES[2, 1][[1]]; 
+  Imbmat0 = RES[2, 1][[1]]; 
+  Imbmat = Imbmat0[c(1, 1 + order(PS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), ]
   colnames(Imbmat) = c("max", "95% quan", "median", "mean");
-  rownames(Imbmat) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  rownames(Imbmat) = nameString(cov_num, level_num, strt_num, "All", PS); 
   R$Imb = Imbmat; 
   
-  R$SNUM = RES[3, 1][[1]]; 
+  SNUM0 = RES[3, 1][[1]]; 
+  SNUM = SNUM0[order(PS0ordinPS), , drop = FALSE]; 
+  rownames(SNUM) = nameString(cov_num, level_num, strt_num, "All", PS)[2 : (1 + strt_num)];  
+  colnames(SNUM) = BBCDname(N, "iter")
+  R$SNUM = SNUM; 
   
   R$method = method; 
   R$cov_num = cov_num; 
   R$level_num = level_num; 
-  R$N = ncol(data_proc);
+  R$n = ncol(data_proc);
   R$iteration = N;
   R$'Data Type' = "Real"; 
   
-  DIF = RES[5, 1][[1]]; 
+  DIF0 = RES[5, 1][[1]]; 
+  DIF = DIF0[c(1, 1 + order(PS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), , drop = FALSE]
   colnames(DIF) = BBCDname(N, "iter"); 
-  rownames(DIF) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  rownames(DIF) = nameString(cov_num, level_num, strt_num, "All", PS); 
   R$DIF = DIF; 
+  R$data = data; 
+  
   
   class(R) = "careval"; 
   return(R);
@@ -621,30 +649,39 @@ evalRand.sim = function(n = 1000, N = 500, Replace = FALSE, cov_num = 2,
   rownames(A) = BBCDname(n, "pat");
   R$Assig = A;
   
-  PS = RES[4, 1][[1]]; 
-  R$`All strata` = PS; 
-  
+  PS0 = RES[4, 1][[1]]; 
+  PS0ordinPS = MVReturnM(PStrGen(cov_num, level_num), PS0); 
+  PS = PS0[, order(PS0ordinPS)]; 
   strt_num = ncol(PS); 
   R$strt_num = strt_num; 
+  colnames(PS) = BBCDname(strt_num, "stratum"); 
+  rownames(PS) = BBCDname(cov_num, "covariate"); 
+  R$`All strata` = PS;
   
-  Imbmat = RES[2, 1][[1]]; 
+  Imbmat0 = RES[2, 1][[1]]; 
+  Imbmat = Imbmat0[c(1, 1 + order(PS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), , drop = FALSE]
   colnames(Imbmat) = c("max", "95% quan", "median", "mean");
-  rownames(Imbmat) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  rownames(Imbmat) = nameString(cov_num, level_num, strt_num, "All", PS); 
   R$Imb = Imbmat; 
   
-  R$SNUM = RES[3, 1][[1]]; 
+  SNUM0 = RES[3, 1][[1]]; 
+  SNUM = SNUM0[order(PS0ordinPS), , drop = FALSE]; 
+  rownames(SNUM) = nameString(cov_num, level_num, strt_num, "All", PS)[2 : (1 + strt_num)];  
+  colnames(SNUM) = BBCDname(N, "iter")
+  R$SNUM = SNUM; 
   
   R$method = method; 
   R$cov_num = cov_num; 
   R$level_num = level_num; 
-  R$N = n; 
+  R$n = n; 
   R$iteration = N; 
   R$'Data Type' = "Simulated"; 
   R$DataGeneration = Replace;
   
-  DIF = RES[5, 1][[1]]; 
+  DIF0 = RES[5, 1][[1]]; 
+  DIF = DIF0[c(1, 1 + order(PS0ordinPS), (1 + strt_num + 1) : (1 + strt_num + sum(level_num))), , drop = FALSE]
   colnames(DIF) = BBCDname(N, "iter"); 
-  rownames(DIF) = nameString(cov_num, level_num, strt_num, "All", "Real"); 
+  rownames(DIF) = nameString(cov_num, level_num, strt_num, "All", PS); 
   R$DIF = DIF; 
   
   class(R) = "careval"; 
