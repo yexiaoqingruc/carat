@@ -5,44 +5,52 @@
 StrBCD(data, p = 0.85)
 }
 \description{
-Allocates patients to one of the two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <Doi:10.1093/biomet/asq014>. 
+Allocates patients to one of the two treatments using Shao's method proposed by Shao J, Yu X, Zhong B (2010) <doi:10.1093/biomet/asq014>. 
 }
 \arguments{
-  \item{data}{a dataframe. A row of the dataframe contains the covariate profile of a patient.}
-  \item{p}{the probability of assigning one patient to treatment 1. \code{p} should be larger than \code{1/2} to obtain balance. The default is \code{0.85}.}
+  \item{data}{a data frame. A row of the dataframe corresponds to the covariate profile of a patient.}
+  \item{p}{the biased coin probability. \code{p} should be larger than \code{1/2} and less than \code{1}. The default is \code{0.85}.}
 }
 \details{
-    Consider \eqn{I} covaraites and \eqn{m_i} levels for the \eqn{i}th covariate. \eqn{T_j} is the assignment of the \eqn{j}th patient and \eqn{Z_j = (k_1,\dots,k_I)} indicates the covariate profile of this patient. For convenience, \eqn{(k_1,\dots,k_I)} and \eqn{(i;k_i)} denote the stratum and margin respectively. \eqn{D_n(.)} is the difference between the numbers of assigned patients in treatment \eqn{1} and treatment \eqn{2} at the corresponding level after \eqn{n} patinets have been assigned.Then Shao's procedure is as follows:
+    Consider \eqn{I} covariates and \eqn{m_i} levels for the \eqn{i}th covariate, \eqn{i=1,\ldots,I}. \eqn{T_j} is the assignment of the \eqn{j}th patient and \eqn{Z_j = (k_1,\dots,k_I)} indicates the covariate profile of this patient, \eqn{j=1,\ldots,n}. For convenience, \eqn{(k_1,\dots,k_I)} and \eqn{(i;k_i)} denote the stratum and margin, respectively. \eqn{D_j(.)} is the difference between the numbers of patients assigned to treatment \eqn{1} and treatment \eqn{2} at the corresponding levels after \eqn{j} patients have been assigned. The stratified biased coin design is as follows:
 
 (1) The first patient is assigned to treatment \eqn{1} with probability \eqn{1/2};
 
-(2) Suppose \eqn{n-1} patients have each been assigned to a treatment (\eqn{n>1}) and the \eqn{n}th patinent falls within \eqn{(k_1^*,\dots,k_I^*)};
+(2) Suppose \eqn{j-1} patients have been assigned (\eqn{1<j\le n}) and the \eqn{j}th patient falls within \eqn{(k_1^*,\dots,k_I^*)};
 
-(3)If the \eqn{n}th patient was assigned to treatment \eqn{1}, then the potential within-stratum difference between the two groups is
-\deqn{D_n^{(1)}(k_1^*,\dots,k_I^*)=D_n(k_1^*,\dots,k_I^*)+1.}
-Similarly, the potential differences would be obtained in the same way if the \eqn{n}th patinent was assigned to treatment \eqn{2}.
+(3) If the \eqn{j}th patient were assigned to treatment \eqn{1}, then the potential within-stratum difference between the two treatments would be
+\deqn{D_j^{(1)}(k_1^*,\dots,k_I^*)=D_j(k_1^*,\dots,k_I^*)+1}
+for stratum \eqn{(k_1^*,\ldots,k_I^*)}. Similarly, the potential difference would be obtained in the same way if the \eqn{j}th patient were assigned to treatment \eqn{2};
 
 (4) An imbalance measure is defined by
-\deqn{Imb_n^{(l)}=[D_n^{(1)}(k_1^*,\dots,k_I^*)]^2,l=1,2;}
+\deqn{Imb_j^{(l)}=[D_j^{(l)}(k_1^*,\dots,k_I^*)]^2,l=1,2;}
 
-(5)Conditional on the assignments of the first (\eqn{n-1}) patients as well as the covariates'profiles of the first \eqn{n} patients, assign the nth patient to treatment \eqn{1} with probability
-\deqn{P(T_n=1|Z_n,T_1,\dots,T_{n-1})=q,} for \eqn{Imb_n^{(1)}>Imb_n^{(2)},}
-\deqn{P(T_n=1|Z_n,T_1,\dots,T_{n-1})=p,} for \eqn{Imb_n^{(1)}<Imb_n^{(2)}}, and
-\deqn{P(T_n=1|Z_n,T_1,\dots,T_{n-1})=0.5,} for \eqn{Imb_n^{(1)}=Imb_n^{(2)}.}
+(5) Conditional on the assignments of the first (\eqn{j-1}) patients as well as the covariates'profiles of the first \eqn{j} patients, assign the \eqn{j}th patient to treatment \eqn{1} with probability
+\deqn{P(T_j=1|Z_j,T_1,\dots,T_{j-1})=q} for \eqn{Imb_j^{(1)}>Imb_j^{(2)},}
+\deqn{P(T_j=1|Z_j,T_1,\dots,T_{j-1})=p} for \eqn{Imb_j^{(1)}<Imb_j^{(2)}}, and
+\deqn{P(T_j=1|Z_j,T_1,\dots,T_{j-1})=0.5} for \eqn{Imb_j^{(1)}=Imb_j^{(2)}.}
+
+Details of the procedure can be found in Shao J, Yu X, Zhong B (2010).
 }
 \value{
 It returns an object of \code{\link{class}} \code{"carandom"}. 
 
-The function \code{\link{print}} is used to obtain results. The generic accessor functions \code{Cov_Assig}, \code{Diff}, \code{data}, \code{All strata} and others extract various useful features of the value returned by \code{StrBCD}. 
+An object of class \code{"carandom"} is a list containing the following components: 
 
-An object of class \code{"carandom"} is a list containing at least the following components: 
-
+\item{datanumeric}{a bool indicating whether the data is a numeric data frame.}
+\item{covariates}{a character string giving the name(s) of the included covariates.}
+\item{strt_num}{the number of strata.}
 \item{cov_num}{the number of covariates.}
+\item{level_num}{a vector of level numbers for each covariate.}
 \item{n}{the number of patients.}
-\item{Cov_Assign}{a \code{(cov_num + 1) * n} matrix containing covariate profiles for all patients and corresponding assignments. The \eqn{i}th column represents the \eqn{i}th patient. The first \code{cov_num} rows include patients' covariate profiles, and the last row contains the assignment.}
-\item{All strata}{a matrix containing all the strata involved.}
-\item{Diff}{a matrix with only one column. There are final differences at the overall, within-stratum, and marginal levels.}
-\item{Data Type}{the data type. \code{Real} or \code{Simulated}. }
+\item{Cov_Assig}{a \code{(cov_num + 1) * n} matrix containing covariate profiles for all patients and the corresponding assignments. The \eqn{i}th column represents the \eqn{i}th patient. The first \code{cov_num} rows include patients' covariate profiles, and the last row contains the assignments.}
+\item{assignments}{the randomization sequence.}
+\item{All strata}{a matrix containing all strata involved.}
+\item{Diff}{a matrix with only one column. There are final differences at the overall, within-stratum, and within-covariate-margin levels.}
+\item{method}{a character string describing the randomization procedure to be used.}
+\item{Data Type}{a character string giving the data type, \code{Real} or \code{Simulated}. }
+\item{framework}{the framework of the used randomization procedure: stratified randomization, or model-based method.}
+\item{data}{the data frame.}
 }
 \seealso{
   See \code{\link{StrBCD.sim}} for allocating patients with covariate data generating mechanism. 
