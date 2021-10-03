@@ -11,20 +11,20 @@
 \arguments{
   \item{n}{the number of patients.}
   \item{cov_num}{the number of covariates.}
-  \item{level_num}{the vector of level numbers for each covariate. Hence the length of \code{level_num} should be equal to the number of covariates.}
-  \item{pr}{the vector of probabilities. Under the assumption of independence between covariates, \code{pr} is a vector containing probabilities for each level of each covariate. The length of \code{pr} should correspond to number of all levels, and the vector sum of \code{pr} should be equal to \code{cov_num}.}
-  \item{type}{the type of models when generating data. Optional input: \code{linear} or \code{logit}.}
-  \item{beta}{the vector of coefficients of covariates. The length of \code{beta} must correspond to \code{cov_num}.}
+  \item{level_num}{a vector of level numbers for each covariate. Hence the length of \code{level_num} should be equal to the number of covariates.}
+  \item{pr}{a vector of probabilities. Under the assumption of independence between covariates, \code{pr} is a vector containing probabilities for each level of each covariate. The length of \code{pr} should correspond to the number of all levels, and the sum of the probabilities for each margin should be \code{1}.}
+  \item{type}{a data-generating method. Optional input: \code{"linear"} or \code{"logit"}.}
+  \item{beta}{a vector of coefficients of covariates. The length of \code{beta} must correspond to \code{cov_num}.}
   \item{mu1,mu2}{main effects of treatment \code{1} and treatment \code{2}.}
-  \item{sigma}{the error variance for linear model. The default is 1. It is only used when \code{type} is \code{linear}.}
-  \item{method}{the randomization method to be used in allocating patients. The default randomization method \code{"HuHuCAR"} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"DoptBCD"}, and \code{"AdjBCD"}.}
-  \item{\dots}{arguments to be passed to methods. These depends on the \code{method} used and the following arguments are accepted:
+  \item{sigma}{the error variance for the linear model. The default is 1. This should be a positive value and is only used when \code{type = linear}.}
+  \item{method}{the randomization procedure to be used for generating randomization sequences. This package provides data-generating function for \code{"HuHuCAR"}, \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"AdjBCD"}, and \code{"DoptBCD"}.}
+  \item{\dots}{arguments to be passed to \code{method}. These arguments depend on the randomization method used and the following arguments are accepted:
   \describe{
-  \item{omega}{the vector of weights at the overall, within-stratum, and marginal levels. It is required that at least one element is larger than 0. Note that \code{omega} is only needed when \code{"HuHuCAR"} is to be used.}
-      \item{weight}{the vector of weights for maginal imbalances. It is required that at least one element is larger than 0. Note that \code{weight} is only needed when \code{PocSimMIN} is to be used.}
-      \item{p}{the probability of assigning one patient to treatment 1. \code{p} is required to be larger than \code{1/2} to obtain balance. Note that \code{p} is only needed when \code{"HuHuCAR", "PocSimMIN"} and \code{"StrBCD"} are to be used.}
-      \item{a}{a design parameter. As \code{a} goes to \eqn{\infty}, the design becomes more deterministic.}
-  \item{bsize}{the block size for stratified randomization. It is required to be a multiple of 2. Notice that \code{bsize} is only needed when \code{"StrPBR"} is to be used.}
+  \item{omega}{a vector of weights at the overall, within-stratum, and within-covariate-margin levels. It is required that at least one element is larger than 0. Note that \code{omega} is only needed when \code{HuHuCAR} is to be used.}
+      \item{weight}{a vector of weights for within-covariate-margin imbalances. It is required that at least one element is larger than 0. Note that \code{weight} is only needed when \code{PocSimMIN} is to be used.}
+      \item{p}{the biased coin probability. \code{p} should be larger than \code{1/2} and less than \code{1}. Note that \code{p} is only needed when \code{"HuHuCAR", "PocSimMIN"} and \code{"StrBCD"} are to be used.}
+      \item{a}{a design parameter governing the degree of randomness. Note that \code{a} is only needed when \code{"AdjBCD"} is to be used.}
+  \item{bsize}{the block size for stratified randomization. It is required to be a multiple of 2. Note that \code{bsize} is only needed when \code{"StrPBR"} is to be used.}
   }}
 }
 
