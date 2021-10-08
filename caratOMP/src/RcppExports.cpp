@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // Rprod
 double Rprod(arma::vec v);
 RcppExport SEXP _caratOMP_Rprod(SEXP vSEXP) {
@@ -54,9 +59,33 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// ReturnCol
+arma::uvec ReturnCol(arma::mat M, arma::vec V);
+RcppExport SEXP _caratOMP_ReturnCol(SEXP MSEXP, SEXP VSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type M(MSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type V(VSEXP);
+    rcpp_result_gen = Rcpp::wrap(ReturnCol(M, V));
+    return rcpp_result_gen;
+END_RCPP
+}
+// MVReturnM
+arma::uvec MVReturnM(arma::mat M, arma::mat MV);
+RcppExport SEXP _caratOMP_MVReturnM(SEXP MSEXP, SEXP MVSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type M(MSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type MV(MVSEXP);
+    rcpp_result_gen = Rcpp::wrap(MVReturnM(M, MV));
+    return rcpp_result_gen;
+END_RCPP
+}
 // nameString
-Rcpp::StringVector nameString(unsigned int cov_num, arma::vec level_num, int strt_num, Rcpp::String type, Rcpp::String typeData);
-RcppExport SEXP _caratOMP_nameString(SEXP cov_numSEXP, SEXP level_numSEXP, SEXP strt_numSEXP, SEXP typeSEXP, SEXP typeDataSEXP) {
+Rcpp::StringVector nameString(unsigned int cov_num, arma::vec level_num, int strt_num, Rcpp::String type, arma::mat AllStrata);
+RcppExport SEXP _caratOMP_nameString(SEXP cov_numSEXP, SEXP level_numSEXP, SEXP strt_numSEXP, SEXP typeSEXP, SEXP AllStrataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -64,8 +93,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type level_num(level_numSEXP);
     Rcpp::traits::input_parameter< int >::type strt_num(strt_numSEXP);
     Rcpp::traits::input_parameter< Rcpp::String >::type type(typeSEXP);
-    Rcpp::traits::input_parameter< Rcpp::String >::type typeData(typeDataSEXP);
-    rcpp_result_gen = Rcpp::wrap(nameString(cov_num, level_num, strt_num, type, typeData));
+    Rcpp::traits::input_parameter< arma::mat >::type AllStrata(AllStrataSEXP);
+    rcpp_result_gen = Rcpp::wrap(nameString(cov_num, level_num, strt_num, type, AllStrata));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1264,6 +1293,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_caratOMP_Bpert", (DL_FUNC) &_caratOMP_Bpert, 2},
     {"_caratOMP_PStrGen", (DL_FUNC) &_caratOMP_PStrGen, 2},
     {"_caratOMP_Prob_S", (DL_FUNC) &_caratOMP_Prob_S, 3},
+    {"_caratOMP_ReturnCol", (DL_FUNC) &_caratOMP_ReturnCol, 2},
+    {"_caratOMP_MVReturnM", (DL_FUNC) &_caratOMP_MVReturnM, 2},
     {"_caratOMP_nameString", (DL_FUNC) &_caratOMP_nameString, 5},
     {"_caratOMP_BBCDname", (DL_FUNC) &_caratOMP_BBCDname, 2},
     {"_caratOMP_Preprocess", (DL_FUNC) &_caratOMP_Preprocess, 1},
