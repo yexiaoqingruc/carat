@@ -304,4 +304,3 @@ AdjBCD_CT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sig
 StrPBR_CT_power <- function(n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize) {
     .Call(`_caratOMP_StrPBR_CT_power`, n, cov_num, level_num, pr, type, beta, mu1, mu2, sigma, Iternum, sl, bsize)
 }
-
