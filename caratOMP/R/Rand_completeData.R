@@ -27,21 +27,10 @@ HuHuCAR = function(data, omega = NULL, p = 0.85){
     datap = data;
   }
   
-  dataverify = unique(apply(data[1, ], 2, class)); 
-  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
-    data_proc = t(data); 
-    cov_num = nrow(data_proc); 
-    level_num = vector(); 
-    for(i in 1 : cov_num){
-      level_num[i] = length(unique(data_proc[i, ])); 
-    }
-    R$datanumeric = TRUE; 
-  }else{
-    rdata = Preprocess(datap); 
-    data_proc = rdata$data; 
-    cov_num = rdata$cov_num; level_num = rdata$level_num; 
-    R$datanumeric = FALSE; 
-  }
+  rdata = Preprocess(datap); 
+  data_proc = rdata$data; 
+  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  R$datanumeric = FALSE; 
   
   if(length(omega) != (2 + cov_num) && !is.null(omega)){
     stop("Length of omega must equal to ncols(data) + 2 !")
@@ -125,21 +114,10 @@ PocSimMIN = function(data, weight = NULL, p = 0.85){
     datap = data;
   }
   
-  dataverify = unique(apply(data[1, ], 2, class)); 
-  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
-    data_proc = t(data); 
-    cov_num = nrow(data_proc); 
-    level_num = vector(); 
-    for(i in 1 : cov_num){
-      level_num[i] = length(unique(data_proc[i, ])); 
-    }
-    R$datanumeric = TRUE; 
-  }else{
-    rdata = Preprocess(datap); 
-    data_proc = rdata$data; 
-    cov_num = rdata$cov_num; level_num = rdata$level_num; 
-    R$datanumeric = FALSE; 
-  }
+  rdata = Preprocess(datap); 
+  data_proc = rdata$data; 
+  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  R$datanumeric = FALSE; 
   
   if(length(weight) != cov_num && !is.null(weight)){
     stop("Length of weight must equal to ncols(data)!")
@@ -222,21 +200,10 @@ StrBCD = function(data, p = 0.85){
     datap = data;
   }
   
-  dataverify = unique(apply(data[1, ], 2, class)); 
-  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
-    data_proc = t(data); 
-    cov_num = nrow(data_proc); 
-    level_num = vector(); 
-    for(i in 1 : cov_num){
-      level_num[i] = length(unique(data_proc[i, ])); 
-    }
-    R$datanumeric = TRUE; 
-  }else{
-    rdata = Preprocess(datap); 
-    data_proc = rdata$data; 
-    cov_num = rdata$cov_num; level_num = rdata$level_num; 
-    R$datanumeric = FALSE; 
-  }
+  rdata = Preprocess(datap); 
+  data_proc = rdata$data; 
+  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  R$datanumeric = FALSE; 
   
   omega = c(0, 1, rep(0, times = cov_num)); 
   RES = C_RHPS(data_proc, cov_num, level_num, omega, p); 
@@ -311,21 +278,10 @@ StrPBR = function(data, bsize = 4){
     datap = data; 
   }
   
-  dataverify = unique(apply(data[1, ], 2, class)); 
-  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
-    data_proc = t(data); 
-    cov_num = nrow(data_proc); 
-    level_num = vector(); 
-    for(i in 1 : cov_num){
-      level_num[i] = length(unique(data_proc[i, ])); 
-    }
-    R$datanumeric = TRUE; 
-  }else{
-    rdata = Preprocess(datap); 
-    data_proc = rdata$data; 
-    cov_num = rdata$cov_num; level_num = rdata$level_num; 
-    R$datanumeric = FALSE; 
-  }
+  rdata = Preprocess(datap); 
+  data_proc = rdata$data; 
+  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  R$datanumeric = FALSE;
   
   RES = C_RStrR(data_proc, cov_num, level_num, bsize, tr_num = 2); 
   
@@ -395,21 +351,10 @@ DoptBCD = function(data){
     datap = data; 
   }
   
-  dataverify = unique(apply(data[1, ], 2, class)); 
-  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
-    data_proc = t(data); 
-    cov_num = nrow(data_proc); 
-    level_num = vector(); 
-    for(i in 1 : cov_num){
-      level_num[i] = length(unique(data_proc[i, ])); 
-    }
-    R$datanumeric = TRUE; 
-  }else{
-    rdata = Preprocess(datap); 
-    data_proc = rdata$data; 
-    cov_num = rdata$cov_num; level_num = rdata$level_num; 
-    R$datanumeric = FALSE; 
-  }
+  rdata = Preprocess(datap); 
+  data_proc = rdata$data; 
+  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  R$datanumeric = FALSE; 
   
   RES = C_RAtkinBCD(data_proc, cov_num, level_num); 
   
@@ -482,21 +427,10 @@ AdjBCD = function(data, a = 3.0){
     datap = data; 
   }
   
-  dataverify = unique(apply(data[1, ], 2, class)); 
-  if(length(dataverify) == 1 && dataverify[1] == "integer"||length(dataverify) == 1 && dataverify[1] == "numeric"){
-    data_proc = t(data); 
-    cov_num = nrow(data_proc); 
-    level_num = vector(); 
-    for(i in 1 : cov_num){
-      level_num[i] = length(unique(data_proc[i, ])); 
-    }
-    R$datanumeric = TRUE; 
-  }else{
-    rdata = Preprocess(datap); 
-    data_proc = rdata$data; 
-    cov_num = rdata$cov_num; level_num = rdata$level_num; 
-    R$datanumeric = FALSE; 
-  }
+  rdata = Preprocess(datap); 
+  data_proc = rdata$data; 
+  cov_num = rdata$cov_num; level_num = rdata$level_num; 
+  R$datanumeric = FALSE; 
   
   RES = C_RAdjustBCD(data_proc, cov_num, level_num, adoub); 
   
