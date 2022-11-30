@@ -14,7 +14,7 @@
   \item{level_num}{a vector of level numbers for each covariate. Hence the length of \code{level_num} should be equal to the number of covariates.}
   \item{pr}{a vector of probabilities. Under the assumption of independence between covariates, \code{pr} is a vector containing probabilities for each level of each covariate. The length of \code{pr} should correspond to the number of all levels, and the sum of the probabilities for each margin should be \code{1}.}
   \item{type}{a data-generating method. Optional input: \code{"linear"} or \code{"logit"}.}
-  \item{beta}{a vector of coefficients of covariates. The length of \code{beta} must correspond to \code{cov_num}.}
+  \item{beta}{a vector of coefficients of covariates. The length of \code{beta} must correspond to the sum of all covariates' levels.}
   \item{mu1,mu2}{main effects of treatment \code{1} and treatment \code{2}.}
   \item{sigma}{the error variance for the linear model. The default is 1. This should be a positive value and is only used when \code{type = linear}.}
   \item{method}{the randomization procedure to be used for generating randomization sequences. This package provides data-generating function for \code{"HuHuCAR"}, \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"AdjBCD"}, and \code{"DoptBCD"}.}
@@ -46,7 +46,7 @@ set.seed(100)
 n = 1000
 cov_num = 5
 level_num = c(2,2,2,2,2)
-beta = c(1,4,3,2,5)
+beta = c(1,4,3,2,5,5,4,3,2,1)
 mu1 = 0
 mu2 = 0
 sigma = 1
