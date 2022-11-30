@@ -440,13 +440,13 @@ arma::mat genData_sim(int n, unsigned int cov_num, arma::vec level_num,
   return Data_S;
 }
 
-bool beta_check(unsigned int cov_num,arma::vec beta){
-  if(beta.n_elem == cov_num){
+bool beta_check(arma::vec level_num,arma::vec beta){
+  if(beta.n_elem == sum(level_num)){
     return TRUE;
   }
   else{
-    Rcpp::Rcout<<"The length of beta must correspond to cov_num!"<<std::endl;
-    Rcpp::Rcout<<"The length of beta should be:"<<cov_num<<std::endl;
+    Rcpp::Rcout<<"The length of beta must correspond to the sum of level_num!"<<std::endl;
+    Rcpp::Rcout<<"The length of beta should be:"<<sum(level_num)<<std::endl;
     return FALSE;
   }
 }
@@ -1610,7 +1610,7 @@ arma::mat HuHuCAR_getData(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           double mu1,double mu2,double sigma,arma::vec omega,
                           double p){
-  bool check_beta = beta_check(cov_num,beta);
+  bool check_beta = beta_check(level_num,beta);
   arma::mat Tdata(cov_num+1,n);
   if(check_beta == TRUE){
     arma::mat ProbS = Prob_S(cov_num,level_num,pr);
@@ -1620,7 +1620,22 @@ arma::mat HuHuCAR_getData(int n,unsigned int cov_num,arma::vec level_num,
     int strt_num = P.n_cols;
     arma::vec D(2 + strt_num + sum(level_num),arma::fill::zeros);
     Tdata.row(cov_num) = Assign(Tdata,D,P,n,cov_num,strt_num,level_num_data,omega,p);
-    arma::vec yita = (Tdata.rows(0,cov_num-1)).t()*beta+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
+    int sums = 0;
+    arma::mat Tdata_temp = Tdata.rows(0,cov_num-1);
+    for(unsigned int i = 0; i < cov_num; i++){
+      arma::vec beta_temp = beta.subvec(sums, (sums + level_num(i) - 1));
+      Tdata_temp.row(i).transform([=,&beta_temp,&level_num](double val){
+        double result = 0;
+        for(double j = 0; j < level_num(i); j++){
+          if(val == j+1){
+            result = beta_temp(j);
+          }
+        }
+        return result;
+      });
+      sums += level_num(i);
+    }
+    arma::vec yita = sum(Tdata_temp,0).t()+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
     if(type == "logit"){
       arma::vec m = exp(yita)/(1+exp(yita));
       arma::vec y = arma::randu(n);
@@ -1633,7 +1648,7 @@ arma::mat HuHuCAR_getData(int n,unsigned int cov_num,arma::vec level_num,
       if(sigma_check(sigma) == TRUE){
         arma::vec epsilon(n,arma::fill::randn);
         epsilon = epsilon*sigma;
-        arma::vec y = yita + epsilon;
+        arma::vec y = yita+epsilon;
         Tdata.insert_rows(cov_num+1,y.t());
       }
       else{
@@ -1646,7 +1661,6 @@ arma::mat HuHuCAR_getData(int n,unsigned int cov_num,arma::vec level_num,
   }
   return Tdata;
 }
-
 
 //[[Rcpp::export]]
 Rcpp::List HuHuCAR_RT(DataFrame data,double Reps,double conf,arma::vec omega,double p = 0.85){
@@ -1923,7 +1937,7 @@ arma::mat PocSimMIN_getData(int n,unsigned int cov_num,arma::vec level_num,
                             arma::vec pr,std::string type,arma::vec beta,
                             double mu1,double mu2,double sigma,
                             arma::vec weight,double p){
-  bool check_beta = beta_check(cov_num,beta);
+  bool check_beta = beta_check(level_num,beta);
   arma::mat Tdata(cov_num+1,n);
   if(check_beta == TRUE){
     if(weight.n_elem != cov_num && weight.n_elem != 0){
@@ -1949,7 +1963,22 @@ arma::mat PocSimMIN_getData(int n,unsigned int cov_num,arma::vec level_num,
       int strt_num = P.n_cols;
       arma::vec D(2 + strt_num + sum(level_num),arma::fill::zeros);
       Tdata.row(cov_num) = Assign(Tdata,D,P,n,cov_num,strt_num,level_num_data,omeganew,p);
-      arma::vec yita = (Tdata.rows(0,cov_num-1)).t()*beta+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
+      int sums = 0;
+      arma::mat Tdata_temp = Tdata.rows(0,cov_num-1);
+      for(unsigned int i = 0; i < cov_num; i++){
+        arma::vec beta_temp = beta.subvec(sums, (sums + level_num(i) - 1));
+        Tdata_temp.row(i).transform([=,&beta_temp,&level_num](double val){
+          double result = 0;
+          for(double j = 0; j < level_num(i); j++){
+            if(val == j+1){
+              result = beta_temp(j);
+            }
+          }
+          return result;
+        });
+        sums += level_num(i);
+      }
+      arma::vec yita = sum(Tdata_temp,0).t()+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
       if(type == "logit"){
         arma::vec m = exp(yita)/(1+exp(yita));
         arma::vec y = arma::randu(n);
@@ -2334,7 +2363,7 @@ arma::vec PocSimMIN_BT_power(int n,unsigned int cov_num,arma::vec level_num,
 arma::mat StrBCD_getData(int n,unsigned int cov_num,arma::vec level_num,
                          arma::vec pr,std::string type,arma::vec beta,double mu1,
                          double mu2,double sigma,double p){
-  bool check_beta = beta_check(cov_num,beta);
+  bool check_beta = beta_check(level_num,beta);
   arma::mat Tdata(cov_num+1,n);
   if(check_beta == TRUE){
     arma::vec omeganew(2 + cov_num, arma::fill::zeros); omeganew(1) = 1;
@@ -2345,7 +2374,22 @@ arma::mat StrBCD_getData(int n,unsigned int cov_num,arma::vec level_num,
     int strt_num = P.n_cols;
     arma::vec D(2 + strt_num + sum(level_num),arma::fill::zeros);
     Tdata.row(cov_num) = Assign(Tdata,D,P,n,cov_num,strt_num,level_num_data,omeganew,p);
-    arma::vec yita = (Tdata.rows(0,cov_num-1)).t()*beta+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
+    int sums = 0;
+    arma::mat Tdata_temp = Tdata.rows(0,cov_num-1);
+    for(unsigned int i = 0; i < cov_num; i++){
+      arma::vec beta_temp = beta.subvec(sums, (sums + level_num(i) - 1));
+      Tdata_temp.row(i).transform([=,&beta_temp,&level_num](double val){
+        double result = 0;
+        for(double j = 0; j < level_num(i); j++){
+          if(val == j+1){
+            result = beta_temp(j);
+          }
+        }
+        return result;
+      });
+      sums += level_num(i);
+    }
+    arma::vec yita = sum(Tdata_temp,0).t()+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
     if(type == "logit"){
       arma::vec m = exp(yita)/(1+exp(yita));
       arma::vec y = arma::randu(n);
@@ -2720,11 +2764,26 @@ arma::mat DoptBCD_In(int n, unsigned int cov_num,arma::vec level_num, arma::vec 
 arma::mat DoptBCD_getData(int n,unsigned int cov_num,arma::vec level_num,
                           arma::vec pr,std::string type,arma::vec beta,
                           double mu1,double mu2,double sigma){
-  bool check_beta = beta_check(cov_num,beta);
+  bool check_beta = beta_check(level_num,beta);
   arma::mat Tdata(cov_num+1,n);
   if(check_beta == TRUE){
     Tdata = DoptBCD_In(n,cov_num,level_num,pr);
-    arma::vec yita = (Tdata.rows(0,cov_num-1)).t()*beta+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
+    int sums = 0;
+    arma::mat Tdata_temp = Tdata.rows(0,cov_num-1);
+    for(unsigned int i = 0; i < cov_num; i++){
+      arma::vec beta_temp = beta.subvec(sums, (sums + level_num(i) - 1));
+      Tdata_temp.row(i).transform([=,&beta_temp,&level_num](double val){
+        double result = 0;
+        for(double j = 0; j < level_num(i); j++){
+          if(val == j+1){
+            result = beta_temp(j);
+          }
+        }
+        return result;
+      });
+      sums += level_num(i);
+    }
+    arma::vec yita = sum(Tdata_temp,0).t()+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
     if(type == "logit"){
       arma::vec m = exp(yita)/(1+exp(yita));
       arma::vec y = arma::randu(n);
@@ -3103,11 +3162,26 @@ arma::mat AdjBCD_In(int n, unsigned int cov_num, arma::vec level_num, arma::vec 
 arma::mat AdjBCD_getData(int n,unsigned int cov_num,arma::vec level_num,
                          arma::vec pr,std::string type,arma::vec beta,
                          double mu1,double mu2,double sigma,double a){
-  bool check_beta = beta_check(cov_num,beta);
+  bool check_beta = beta_check(level_num,beta);
   arma::mat Tdata(cov_num+1,n);
   if(check_beta == TRUE){
     Tdata = AdjBCD_In(n,cov_num,level_num,pr,a);
-    arma::vec yita = (Tdata.rows(0,cov_num-1)).t()*beta+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
+    int sums = 0;
+    arma::mat Tdata_temp = Tdata.rows(0,cov_num-1);
+    for(unsigned int i = 0; i < cov_num; i++){
+      arma::vec beta_temp = beta.subvec(sums, (sums + level_num(i) - 1));
+      Tdata_temp.row(i).transform([=,&beta_temp,&level_num](double val){
+        double result = 0;
+        for(double j = 0; j < level_num(i); j++){
+          if(val == j+1){
+            result = beta_temp(j);
+          }
+        }
+        return result;
+      });
+      sums += level_num(i);
+    }
+    arma::vec yita = sum(Tdata_temp,0).t()+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
     if(type == "logit"){
       arma::vec m = exp(yita)/(1+exp(yita));
       arma::vec y = arma::randu(n);
@@ -3448,7 +3522,7 @@ arma::vec AdjBCD_BT_power(int n,unsigned int cov_num,arma::vec level_num,
 arma::mat StrPBR_getData(int n,unsigned int cov_num,arma::vec level_num,
                          arma::vec pr,std::string type,arma::vec beta,
                          double mu1,double mu2,double sigma,int bsize){
-  bool check_beta = beta_check(cov_num,beta);
+  bool check_beta = beta_check(level_num,beta);
   arma::mat Tdata(cov_num+1,n);
   if(check_beta == TRUE){
     arma::mat ProbS = Prob_S(cov_num,level_num,pr);
@@ -3470,7 +3544,22 @@ arma::mat StrPBR_getData(int n,unsigned int cov_num,arma::vec level_num,
       Tdata(cov_num,i) = Res(2,0)(0,0);
       D = Res(3,0);
     }
-    arma::vec yita = (Tdata.rows(0,cov_num-1)).t()*beta+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
+    int sums = 0;
+    arma::mat Tdata_temp = Tdata.rows(0,cov_num-1);
+    for(unsigned int i = 0; i < cov_num; i++){
+      arma::vec beta_temp = beta.subvec(sums, (sums + level_num(i) - 1));
+      Tdata_temp.row(i).transform([=,&beta_temp,&level_num](double val){
+        double result = 0;
+        for(double j = 0; j < level_num(i); j++){
+          if(val == j+1){
+            result = beta_temp(j);
+          }
+        }
+        return result;
+      });
+      sums += level_num(i);
+    }
+    arma::vec yita = sum(Tdata_temp,0).t()+(Tdata.row(cov_num)).t()*(mu2-mu1)+2*mu1-mu2;
     if(type == "logit"){
       arma::vec m = exp(yita)/(1+exp(yita));
       arma::vec y = arma::randu(n);
