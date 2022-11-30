@@ -14,7 +14,7 @@
   \item{level_num}{the vector of level numbers for each covariate. Hence the length of \code{level_num} should be equal to the number of covariates.}
   \item{pr}{the vector of probabilities. Under the assumption of independence between covariates, \code{pr} is a vector containing probabilities for each level of each covariate. The length of \code{pr} should correspond to number of all levels, and the vector sum of \code{pr} should be equal to \code{cov_num}.}
   \item{type}{the type of models when generating data. Optional input: \code{linear} or \code{logit}.}
-  \item{beta}{the vector of coefficients of covariates. The length of \code{beta} must correspond to \code{cov_num}.}
+  \item{beta}{a vector of coefficients of covariates. The length of \code{beta} must correspond to the sum of all covariates' levels.}
   \item{mu1,mu2}{main effects of treatment \code{1} and treatment \code{2}.}
   \item{sigma}{the error variance for linear model. The default is 1. It is only used when \code{type} is \code{linear}.}
   \item{method}{the randomization method to be used in allocating patients. The default randomization method \code{"HuHuCAR"} uses Hu and Hu's general covariate-adaptive randomization; the alternatives are \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"DoptBCD"}, and \code{"AdjBCD"}.}
@@ -46,7 +46,7 @@ set.seed(100)
 n = 1000
 cov_num = 5
 level_num = c(2,2,2,2,2)
-beta = c(1,4,3,2,5)
+beta = c(1,4,3,2,5,5,4,3,2,1)
 mu1 = 0
 mu2 = 0
 sigma = 1
