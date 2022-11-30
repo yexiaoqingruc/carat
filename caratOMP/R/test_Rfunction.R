@@ -1,7 +1,7 @@
 getData<-function(n,cov_num,level_num,pr,type,beta,mu1,mu2,sigma = 1,method = "HuHuCAR",...){
   FUN = switch(method,"HuHuCAR" = HuHuCAR_getData, "PocSimMIN" = PocSimMIN_getData,
-              "StrBCD" = StrBCD_getData, "StrPBR" = StrPBR_getData,
-              "DoptBCD" = DoptBCD_getData, "AdjBCD" = AdjBCD_getData)
+               "StrBCD" = StrBCD_getData, "StrPBR" = StrPBR_getData,
+               "DoptBCD" = DoptBCD_getData, "AdjBCD" = AdjBCD_getData)
   data = FUN(n,cov_num,level_num,pr,type,beta,mu1,mu2,sigma,...)
   names = c(paste0("covariate",1:cov_num),"assignment","outcome")
   datafr = data.frame(data, row.names = names, stringsAsFactors = TRUE)
@@ -81,7 +81,7 @@ corr.test<-function(data,conf = 0.95){
 
 evalPower<-function(n,cov_num,level_num,pr,type,beta,di = seq(0,0.5,0.1),sigma = 1,Iternum,sl = 0.05,
                     method = c("HuHuCAR","PocSimMIN","StrBCD","StrPBR","DoptBCD","AdjBCD"),
-                    test = c("rand.test","boot.test","corr.test"),plot = TRUE,...){
+                    test = c("boot.test","corr.test","rand.test"),plot = TRUE,...){
   a = Sys.time()
   if(!is.logical(plot)){
     print("Please specify whether to plot or not!")
