@@ -56,3 +56,9 @@
     \item Rectified some issues.
     }
 }
+
+\section{version 2.1.0 (November 30th, 2022)}{
+\itemize{
+    \item Adapted the function \code{getData} to a version for covariates with multiple levels without adding any input parameters.
+    }
+}
