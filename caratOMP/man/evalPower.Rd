@@ -5,7 +5,7 @@
   evalPower(n, cov_num, level_num, pr, type, beta, di = seq(0,0.5,0.1), sigma = 1,
           Iternum, sl = 0.05, method = c("HuHuCAR", "PocSimMIN", "StrBCD", "StrPBR", 
                                          "DoptBCD","AdjBCD"), 
-          test = c("rand.test", "boot.test", "corr.test"), plot = TRUE, ...)
+          test = c("boot.test", "corr.test", "rand.test"), plot = TRUE, ...)
 }
 \description{
   Returns powers and a plot of the chosen test and method under different treatment effects.
