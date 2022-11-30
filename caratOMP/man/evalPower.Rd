@@ -16,13 +16,13 @@
   \item{level_num}{a vector of level numbers for each covariate. Hence the length of \code{level_num} should be equal to the number of covariates.}
   \item{pr}{a vector of probabilities. Under the assumption of independence between covariates, \code{pr} is a vector containing probabilities for each level of each covariate. The length of \code{pr} should correspond to the number of all levels, and the sum of the probabilities for each margin should be \code{1}.}
   \item{type}{a data-generating method. Optional input: \code{"linear"} or \code{"logit"}.}
-  \item{beta}{a vector of coefficients of covariates. The length of \code{beta} must correspond to \code{cov_num}.}
+  \item{beta}{a vector of coefficients of covariates. The length of \code{beta} must correspond to the sum of all covariates' levels.}
   \item{di}{a value or a vector of values of difference in treatment effects. The default value is a sequence from \code{0} to \code{0.5} with increments of \code{0.1}. The value(s) forms the horizontal axis of the plot.}
   \item{sigma}{the error variance for the linear model. The default is 1. This should be a positive value and is only used when \code{type = linear}.}
   \item{Iternum}{an integer. It is the number of iterations required for power calculation.}
   \item{sl}{the significance level. If the \eqn{p} value returned by the test is less than \code{sl}, the null hypothesis will be rejected. The default value is \code{0.05}.}
   \item{method}{the randomization procedure to be used for power calculation. This package provides power calculation for \code{"HuHuCAR"}, \code{"PocSimMIN"}, \code{"StrBCD"}, \code{"StrPBR"}, \code{"AdjBCD"}, and \code{"DoptBCD"}.}
-  \item{test}{a character string specifying the alternative tests used to verify hypothesis, must be one of \code{"boot.test"}, \code{"corr.test"} or \code{"rand.test"}, which are the randomization test, the bootstrap \eqn{t} test, and the corrected \eqn{t} test, respectively. The arguments associated with the testing function can be specified; otherwise, the default value will be used.}
+  \item{test}{a character string specifying the alternative tests used to verify hypothesis, must be one of \code{"boot.test"}, \code{"corr.test"} or \code{"rand.test"}, which are the bootstrap \eqn{t} test, the corrected \eqn{t} test, and the randomization test, respectively. The arguments associated with the testing function can be specified; otherwise, the default value will be used.}
   \item{plot}{a bool. It indicates whether to plot or not. Optional input: \code{TRUE} or \code{FALSE}.}
   \item{\dots}{arguments to be passed to \code{method}. These arguments depend on the randomization method used and the following arguments are accepted:
   \describe{
@@ -47,7 +47,7 @@ n = 100#<<for demonstration,it is suggested to be larger than 1000
 cov_num = 5
 level_num = c(2,2,2,2,2)
 pr = rep(0.5,10)
-beta = c(0.1,0.4,0.3,0.2,0.5)
+beta = c(0.1,0.4,0.3,0.2,0.5,0.5,0.4,0.3,0.2,0.1)
 omega = c(0.1, 0.1, rep(0.8 / 5, times = 5))
 di = seq(0,0.5,0.1)
 sigma = 1
