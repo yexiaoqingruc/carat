@@ -35,3 +35,40 @@
     \item The modification is consistent with the \pkg{OpenMP}-supported version in \issue{carat}. 
   }
 }
+
+\section{version 1.4 (September 26th, 2020)}{
+\itemize{
+    \item References were added to the man files. 
+    \item The modification is consistent with the \pkg{OpenMP}-supported version in \issue{carat}. 
+  }
+}
+
+\section{version 1.5 (July 25th, 2021)}{
+\itemize{
+    \item Some modifications were added to Remark Index, including modifications in functions of \code{nameString}, \code{PreProcess}, \code{print.carandom}, and \code{print.careval}. 
+  }
+}
+
+\section{version 2.0 (August 25th, 2021)}{
+\itemize{
+    \item Some modifications were added to Remark Index to fixed some issues, including modifications in functions of \code{print.carandom}, and \code{print.careval}. 
+  }
+}
+
+\section{version 2.0.1 (September 29th, 2021)}{
+\itemize{
+    \item Rectified the error in \code{print.carandom} about misplacement between the mean absolute within-stratum imbalance and the mean absolute within-covariate-margin imbalance. 
+    }
+}
+
+\section{version 2.0.2 (October 16th, 2021)}{
+\itemize{
+    \item Rectified some issues.
+    }
+}
+
+\section{version 2.1.0 (November 29th, 2022)}{
+\itemize{
+    \item Adapted the function \code{getData} to a version for covariates with multiple levels without adding any input parameters.
+    }
+}
