@@ -69,7 +69,7 @@ corr.test<-function(data,conf = 0.95){
 
 evalPower<-function(n,cov_num,level_num,pr,type,beta,di = seq(0,0.5,0.1),sigma = 1,Iternum,sl = 0.05,
                     method = c("HuHuCAR","PocSimMIN","StrBCD","StrPBR","DoptBCD","AdjBCD"),
-                    test = c("rand.test","boot.test","corr.test"),plot = TRUE,...){
+                    test = c("boot.test","corr.test","rand.test"),plot = TRUE,...){
   a = Sys.time()
   if(!is.logical(plot)){
     print("Please specify whether to plot or not!")
