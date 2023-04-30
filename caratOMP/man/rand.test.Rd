@@ -43,7 +43,7 @@
   
   \item{p.value}{p-value of the test, the null hypothesis is rejected if the p-value is less than \code{sl}.}
   \item{estimate}{the estimated difference in treatment effects between treatment \code{1} and treatment \code{2}.}
-  \item{conf.int}{a confidence interval under the chosen level \code{conf} for the difference in treatment effect between treatment \code{1} and treatment \code{2}. As the randomization test is a nonparametric method, we cannot calculate the confidence interval, so it is hidden in this result.}
+  \item{conf.int}{a confidence interval under the chosen level \code{conf} for the difference in treatment effect between treatment \code{1} and treatment \code{2}.}
   \item{method}{a character string indicating what type of test was performed.}
   \item{data.name}{a character string giving the name(s) of the data.}
   \item{statistic}{the value of the t-statistic. As the randomization test is a nonparametric method, we cannot calculate the t-statistic, so it is hidden in this result.}
