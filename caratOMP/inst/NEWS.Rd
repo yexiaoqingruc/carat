@@ -62,3 +62,9 @@
     \item Adapted the function \code{getData} to a version for covariates with multiple levels without adding any input parameters.
     }
 }
+                          
+\section{version 2.2.0 (April 30th, 2023)}{
+\itemize{
+    \item fixed a typo in calculating the confidence itervals using randomization test. 
+    }
+}
