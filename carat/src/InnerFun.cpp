@@ -1703,13 +1703,23 @@ Rcpp::List HuHuCAR_RT(DataFrame data,double Reps,double conf,arma::vec omega,dou
   double zalpha = Rcpp::as<double>(qnorm(alpha));
   double k = -2.0/(zalpha*pow(2*arma::datum::pi,-0.5)*exp(-pow(zalpha,2)*0.5));
   int spreps = ceil((2.0-alpha)/alpha);
+  arma::rowvec y = data_proc.row(cov_num+1);
+  arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
+  arma::uvec indytemp = arma::find(data_proc.row(cov_num) == 1);
   arma::vec sp(spreps);
   for(i = 0; i < spreps; i++){
     D.zeros();
     assignew = Assign(data_proc,D,P,n,cov_num,strt_num,level_num,omega,p);
     n1 = -sum(assignew-2);
     n0 = n - n1;
-    sp(i) = -sum(data_proc.row(cov_num+1)%(assignew-2))/n1-sum(data_proc.row(cov_num+1)%(assignew-1))/n0;
+    y = data_proc.row(cov_num+1);
+    indy = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indy) = y(indy) - diff_data;
+    indytemp = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indytemp) = y(indytemp) + diff_data;
+    n1 = -sum(assignew-2);
+    n0 = n - n1;
+    sp(i) = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
   }
   sp = sort(sp);
   double Lp = diff_data - sp(spreps - 2);
@@ -1722,15 +1732,16 @@ Rcpp::List HuHuCAR_RT(DataFrame data,double Reps,double conf,arma::vec omega,dou
   double c = 0;
   double Um = Up;
   bool mupdate;
-  arma::rowvec y = data_proc.row(cov_num+1);
-  arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
   for(i = 0; i < confReps; i++){
     D.zeros();
     assignew = Assign(data_proc,D,P,n,cov_num,strt_num,level_num,omega,p);
     n1 = -sum(assignew-2);
     n0 = n - n1;
     y = data_proc.row(cov_num+1);
-    y.elem(indy) = y.elem(indy) - Up;
+    indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indy) = y(indy) - Up;
+    indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indytemp) = y(indytemp) + Up;
     TU = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     c = k*(Up - diff_data);
     mupdate = ((Up - diff_data)>2*(Um - diff_data)||(Up - diff_data)<(Um - diff_data)*0.5);
@@ -1747,7 +1758,10 @@ Rcpp::List HuHuCAR_RT(DataFrame data,double Reps,double conf,arma::vec omega,dou
     n1 = -sum(assignew-2);
     n0 = n - n1;
     y = data_proc.row(cov_num+1);
-    y.elem(indy) = y.elem(indy) - Lp;
+    indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indy) = y(indy) - Lp;
+    indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indytemp) = y(indytemp) + Lp;
     TL = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     c = k*(diff_data - Lp);
     mupdate = ((diff_data - Lp)>2*(diff_data - Lm)||(diff_data - Lp)<(diff_data - Lm)*0.5);
@@ -2078,13 +2092,23 @@ Rcpp::List PocSimMIN_RT(DataFrame data,double Reps, double conf, arma::vec weigh
     double zalpha = Rcpp::as<double>(qnorm(alpha));
     double k = -2.0/(zalpha*pow(2*arma::datum::pi,-0.5)*exp(-pow(zalpha,2)*0.5));
     int spreps = ceil((2.0-alpha)/alpha);
+    arma::rowvec y = data_proc.row(cov_num+1);
+    arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
+    arma::uvec indytemp = arma::find(data_proc.row(cov_num) == 1);
     arma::vec sp(spreps);
     for(i = 0; i < spreps; i++){
       D.zeros();
       assignew = Assign(data_proc,D,P,n,cov_num,strt_num,level_num,omeganew,p);
       n1 = -sum(assignew-2);
       n0 = n - n1;
-      sp(i) = -sum(data_proc.row(cov_num+1)%(assignew-2))/n1-sum(data_proc.row(cov_num+1)%(assignew-1))/n0;
+      y = data_proc.row(cov_num+1);
+      indy = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+      y(indy) = y(indy) - diff_data;
+      indytemp = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+      y(indytemp) = y(indytemp) + diff_data;
+      n1 = -sum(assignew-2);
+      n0 = n - n1;
+      sp(i) = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     }
     sp = sort(sp);
     double Lp = diff_data - sp(spreps - 2);
@@ -2097,15 +2121,16 @@ Rcpp::List PocSimMIN_RT(DataFrame data,double Reps, double conf, arma::vec weigh
     double c = 0;
     double Um = Up;
     bool mupdate;
-    arma::rowvec y = data_proc.row(cov_num+1);
-    arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
     for(i = 0; i < confReps; i++){
       D.zeros();
       assignew = Assign(data_proc,D,P,n,cov_num,strt_num,level_num,omeganew,p);
       n1 = -sum(assignew-2);
       n0 = n - n1;
       y = data_proc.row(cov_num+1);
-      y.elem(indy) = y.elem(indy) - Up;
+      indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+      y(indy) = y(indy) - Up;
+      indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+      y(indytemp) = y(indytemp) + Up;
       TU = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
       c = k*(Up - diff_data);
       mupdate = ((Up - diff_data)>2*(Um - diff_data)||(Up - diff_data)<(Um - diff_data)*0.5);
@@ -2122,7 +2147,10 @@ Rcpp::List PocSimMIN_RT(DataFrame data,double Reps, double conf, arma::vec weigh
       n1 = -sum(assignew-2);
       n0 = n - n1;
       y = data_proc.row(cov_num+1);
-      y.elem(indy) = y.elem(indy) - Lp;
+      indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+      y(indy) = y(indy) - Lp;
+      indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+      y(indytemp) = y(indytemp) + Lp;
       TL = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
       c = k*(diff_data - Lp);
       mupdate = ((diff_data - Lp)>2*(diff_data - Lm)||(diff_data - Lp)<(diff_data - Lm)*0.5);
@@ -2476,13 +2504,23 @@ Rcpp::List StrBCD_RT(DataFrame data,double Reps,double conf,double p = 0.85){
   double zalpha = Rcpp::as<double>(qnorm(alpha));
   double k = -2.0/(zalpha*pow(2*arma::datum::pi,-0.5)*exp(-pow(zalpha,2)*0.5));
   int spreps = ceil((2.0-alpha)/alpha);
+  arma::rowvec y = data_proc.row(cov_num+1);
+  arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
+  arma::uvec indytemp = arma::find(data_proc.row(cov_num) == 1);
   arma::vec sp(spreps);
   for(i = 0; i < spreps; i++){
     D.zeros();
     assignew = Assign(data_proc,D,P,n,cov_num,strt_num,level_num,omeganew,p);
     n1 = -sum(assignew-2);
     n0 = n - n1;
-    sp(i) = -sum(data_proc.row(cov_num+1)%(assignew-2))/n1-sum(data_proc.row(cov_num+1)%(assignew-1))/n0;
+    y = data_proc.row(cov_num+1);
+    indy = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indy) = y(indy) - diff_data;
+    indytemp = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indytemp) = y(indytemp) + diff_data;
+    n1 = -sum(assignew-2);
+    n0 = n - n1;
+    sp(i) = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
   }
   sp = sort(sp);
   double Lp = diff_data - sp(spreps - 2);
@@ -2495,15 +2533,16 @@ Rcpp::List StrBCD_RT(DataFrame data,double Reps,double conf,double p = 0.85){
   double c = 0;
   double Um = Up;
   bool mupdate;
-  arma::rowvec y = data_proc.row(cov_num+1);
-  arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
   for(i = 0; i < confReps; i++){
     D.zeros();
     assignew = Assign(data_proc,D,P,n,cov_num,strt_num,level_num,omeganew,p);
     n1 = -sum(assignew-2);
     n0 = n - n1;
     y = data_proc.row(cov_num+1);
-    y.elem(indy) = y.elem(indy) - Up;
+    indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indy) = y(indy) - Up;
+    indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indytemp) = y(indytemp) + Up;
     TU = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     c = k*(Up - diff_data);
     mupdate = ((Up - diff_data)>2*(Um - diff_data)||(Up - diff_data)<(Um - diff_data)*0.5);
@@ -2520,7 +2559,10 @@ Rcpp::List StrBCD_RT(DataFrame data,double Reps,double conf,double p = 0.85){
     n1 = -sum(assignew-2);
     n0 = n - n1;
     y = data_proc.row(cov_num+1);
-    y.elem(indy) = y.elem(indy) - Lp;
+    indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indy) = y(indy) - Lp;
+    indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indytemp) = y(indytemp) + Lp;
     TL = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     c = k*(diff_data - Lp);
     mupdate = ((diff_data - Lp)>2*(diff_data - Lm)||(diff_data - Lp)<(diff_data - Lm)*0.5);
@@ -2896,12 +2938,22 @@ Rcpp::List DoptBCD_RT(DataFrame data,double Reps,double conf){
   double zalpha = Rcpp::as<double>(qnorm(alpha));
   double k = -2.0/(zalpha*pow(2*arma::datum::pi,-0.5)*exp(-pow(zalpha,2)*0.5));
   int spreps = ceil((2.0-alpha)/alpha);
+  arma::rowvec y = data_proc.row(cov_num+1);
+  arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
+  arma::uvec indytemp = arma::find(data_proc.row(cov_num) == 1);
   arma::vec sp(spreps);
   for(i = 0; i < spreps; i++){
     assignew = DoptBCDOne(data_proc.rows(0,cov_num-1),n,cov_num);
     n1 = -sum(assignew-2);
     n0 = n - n1;
-    sp(i) = -sum(data_proc.row(cov_num+1)%(assignew-2))/n1-sum(data_proc.row(cov_num+1)%(assignew-1))/n0;
+    y = data_proc.row(cov_num+1);
+    indy = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indy) = y(indy) - diff_data;
+    indytemp = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indytemp) = y(indytemp) + diff_data;
+    n1 = -sum(assignew-2);
+    n0 = n - n1;
+    sp(i) = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
   }
   sp = sort(sp);
   double Lp = diff_data - sp(spreps - 2);
@@ -2914,14 +2966,15 @@ Rcpp::List DoptBCD_RT(DataFrame data,double Reps,double conf){
   double c = 0;
   double Um = Up;
   bool mupdate;
-  arma::rowvec y = data_proc.row(cov_num+1);
-  arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
   for(i = 0; i < confReps; i++){
     assignew = DoptBCDOne(data_proc.rows(0,cov_num-1),n,cov_num);
     n1 = -sum(assignew-2);
     n0 = n - n1;
     y = data_proc.row(cov_num+1);
-    y.elem(indy) = y.elem(indy) - Up;
+    indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indy) = y(indy) - Up;
+    indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indytemp) = y(indytemp) + Up;
     TU = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     c = k*(Up - diff_data);
     mupdate = ((Up - diff_data)>2*(Um - diff_data)||(Up - diff_data)<(Um - diff_data)*0.5);
@@ -2937,7 +2990,10 @@ Rcpp::List DoptBCD_RT(DataFrame data,double Reps,double conf){
     n1 = -sum(assignew-2);
     n0 = n - n1;
     y = data_proc.row(cov_num+1);
-    y.elem(indy) = y.elem(indy) - Lp;
+    indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indy) = y(indy) - Lp;
+    indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indytemp) = y(indytemp) + Lp;
     TL = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     c = k*(diff_data - Lp);
     mupdate = ((diff_data - Lp)>2*(diff_data - Lm)||(diff_data - Lp)<(diff_data - Lm)*0.5);
@@ -3295,6 +3351,9 @@ Rcpp::List AdjBCD_RT(DataFrame data,double Reps,double conf,double a){
   double zalpha = Rcpp::as<double>(qnorm(alpha));
   double k = -2.0/(zalpha*pow(2*arma::datum::pi,-0.5)*exp(-pow(zalpha,2)*0.5));
   int spreps = ceil((2.0-alpha)/alpha);
+  arma::rowvec y = data_proc.row(cov_num+1);
+  arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
+  arma::uvec indytemp = arma::find(data_proc.row(cov_num) == 1);
   arma::vec sp(spreps);
   for(i = 0; i < spreps; i++){
     D.zeros();
@@ -3302,9 +3361,14 @@ Rcpp::List AdjBCD_RT(DataFrame data,double Reps,double conf,double a){
       D = AdjBCDOne(D,P,data_proc.col(j).head(cov_num),a);
       assignew(j) = D(D.n_elem-1);
     }
+    y = data_proc.row(cov_num+1);
+    indy = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indy) = y(indy) - diff_data;
+    indytemp = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indytemp) = y(indytemp) + diff_data;
     n1 = -sum(assignew-2);
     n0 = n - n1;
-    sp(i) = -sum(data_proc.row(cov_num+1)%(assignew-2))/n1-sum(data_proc.row(cov_num+1)%(assignew-1))/n0;
+    sp(i) = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
   }
   sp = sort(sp);
   double Lp = diff_data - sp(spreps - 2);
@@ -3317,8 +3381,6 @@ Rcpp::List AdjBCD_RT(DataFrame data,double Reps,double conf,double a){
   double c = 0;
   double Um = Up;
   bool mupdate;
-  arma::rowvec y = data_proc.row(cov_num+1);
-  arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
   for(i = 0; i < confReps; i++){
     D.zeros();
     for(j = 0; j < n; j++){
@@ -3328,7 +3390,10 @@ Rcpp::List AdjBCD_RT(DataFrame data,double Reps,double conf,double a){
     n1 = -sum(assignew-2);
     n0 = n - n1;
     y = data_proc.row(cov_num+1);
-    y.elem(indy) = y.elem(indy) - Up;
+    indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indy) = y(indy) - Up;
+    indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indytemp) = y(indytemp) + Up;
     TU = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     c = k*(Up - diff_data);
     mupdate = ((Up - diff_data)>2*(Um - diff_data)||(Up - diff_data)<(Um - diff_data)*0.5);
@@ -3348,7 +3413,10 @@ Rcpp::List AdjBCD_RT(DataFrame data,double Reps,double conf,double a){
     n1 = -sum(assignew-2);
     n0 = n - n1;
     y = data_proc.row(cov_num+1);
-    y.elem(indy) = y.elem(indy) - Lp;
+    indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indy) = y(indy) - Lp;
+    indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indytemp) = y(indytemp) + Lp;
     TL = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     c = k*(diff_data - Lp);
     mupdate = ((diff_data - Lp)>2*(diff_data - Lm)||(diff_data - Lp)<(diff_data - Lm)*0.5);
@@ -3683,6 +3751,9 @@ Rcpp::List StrPBR_RT(DataFrame data,double Reps,double conf,int bsize){
   double zalpha = Rcpp::as<double>(qnorm(alpha));
   double k = -2.0/(zalpha*pow(2*arma::datum::pi,-0.5)*exp(-pow(zalpha,2)*0.5));
   int spreps = ceil((2.0-alpha)/alpha);
+  arma::rowvec y = data_proc.row(cov_num+1);
+  arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
+  arma::uvec indytemp = arma::find(data_proc.row(cov_num) == 1);
   arma::vec sp(spreps);
   for(i = 0; i < spreps; i++){
     D.zeros();
@@ -3698,7 +3769,14 @@ Rcpp::List StrPBR_RT(DataFrame data,double Reps,double conf,int bsize){
     }
     n1 = -sum(assignew-2);
     n0 = n - n1;
-    sp(i) = -sum(data_proc.row(cov_num+1)%(assignew-2))/n1-sum(data_proc.row(cov_num+1)%(assignew-1))/n0;
+    y = data_proc.row(cov_num+1);
+    indy = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indy) = y(indy) - diff_data;
+    indytemp = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indytemp) = y(indytemp) + diff_data;
+    n1 = -sum(assignew-2);
+    n0 = n - n1;
+    sp(i) = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
   }
   sp = sort(sp);
   double Lp = diff_data - sp(spreps - 2);
@@ -3711,8 +3789,6 @@ Rcpp::List StrPBR_RT(DataFrame data,double Reps,double conf,int bsize){
   double c = 0;
   double Um = Up;
   bool mupdate;
-  arma::rowvec y = data_proc.row(cov_num+1);
-  arma::uvec indy = arma::find(data_proc.row(cov_num) == 1);
   for(i = 0; i < confReps; i++){
     D.zeros();
     shuffle = arma::randi<arma::uvec>(n,arma::distr_param(0,B.n_cols-1));
@@ -3728,7 +3804,10 @@ Rcpp::List StrPBR_RT(DataFrame data,double Reps,double conf,int bsize){
     n1 = -sum(assignew-2);
     n0 = n - n1;
     y = data_proc.row(cov_num+1);
-    y.elem(indy) = y.elem(indy) - Up;
+    indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indy) = y(indy) - Up;
+    indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indytemp) = y(indytemp) + Up;
     TU = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     c = k*(Up - diff_data);
     mupdate = ((Up - diff_data)>2*(Um - diff_data)||(Up - diff_data)<(Um - diff_data)*0.5);
@@ -3754,7 +3833,10 @@ Rcpp::List StrPBR_RT(DataFrame data,double Reps,double conf,int bsize){
     n1 = -sum(assignew-2);
     n0 = n - n1;
     y = data_proc.row(cov_num+1);
-    y.elem(indy) = y.elem(indy) - Lp;
+    indy = arma::find((assignew == 2)%(data_proc.row(cov_num) == 1));
+    y(indy) = y(indy) - Lp;
+    indytemp = arma::find((assignew == 1)%(data_proc.row(cov_num) == 2));
+    y(indytemp) = y(indytemp) + Lp;
     TL = -sum(y%(assignew-2))/n1-sum(y%(assignew-1))/n0;
     c = k*(diff_data - Lp);
     mupdate = ((diff_data - Lp)>2*(diff_data - Lm)||(diff_data - Lp)<(diff_data - Lm)*0.5);
