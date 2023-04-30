@@ -1,7 +1,7 @@
 getData<-function(n,cov_num,level_num,pr,type,beta,mu1,mu2,sigma = 1,method = "HuHuCAR",...){
   FUN = switch(method,"HuHuCAR" = HuHuCAR_getData, "PocSimMIN" = PocSimMIN_getData,
-               "StrBCD" = StrBCD_getData, "StrPBR" = StrPBR_getData,
-               "DoptBCD" = DoptBCD_getData, "AdjBCD" = AdjBCD_getData)
+              "StrBCD" = StrBCD_getData, "StrPBR" = StrPBR_getData,
+              "DoptBCD" = DoptBCD_getData, "AdjBCD" = AdjBCD_getData)
   data = FUN(n,cov_num,level_num,pr,type,beta,mu1,mu2,sigma,...)
   names = c(paste0("covariate",1:cov_num),"assignment","outcome")
   datafr = data.frame(data, row.names = names, stringsAsFactors = TRUE)
@@ -22,8 +22,10 @@ rand.test<-function(data,Reps = 200,method = c("HuHuCAR","PocSimMIN","StrBCD","S
   pval = result$pval
   testmethod<-"Randomization test"
   estimate = result$estimate
+  cint <- c(result$CIl,result$CIu)
+  attr(cint,"conf.level")<-conf
   names(estimate)<-"difference for treatment effect"
-  rval<-list(p.value = pval,estimate = estimate,conf.int = c(result$CIl,result$CIu),
+  rval<-list(p.value = pval,estimate = estimate,conf.int = cint,
              method = testmethod,data.name = dname,data = result$Randata,binwidth = binwidth)
   class(rval)<-c("plotrandtest","htest")
   return(rval)
