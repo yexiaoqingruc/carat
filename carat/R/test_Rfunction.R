@@ -22,8 +22,10 @@ rand.test<-function(data,Reps = 200,method = c("HuHuCAR","PocSimMIN","StrBCD","S
   pval = result$pval
   testmethod<-"Randomization test"
   estimate = result$estimate
+  cint <- c(result$CIl,result$CIu)
+  attr(cint,"conf.level")<-conf
   names(estimate)<-"difference for treatment effect"
-  rval<-list(p.value = pval,estimate = estimate,conf.int = c(result$CIl,result$CIu),
+  rval<-list(p.value = pval,estimate = estimate,conf.int = cint,
              method = testmethod,data.name = dname,data = result$Randata,binwidth = binwidth)
   class(rval)<-c("plotrandtest","htest")
   return(rval)
