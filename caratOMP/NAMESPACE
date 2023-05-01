@@ -41,5 +41,6 @@ S3method(print, carandom)
 S3method(print, careval)
 S3method(print, carcomp)
 S3method(print, carseq)
+S3method(print, plotrandtest)
 
 
